@@ -14,7 +14,7 @@ const BettingAmountInput = ({ value, onChange }: BettingAmountInputProps) => {
         type="number"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-24 bg-white text-gray-900 border-gray-200"
+        className="w-24 bg-white text-gray-900 border-gray-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         placeholder="1000"
       />
     </div>

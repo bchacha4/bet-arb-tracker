@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 
 interface Prop {
@@ -23,7 +23,51 @@ interface ArbitrageTableProps {
   bettingAmount: string;
 }
 
+const calculateAmounts = (prop: Prop, totalAmount: number) => {
+  const sides = [...prop.sides];
+  const holdPercentage = parseFloat(prop.hold) / 100;
+  
+  // Calculate the optimal bet distribution
+  const total = parseFloat(totalAmount.toString());
+  const ratio = sides[0].odds.startsWith('-') ? 
+    Math.abs(parseInt(sides[0].odds)) / 100 :
+    100 / parseInt(sides[0].odds);
+    
+  const wager1 = total * (ratio / (1 + ratio));
+  const wager2 = total - wager1;
+
+  // Calculate payouts
+  const payout = total * (1 + holdPercentage);
+  
+  return {
+    sides: [
+      {
+        ...sides[0],
+        wager: wager1.toFixed(2),
+        payout: payout.toFixed(2)
+      },
+      {
+        ...sides[1],
+        wager: wager2.toFixed(2),
+        payout: payout.toFixed(2)
+      }
+    ],
+    profit: (payout - total).toFixed(2)
+  };
+};
+
 const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
+  const [calculatedProps, setCalculatedProps] = useState(props);
+
+  useEffect(() => {
+    const amount = parseFloat(bettingAmount) || 0;
+    const updated = props.map(prop => ({
+      ...prop,
+      ...calculateAmounts(prop, amount)
+    }));
+    setCalculatedProps(updated);
+  }, [bettingAmount, props]);
+
   return (
     <div className="overflow-x-auto border border-gray-200 rounded-lg">
       <table className="w-full text-sm text-left text-gray-900">
@@ -42,7 +86,7 @@ const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {props.map((prop, index) => (
+          {calculatedProps.map((prop, index) => (
             <tr
               key={index}
               className="bg-white border-b border-gray-200 hover:bg-gray-50"
