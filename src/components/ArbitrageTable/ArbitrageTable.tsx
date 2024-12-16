@@ -23,6 +23,11 @@ interface ArbitrageTableProps {
   bettingAmount: string;
 }
 
+const formatDollarAmount = (amount: string) => {
+  const number = parseFloat(amount);
+  return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+};
+
 const calculateAmounts = (prop: Prop, totalAmount: number) => {
   const sides = [...prop.sides];
   const holdPercentage = parseFloat(prop.hold) / 100;
@@ -114,18 +119,18 @@ const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
               <td className="px-6 py-4">
                 {prop.sides.map((side, sideIndex) => (
                   <div key={sideIndex} className="mb-2">
-                    ${side.wager}
+                    ${formatDollarAmount(side.wager)}
                   </div>
                 ))}
               </td>
               <td className="px-6 py-4">
                 {prop.sides.map((side, sideIndex) => (
                   <div key={sideIndex} className="mb-2 text-betting-profit">
-                    ${side.payout}
+                    ${formatDollarAmount(side.payout)}
                   </div>
                 ))}
               </td>
-              <td className="px-6 py-4 text-betting-profit">${prop.profit}</td>
+              <td className="px-6 py-4 text-betting-profit">${formatDollarAmount(prop.profit)}</td>
               <td className="px-6 py-4 text-betting-profit">{prop.hold.replace('-', '')}%</td>
               <td className="px-6 py-4">{prop.updated}</td>
               <td className="px-6 py-4">
