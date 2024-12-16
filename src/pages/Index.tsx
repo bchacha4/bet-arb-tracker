@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import ArbitrageTable from '@/components/ArbitrageTable/ArbitrageTable';
 import FilterSection from '@/components/ArbitrageTable/FilterSection';
 import BettingAmountInput from '@/components/ArbitrageTable/BettingAmountInput';
+import Navbar from '@/components/Navbar/Navbar';
+import ArbitrageDescription from '@/components/ArbitrageDescription/ArbitrageDescription';
 
 const mockProps = [
   {
@@ -39,10 +41,13 @@ const Index = () => {
   const isSubscribed = false; // This would come from your auth context
 
   return (
-    <div className="min-h-screen bg-table-dark p-6">
-      <div className="max-w-[1400px] mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="max-w-[1400px] mx-auto p-6">
+        <ArbitrageDescription />
+        
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-white">Arbitrage Props</h1>
+          <h2 className="text-xl font-bold text-gray-900">Arbitrage Props</h2>
           <BettingAmountInput
             value={bettingAmount}
             onChange={setBettingAmount}

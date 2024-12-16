@@ -25,34 +25,32 @@ interface ArbitrageTableProps {
 
 const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm text-left text-gray-200">
-        <thead className="text-xs uppercase bg-table-dark">
+    <div className="overflow-x-auto border border-gray-200 rounded-lg">
+      <table className="w-full text-sm text-left text-gray-900">
+        <thead className="text-xs uppercase bg-gray-50">
           <tr>
-            <th className="px-6 py-3">PLAYER/TEAM</th>
-            <th className="px-6 py-3">BET</th>
-            <th className="px-6 py-3">HOLD</th>
-            <th className="px-6 py-3">PROFIT</th>
-            <th className="px-6 py-3">SIDES</th>
-            <th className="px-6 py-3">LINE/ODDS</th>
-            <th className="px-6 py-3">WAGER</th>
-            <th className="px-6 py-3">PAYOUT</th>
-            <th className="px-6 py-3">UPDATED</th>
-            <th className="px-6 py-3">PLACE BETS</th>
+            <th className="px-6 py-3 border-b border-gray-200">PLAYER/TEAM</th>
+            <th className="px-6 py-3 border-b border-gray-200">BET</th>
+            <th className="px-6 py-3 border-b border-gray-200">HOLD</th>
+            <th className="px-6 py-3 border-b border-gray-200">PROFIT</th>
+            <th className="px-6 py-3 border-b border-gray-200">SIDES</th>
+            <th className="px-6 py-3 border-b border-gray-200">LINE/ODDS</th>
+            <th className="px-6 py-3 border-b border-gray-200">WAGER</th>
+            <th className="px-6 py-3 border-b border-gray-200">PAYOUT</th>
+            <th className="px-6 py-3 border-b border-gray-200">UPDATED</th>
+            <th className="px-6 py-3 border-b border-gray-200">PLACE BETS</th>
           </tr>
         </thead>
         <tbody>
           {props.map((prop, index) => (
             <tr
               key={index}
-              className={`${
-                index % 2 === 0 ? "bg-table-row" : "bg-table-altRow"
-              } border-b border-table-border`}
+              className="bg-white border-b border-gray-200 hover:bg-gray-50"
             >
               <td className="px-6 py-4 font-medium">
                 {prop.player}
                 <br />
-                <span className="text-gray-400">{prop.team}</span>
+                <span className="text-gray-500">{prop.team}</span>
               </td>
               <td className="px-6 py-4">{prop.bet}</td>
               <td className="px-6 py-4 text-betting-loss">{prop.hold}</td>

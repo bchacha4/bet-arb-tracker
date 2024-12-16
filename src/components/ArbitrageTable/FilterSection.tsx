@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Select,
   SelectContent,
@@ -6,19 +6,45 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Lock } from "lucide-react";
+import { Lock, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 
 interface FilterSectionProps {
   isSubscribed: boolean;
 }
 
+const REFRESH_COOLDOWN = 300000; // 5 minutes in milliseconds
+
 const FilterSection = ({ isSubscribed }: FilterSectionProps) => {
+  const [lastRefreshTime, setLastRefreshTime] = useState<number>(0);
+  const { toast } = useToast();
+
+  const handleRefresh = () => {
+    const now = Date.now();
+    if (!isSubscribed && now - lastRefreshTime < REFRESH_COOLDOWN) {
+      const remainingTime = Math.ceil((REFRESH_COOLDOWN - (now - lastRefreshTime)) / 60000);
+      toast({
+        title: "Refresh Limited",
+        description: `Please upgrade to Pro or wait ${remainingTime} minutes to refresh again.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLastRefreshTime(now);
+    // Add your refresh logic here
+    toast({
+      title: "Data Refreshed",
+      description: "The arbitrage opportunities have been updated.",
+    });
+  };
+
   return (
     <div className="flex flex-wrap gap-4 items-center mb-6">
       <div className="relative">
         <Select disabled={!isSubscribed}>
-          <SelectTrigger className="w-[180px] bg-table-dark text-white border-table-border">
+          <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
             <SelectValue placeholder="All Sportsbooks" />
           </SelectTrigger>
           <SelectContent>
@@ -35,7 +61,7 @@ const FilterSection = ({ isSubscribed }: FilterSectionProps) => {
 
       <div className="relative">
         <Select disabled={!isSubscribed}>
-          <SelectTrigger className="w-[180px] bg-table-dark text-white border-table-border">
+          <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
             <SelectValue placeholder="All Sports" />
           </SelectTrigger>
           <SelectContent>
@@ -50,8 +76,17 @@ const FilterSection = ({ isSubscribed }: FilterSectionProps) => {
         )}
       </div>
 
+      <Button
+        variant="outline"
+        className="gap-2"
+        onClick={handleRefresh}
+      >
+        <RefreshCw size={16} />
+        Refresh
+      </Button>
+
       {!isSubscribed && (
-        <Button variant="outline" className="text-primary hover:text-primary-hover">
+        <Button variant="default" className="bg-primary hover:bg-primary-hover text-white">
           Upgrade to Pro
         </Button>
       )}
