@@ -12,9 +12,9 @@ interface Prop {
     value: string;
     odds: string;
     book: string;
+    wager: string;
+    payout: string;
   }[];
-  wager: string;
-  payout: string;
   updated: string;
 }
 
@@ -31,12 +31,12 @@ const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
           <tr>
             <th className="px-6 py-3 border-b border-gray-200">PLAYER/TEAM</th>
             <th className="px-6 py-3 border-b border-gray-200">BET</th>
-            <th className="px-6 py-3 border-b border-gray-200">HOLD</th>
-            <th className="px-6 py-3 border-b border-gray-200">PROFIT</th>
             <th className="px-6 py-3 border-b border-gray-200">SIDES</th>
             <th className="px-6 py-3 border-b border-gray-200">LINE/ODDS</th>
             <th className="px-6 py-3 border-b border-gray-200">WAGER</th>
             <th className="px-6 py-3 border-b border-gray-200">PAYOUT</th>
+            <th className="px-6 py-3 border-b border-gray-200">PROFIT</th>
+            <th className="px-6 py-3 border-b border-gray-200">PERCENT RETURN</th>
             <th className="px-6 py-3 border-b border-gray-200">UPDATED</th>
             <th className="px-6 py-3 border-b border-gray-200">PLACE BETS</th>
           </tr>
@@ -53,8 +53,6 @@ const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
                 <span className="text-gray-500">{prop.team}</span>
               </td>
               <td className="px-6 py-4">{prop.bet}</td>
-              <td className="px-6 py-4 text-betting-loss">{prop.hold}</td>
-              <td className="px-6 py-4 text-betting-profit">${prop.profit}</td>
               <td className="px-6 py-4">
                 {prop.sides.map((side, sideIndex) => (
                   <div key={sideIndex} className="mb-2">
@@ -69,8 +67,22 @@ const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
                   </div>
                 ))}
               </td>
-              <td className="px-6 py-4">${prop.wager}</td>
-              <td className="px-6 py-4 text-betting-profit">${prop.payout}</td>
+              <td className="px-6 py-4">
+                {prop.sides.map((side, sideIndex) => (
+                  <div key={sideIndex} className="mb-2">
+                    ${side.wager}
+                  </div>
+                ))}
+              </td>
+              <td className="px-6 py-4">
+                {prop.sides.map((side, sideIndex) => (
+                  <div key={sideIndex} className="mb-2 text-betting-profit">
+                    ${side.payout}
+                  </div>
+                ))}
+              </td>
+              <td className="px-6 py-4 text-betting-profit">${prop.profit}</td>
+              <td className="px-6 py-4 text-betting-profit">{prop.hold.replace('-', '')}%</td>
               <td className="px-6 py-4">{prop.updated}</td>
               <td className="px-6 py-4">
                 {prop.sides.map((side, sideIndex) => (
