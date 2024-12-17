@@ -4,6 +4,7 @@ import FilterSection from '@/components/ArbitrageTable/FilterSection';
 import BettingAmountInput from '@/components/ArbitrageTable/BettingAmountInput';
 import Navbar from '@/components/Navbar/Navbar';
 import ArbitrageDescription from '@/components/ArbitrageDescription/ArbitrageDescription';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const mockProps = [
   {
@@ -62,7 +63,8 @@ const mockProps = [
 
 const Index = () => {
   const [bettingAmount, setBettingAmount] = useState("1000");
-  const isSubscribed = false; // This would come from your auth context
+  const isSubscribed = false;
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -70,15 +72,32 @@ const Index = () => {
       <div className="max-w-[1400px] mx-auto p-6">
         <ArbitrageDescription />
         
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Arbitrage Props</h2>
-          <BettingAmountInput
-            value={bettingAmount}
-            onChange={setBettingAmount}
-          />
-        </div>
+        {!isMobile && (
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-gray-900">Arbitrage Props</h2>
+            <BettingAmountInput
+              value={bettingAmount}
+              onChange={setBettingAmount}
+            />
+          </div>
+        )}
+        
+        {isMobile && (
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Arbitrage Props</h2>
+          </div>
+        )}
         
         <FilterSection isSubscribed={isSubscribed} />
+        
+        {isMobile && (
+          <div className="mb-6">
+            <BettingAmountInput
+              value={bettingAmount}
+              onChange={setBettingAmount}
+            />
+          </div>
+        )}
         
         <ArbitrageTable
           props={mockProps}
