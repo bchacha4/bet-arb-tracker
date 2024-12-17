@@ -26,7 +26,7 @@ const ArbitrageDescription = () => {
 
   if (isMobile) {
     return (
-      <Card className="mb-4 bg-white h-[150px]">
+      <Card className="mb-4 bg-white">
         <CardContent className="pt-3 px-0">
           <Accordion type="single" collapsible>
             <AccordionItem value="description" className="border-none">
@@ -44,7 +44,7 @@ const ArbitrageDescription = () => {
   }
 
   return (
-    <Card className="mb-4 bg-white h-[150px]">
+    <Card className="mb-4 bg-white">
       <CardContent className="pt-3">
         <h2 className="text-xl font-semibold mb-2 text-gray-900">Understanding Arbitrage Betting</h2>
         {content}
