@@ -30,39 +30,37 @@ const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
         <p className="text-sm font-medium mt-1">{prop.bet}</p>
       </div>
 
-      <div className="flex divide-x divide-gray-200">
+      <div className="grid grid-cols-2 gap-4">
         {prop.sides.map((side, index) => (
-          <div key={index} className="flex-1 px-4">
-            <div className="space-y-2 text-center">
-              <p className="font-medium">
-                {side.type} {side.value} ({side.odds})
-              </p>
-              <p className="text-sm">
-                Wager: <span className="font-semibold">${formatDollarAmount(side.wager)}</span>
-              </p>
-              <p className="text-sm text-betting-profit">
-                Payout: <span className="font-semibold">${formatDollarAmount(side.payout)}</span>
-              </p>
-              <Button
-                variant="outline"
-                className="w-full mt-2 text-primary border-primary hover:bg-primary hover:text-white"
-              >
-                PLACE BET
-              </Button>
-            </div>
+          <div key={index} className="space-y-2">
+            <p className="font-medium text-center">
+              {side.type} {side.value} ({side.odds})
+            </p>
+            <p className="text-sm text-center">
+              Wager: <span className="font-semibold">${formatDollarAmount(side.wager)}</span>
+            </p>
+            <p className="text-sm text-betting-profit text-center">
+              Payout: <span className="font-semibold">${formatDollarAmount(side.payout)}</span>
+            </p>
+            <Button
+              variant="outline"
+              className="w-full text-primary border-primary hover:bg-primary hover:text-white"
+            >
+              PLACE BET
+            </Button>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 pt-4 border-t border-gray-200 bg-gray-50 -mx-4 -mb-4 p-4 rounded-b-lg">
-        <div className="flex justify-between items-center">
-          <div className="space-y-1">
+      <div className="mt-4 pt-4 border-t border-gray-200">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="text-center">
             <p className="text-sm font-medium">Profit</p>
             <p className="text-lg font-bold text-betting-profit">
               ${formatDollarAmount(prop.profit)}
             </p>
           </div>
-          <div className="space-y-1 text-right">
+          <div className="text-center">
             <p className="text-sm font-medium">Percent Return</p>
             <p className="text-lg font-bold text-betting-profit">
               {prop.hold.replace('-', '')}%
