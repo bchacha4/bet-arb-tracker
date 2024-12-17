@@ -9,14 +9,17 @@ import {
 import { Lock, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import BettingAmountInput from "./BettingAmountInput";
 
 interface FilterSectionProps {
   isSubscribed: boolean;
+  bettingAmount: string;
+  onBettingAmountChange: (value: string) => void;
 }
 
 const REFRESH_COOLDOWN = 300000; // 5 minutes in milliseconds
 
-const FilterSection = ({ isSubscribed }: FilterSectionProps) => {
+const FilterSection = ({ isSubscribed, bettingAmount, onBettingAmountChange }: FilterSectionProps) => {
   const [lastRefreshTime, setLastRefreshTime] = useState<number>(0);
   const { toast } = useToast();
 
@@ -42,48 +45,57 @@ const FilterSection = ({ isSubscribed }: FilterSectionProps) => {
 
   return (
     <div className="flex flex-wrap gap-4 items-center mb-6">
-      <div className="relative">
-        <Select disabled={!isSubscribed}>
-          <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
-            <SelectValue placeholder="All Sportsbooks" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Sportsbooks</SelectItem>
-            <SelectItem value="draftkings">DraftKings</SelectItem>
-            <SelectItem value="fanduel">FanDuel</SelectItem>
-            <SelectItem value="caesars">Caesars</SelectItem>
-          </SelectContent>
-        </Select>
-        {!isSubscribed && (
-          <Lock className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-        )}
+      <div className="flex items-center gap-4">
+        <div className="relative">
+          <Select disabled={!isSubscribed}>
+            <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
+              <SelectValue placeholder="All Sportsbooks" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Sportsbooks</SelectItem>
+              <SelectItem value="draftkings">DraftKings</SelectItem>
+              <SelectItem value="fanduel">FanDuel</SelectItem>
+              <SelectItem value="caesars">Caesars</SelectItem>
+            </SelectContent>
+          </Select>
+          {!isSubscribed && (
+            <Lock className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+          )}
+        </div>
+
+        <Button
+          variant="outline"
+          className="gap-2"
+          onClick={handleRefresh}
+        >
+          <RefreshCw size={16} />
+          Refresh
+        </Button>
       </div>
 
-      <div className="relative">
-        <Select disabled={!isSubscribed}>
-          <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
-            <SelectValue placeholder="All Sports" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Sports</SelectItem>
-            <SelectItem value="nba">NBA</SelectItem>
-            <SelectItem value="nfl">NFL</SelectItem>
-            <SelectItem value="mlb">MLB</SelectItem>
-          </SelectContent>
-        </Select>
-        {!isSubscribed && (
-          <Lock className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-        )}
-      </div>
+      <div className="flex items-center gap-4">
+        <div className="relative">
+          <Select disabled={!isSubscribed}>
+            <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
+              <SelectValue placeholder="All Sports" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Sports</SelectItem>
+              <SelectItem value="nba">NBA</SelectItem>
+              <SelectItem value="nfl">NFL</SelectItem>
+              <SelectItem value="mlb">MLB</SelectItem>
+            </SelectContent>
+          </Select>
+          {!isSubscribed && (
+            <Lock className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+          )}
+        </div>
 
-      <Button
-        variant="outline"
-        className="gap-2"
-        onClick={handleRefresh}
-      >
-        <RefreshCw size={16} />
-        Refresh
-      </Button>
+        <BettingAmountInput
+          value={bettingAmount}
+          onChange={onBettingAmountChange}
+        />
+      </div>
 
       {!isSubscribed && (
         <Button variant="default" className="bg-primary hover:bg-primary-hover text-white">

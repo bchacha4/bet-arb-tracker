@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ArbitrageTable from '@/components/ArbitrageTable/ArbitrageTable';
 import FilterSection from '@/components/ArbitrageTable/FilterSection';
-import BettingAmountInput from '@/components/ArbitrageTable/BettingAmountInput';
 import Navbar from '@/components/Navbar/Navbar';
 import ArbitrageDescription from '@/components/ArbitrageDescription/ArbitrageDescription';
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -75,10 +74,6 @@ const Index = () => {
         {!isMobile && (
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold text-gray-900">Arbitrage Props</h2>
-            <BettingAmountInput
-              value={bettingAmount}
-              onChange={setBettingAmount}
-            />
           </div>
         )}
         
@@ -88,16 +83,11 @@ const Index = () => {
           </div>
         )}
         
-        <FilterSection isSubscribed={isSubscribed} />
-        
-        {isMobile && (
-          <div className="mb-6">
-            <BettingAmountInput
-              value={bettingAmount}
-              onChange={setBettingAmount}
-            />
-          </div>
-        )}
+        <FilterSection 
+          isSubscribed={isSubscribed} 
+          bettingAmount={bettingAmount}
+          onBettingAmountChange={setBettingAmount}
+        />
         
         <ArbitrageTable
           props={mockProps}
