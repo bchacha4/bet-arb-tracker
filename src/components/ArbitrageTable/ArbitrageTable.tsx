@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileArbitrageCard from "./MobileArbitrageCard";
-import { calculateAmounts } from "./utils";
+import { Button } from "@/components/ui/button";
+import { calculateAmounts, formatDollarAmount } from "./utils";
 
 interface Side {
   type: "Over" | "Under";
