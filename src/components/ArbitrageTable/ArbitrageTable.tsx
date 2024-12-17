@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Separator } from "@/components/ui/separator";
 
 interface Prop {
   player: string;
@@ -61,8 +63,62 @@ const calculateAmounts = (prop: Prop, totalAmount: number) => {
   };
 };
 
+const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
+  return (
+    <div className="bg-white rounded-lg shadow-md p-4 mb-4">
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold">{prop.player}</h3>
+        <p className="text-sm text-gray-500">{prop.team}</p>
+        <p className="text-sm font-medium mt-1">{prop.bet}</p>
+      </div>
+
+      <div className="flex divide-x divide-gray-200">
+        {prop.sides.map((side, index) => (
+          <div key={index} className={`${index === 0 ? 'pr-4' : 'pl-4'} flex-1`}>
+            <div className="space-y-2">
+              <p className="font-medium">
+                {side.type} {side.value} ({side.odds})
+              </p>
+              <p className="text-sm">
+                Wager: <span className="font-semibold">${formatDollarAmount(side.wager)}</span>
+              </p>
+              <p className="text-sm text-betting-profit">
+                Payout: <span className="font-semibold">${formatDollarAmount(side.payout)}</span>
+              </p>
+              <Button
+                variant="outline"
+                className="w-full mt-2 text-primary border-primary hover:bg-primary hover:text-white"
+              >
+                PLACE BET
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 pt-4 border-t border-gray-200 bg-gray-50 -mx-4 -mb-4 p-4 rounded-b-lg">
+        <div className="flex justify-between items-center">
+          <div className="space-y-1">
+            <p className="text-sm font-medium">Profit</p>
+            <p className="text-lg font-bold text-betting-profit">
+              ${formatDollarAmount(prop.profit)}
+            </p>
+          </div>
+          <div className="space-y-1 text-right">
+            <p className="text-sm font-medium">Percent Return</p>
+            <p className="text-lg font-bold text-betting-profit">
+              {prop.hold.replace('-', '')}%
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
   const [calculatedProps, setCalculatedProps] = useState(props);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const amount = parseFloat(bettingAmount) || 0;
@@ -72,6 +128,16 @@ const ArbitrageTable = ({ props, bettingAmount }: ArbitrageTableProps) => {
     }));
     setCalculatedProps(updated);
   }, [bettingAmount, props]);
+
+  if (isMobile) {
+    return (
+      <div className="space-y-4 px-4">
+        {calculatedProps.map((prop, index) => (
+          <MobileArbitrageCard key={index} prop={prop} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto border border-gray-200 rounded-lg">
