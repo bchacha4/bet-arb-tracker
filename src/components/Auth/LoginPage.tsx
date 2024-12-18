@@ -32,19 +32,19 @@ const LoginPage = () => {
               variables: {
                 default: {
                   colors: {
-                    brand: '#1edb95',
-                    brandAccent: '#1bc585',
+                    brand: '#3b82f6',
+                    brandAccent: '#2563eb',
                   },
                 },
               },
               style: {
                 button: {
-                  background: '#1edb95',
+                  background: '#3b82f6',
                   color: 'white',
                   borderRadius: '0.5rem',
                 },
                 anchor: {
-                  color: '#1edb95',
+                  color: '#3b82f6',
                 },
                 container: {
                   color: '#333',
@@ -59,7 +59,7 @@ const LoginPage = () => {
                 },
               },
             }}
-            providers={['twitter']}
+            providers={['google', 'twitter']}
           />
         </div>
       </div>
