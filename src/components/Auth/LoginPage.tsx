@@ -29,17 +29,37 @@ const LoginPage = () => {
             supabaseClient={supabase}
             appearance={{
               theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    brand: '#1edb95',
+                    brandAccent: '#1bc585',
+                  },
+                },
+              },
               style: {
                 button: {
-                  background: 'rgb(var(--primary))',
-                  color: 'rgb(var(--primary-foreground))',
+                  background: '#1edb95',
+                  color: 'white',
                   borderRadius: '0.5rem',
                 },
                 anchor: {
-                  color: 'rgb(var(--primary))',
+                  color: '#1edb95',
+                },
+                container: {
+                  color: '#333',
+                },
+                label: {
+                  color: '#4b5563',
+                },
+                input: {
+                  backgroundColor: 'white',
+                  borderColor: '#e5e7eb',
+                  color: '#1f2937',
                 },
               },
             }}
+            providers={['twitter']}
           />
         </div>
       </div>
