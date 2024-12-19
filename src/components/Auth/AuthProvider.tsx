@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import type { User } from '@supabase/supabase-js';
+import LoginPage from './LoginPage';
 
 type AuthContextType = {
   user: User | null;
@@ -36,6 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider value={{ user, isLoading }}>
       {children}
+      <LoginPage />
     </AuthContext.Provider>
   );
 };

@@ -2,8 +2,14 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
 import { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -16,20 +22,14 @@ const LoginPage = () => {
   }, [user, navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-          Welcome to Arbitrage Tracker
-        </h2>
-        <div className="mt-2 text-center">
-          <Link to="/" className="text-sm text-blue-600 hover:text-blue-500">
-            ← Back to Homepage
-          </Link>
-        </div>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <Dialog open={!user} modal>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-center text-2xl font-bold">
+            Welcome to Arbitrage Tracker
+          </DialogTitle>
+        </DialogHeader>
+        <div className="px-4 py-6">
           <Auth
             supabaseClient={supabase}
             appearance={{
@@ -64,10 +64,11 @@ const LoginPage = () => {
                 },
               },
             }}
+            providers={[]}
           />
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
