@@ -45,7 +45,7 @@ const FilterSection = ({ isSubscribed, bettingAmount, onBettingAmountChange }: F
 
   return (
     <div className="flex flex-wrap gap-4 items-center mb-6">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="relative">
           <Select disabled={!isSubscribed}>
             <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
@@ -63,17 +63,6 @@ const FilterSection = ({ isSubscribed, bettingAmount, onBettingAmountChange }: F
           )}
         </div>
 
-        <Button
-          variant="outline"
-          className="gap-2"
-          onClick={handleRefresh}
-        >
-          <RefreshCw size={16} />
-          Refresh
-        </Button>
-      </div>
-
-      <div className="flex items-center gap-4">
         <div className="relative">
           <Select disabled={!isSubscribed}>
             <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
@@ -91,10 +80,30 @@ const FilterSection = ({ isSubscribed, bettingAmount, onBettingAmountChange }: F
           )}
         </div>
 
+        <Button
+          variant="outline"
+          className="gap-2 hidden sm:inline-flex"
+          onClick={handleRefresh}
+        >
+          <RefreshCw size={16} />
+          Refresh
+        </Button>
+      </div>
+
+      <div className="flex items-center gap-4">
         <BettingAmountInput
           value={bettingAmount}
           onChange={onBettingAmountChange}
         />
+
+        <Button
+          variant="outline"
+          className="gap-2 sm:hidden"
+          onClick={handleRefresh}
+        >
+          <RefreshCw size={16} />
+          Refresh
+        </Button>
       </div>
 
       {!isSubscribed && (
