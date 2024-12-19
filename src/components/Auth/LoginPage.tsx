@@ -2,7 +2,7 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 
 const LoginPage = () => {
@@ -21,6 +21,11 @@ const LoginPage = () => {
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
           Welcome to Arbitrage Tracker
         </h2>
+        <div className="mt-2 text-center">
+          <Link to="/" className="text-sm text-blue-600 hover:text-blue-500">
+            ← Back to Homepage
+          </Link>
+        </div>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -59,7 +64,6 @@ const LoginPage = () => {
                 },
               },
             }}
-            providers={['google', 'twitter']}
           />
         </div>
       </div>
