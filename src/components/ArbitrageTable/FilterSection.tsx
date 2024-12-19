@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Lock, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
@@ -47,7 +47,7 @@ const FilterSection = ({ isSubscribed, bettingAmount, onBettingAmountChange }: F
     <div className="flex flex-wrap gap-4 items-center mb-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="relative">
-          <Select disabled={!isSubscribed}>
+          <Select>
             <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
               <SelectValue placeholder="All Sportsbooks" />
             </SelectTrigger>
@@ -58,13 +58,10 @@ const FilterSection = ({ isSubscribed, bettingAmount, onBettingAmountChange }: F
               <SelectItem value="caesars">Caesars</SelectItem>
             </SelectContent>
           </Select>
-          {!isSubscribed && (
-            <Lock className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-          )}
         </div>
 
         <div className="relative">
-          <Select disabled={!isSubscribed}>
+          <Select>
             <SelectTrigger className="w-[180px] bg-white text-gray-900 border-gray-200">
               <SelectValue placeholder="All Sports" />
             </SelectTrigger>
@@ -75,9 +72,6 @@ const FilterSection = ({ isSubscribed, bettingAmount, onBettingAmountChange }: F
               <SelectItem value="mlb">MLB</SelectItem>
             </SelectContent>
           </Select>
-          {!isSubscribed && (
-            <Lock className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-          )}
         </div>
 
         <Button
