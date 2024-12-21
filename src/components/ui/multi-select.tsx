@@ -29,7 +29,7 @@ export function MultiSelect({
   const [selectedValues, setSelectedValues] = React.useState<string[]>(selected);
 
   React.useEffect(() => {
-    setSelectedValues(selected);
+    setSelectedValues(selected || []);
   }, [selected]);
 
   const handleSelect = (value: string) => {
@@ -94,7 +94,7 @@ export function MultiSelect({
           <CommandInput placeholder={`Search ${placeholder.toLowerCase()}...`} />
           <CommandEmpty>No options found.</CommandEmpty>
           <CommandGroup className="max-h-64 overflow-auto">
-            {options.map((option) => (
+            {(options || []).map((option) => (
               <CommandItem
                 key={option.value}
                 onSelect={() => handleSelect(option.value)}
