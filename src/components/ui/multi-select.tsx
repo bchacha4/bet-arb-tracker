@@ -78,6 +78,7 @@ export function MultiSelect({
                 >
                   {option.label}
                   <button
+                    type="button"
                     className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
@@ -99,7 +100,7 @@ export function MultiSelect({
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0" align="start">
-        <Command>
+        <Command shouldFilter={false}>
           <CommandInput placeholder={`Search ${placeholder.toLowerCase()}...`} />
           <CommandEmpty>No options found.</CommandEmpty>
           <CommandGroup className="max-h-64 overflow-auto">

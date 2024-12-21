@@ -27,6 +27,7 @@ export type Database = {
           Outcome_2: string | null
           Player: string | null
           Player_Prop: string | null
+          Sport: string | null
         }
         Insert: {
           Arbitrage_Margin?: number | null
@@ -45,6 +46,7 @@ export type Database = {
           Outcome_2?: string | null
           Player?: string | null
           Player_Prop?: string | null
+          Sport?: string | null
         }
         Update: {
           Arbitrage_Margin?: number | null
@@ -63,6 +65,7 @@ export type Database = {
           Outcome_2?: string | null
           Player?: string | null
           Player_Prop?: string | null
+          Sport?: string | null
         }
         Relationships: []
       }
