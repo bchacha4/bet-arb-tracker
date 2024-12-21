@@ -16,6 +16,6 @@ export const AVAILABLE_SPORTSBOOKS = [
   { label: 'Fliff', value: 'Fliff' },
   { label: 'Hard Rock Bet', value: 'Hard Rock Bet' },
   { label: 'Wind Creek', value: 'Wind Creek' }
-] as const;
+];
 
-export type Sportsbook = typeof AVAILABLE_SPORTSBOOKS[number]['value'];
+export type Sportsbook = (typeof AVAILABLE_SPORTSBOOKS)[number]['value'];
