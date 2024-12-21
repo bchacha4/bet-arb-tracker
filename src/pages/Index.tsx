@@ -24,16 +24,24 @@ const Index = () => {
       if (error) throw error;
       
       const uniqueBooks = new Set<string>();
-      data.forEach(item => {
+      data?.forEach(item => {
         if (item.Bookmaker_1) uniqueBooks.add(item.Bookmaker_1);
         if (item.Bookmaker_2) uniqueBooks.add(item.Bookmaker_2);
       });
       
-      return Array.from(uniqueBooks).filter(Boolean);
+      return Array.from(uniqueBooks)
+        .filter(Boolean)
+        .map(book => ({
+          label: book,
+          value: book
+        }));
     },
   });
 
-  const availableSports = ['NBA', 'NFL', 'MLB']; // This could be fetched from the database if needed
+  const availableSports = ['NBA', 'NFL', 'MLB'].map(sport => ({
+    label: sport,
+    value: sport
+  }));
 
   return (
     <div className="min-h-screen bg-gray-50">

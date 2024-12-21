@@ -47,6 +47,9 @@ export function MultiSelect({
     onChange(newSelected);
   };
 
+  // Ensure options is always an array
+  const safeOptions = Array.isArray(options) ? options : [];
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -68,7 +71,7 @@ export function MultiSelect({
                 variant="secondary"
                 className="flex items-center gap-1"
               >
-                {options.find((option) => option.value === value)?.label}
+                {safeOptions.find((option) => option.value === value)?.label || value}
                 <button
                   className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
@@ -90,11 +93,11 @@ export function MultiSelect({
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0" align="start">
-        <Command className="bg-popover">
+        <Command>
           <CommandInput placeholder={`Search ${placeholder.toLowerCase()}...`} />
           <CommandEmpty>No options found.</CommandEmpty>
           <CommandGroup className="max-h-64 overflow-auto">
-            {(options || []).map((option) => (
+            {safeOptions.map((option) => (
               <CommandItem
                 key={option.value}
                 onSelect={() => handleSelect(option.value)}
