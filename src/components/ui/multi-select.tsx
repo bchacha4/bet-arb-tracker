@@ -28,27 +28,29 @@ export function MultiSelect({
   const [open, setOpen] = React.useState(false);
   const [selectedValues, setSelectedValues] = React.useState<string[]>(selected);
 
-  // Ensure options is always an array
-  const safeOptions = Array.isArray(options) ? options : [];
+  // Ensure options is always an array and has the correct shape
+  const safeOptions = React.useMemo(() => {
+    return Array.isArray(options) ? options : [];
+  }, [options]);
 
   React.useEffect(() => {
     setSelectedValues(selected || []);
   }, [selected]);
 
-  const handleSelect = (value: string) => {
+  const handleSelect = React.useCallback((value: string) => {
     const newSelected = selectedValues.includes(value)
       ? selectedValues.filter((item) => item !== value)
       : [...selectedValues, value];
     
     setSelectedValues(newSelected);
     onChange(newSelected);
-  };
+  }, [selectedValues, onChange]);
 
-  const handleRemove = (value: string) => {
+  const handleRemove = React.useCallback((value: string) => {
     const newSelected = selectedValues.filter((item) => item !== value);
     setSelectedValues(newSelected);
     onChange(newSelected);
-  };
+  }, [selectedValues, onChange]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -65,30 +67,33 @@ export function MultiSelect({
             {selectedValues.length === 0 && (
               <span className="text-muted-foreground">{placeholder}</span>
             )}
-            {selectedValues.map((value) => (
-              <Badge
-                key={value}
-                variant="secondary"
-                className="flex items-center gap-1"
-              >
-                {safeOptions.find((option) => option.value === value)?.label || value}
-                <button
-                  className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleRemove(value);
-                    }
-                  }}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                  onClick={() => handleRemove(value)}
+            {selectedValues.map((value) => {
+              const option = safeOptions.find((opt) => opt.value === value);
+              return (
+                <Badge
+                  key={value}
+                  variant="secondary"
+                  className="flex items-center gap-1"
                 >
-                  <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
-                </button>
-              </Badge>
-            ))}
+                  {option?.label || value}
+                  <button
+                    className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleRemove(value);
+                      }
+                    }}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onClick={() => handleRemove(value)}
+                  >
+                    <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                  </button>
+                </Badge>
+              );
+            })}
           </div>
         </div>
       </PopoverTrigger>
@@ -100,6 +105,7 @@ export function MultiSelect({
             {safeOptions.map((option) => (
               <CommandItem
                 key={option.value}
+                value={option.value}
                 onSelect={() => handleSelect(option.value)}
               >
                 <Check
