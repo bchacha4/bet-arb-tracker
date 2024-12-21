@@ -29,7 +29,7 @@ const Index = () => {
         if (item.Bookmaker_2) uniqueBooks.add(item.Bookmaker_2);
       });
       
-      return Array.from(uniqueBooks);
+      return Array.from(uniqueBooks).filter(Boolean);
     },
   });
 
@@ -59,7 +59,7 @@ const Index = () => {
           onBettingAmountChange={setBettingAmount}
           onSportsbookFilter={setSelectedSportsbooks}
           onSportsFilter={setSelectedSports}
-          availableSportsbooks={isLoading ? [] : sportsbooks}
+          availableSportsbooks={sportsbooks}
           availableSports={availableSports}
         />
         
