@@ -4,8 +4,7 @@ import FilterSection from '@/components/ArbitrageTable/FilterSection';
 import Navbar from '@/components/Navbar/Navbar';
 import ArbitrageDescription from '@/components/ArbitrageDescription/ArbitrageDescription';
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from "@/integrations/supabase/client";
+import { AVAILABLE_SPORTSBOOKS } from '@/constants/sportsbooks';
 import { Option } from '@/components/ui/multi-select';
 
 const Index = () => {
@@ -14,30 +13,6 @@ const Index = () => {
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const isSubscribed = false;
   const isMobile = useIsMobile();
-
-  const { data: sportsbooks = [], isLoading } = useQuery({
-    queryKey: ['sportsbooks'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('arb_props')
-        .select('Bookmaker_1, Bookmaker_2');
-      
-      if (error) throw error;
-      
-      const uniqueBooks = new Set<string>();
-      data?.forEach(item => {
-        if (item.Bookmaker_1) uniqueBooks.add(item.Bookmaker_1);
-        if (item.Bookmaker_2) uniqueBooks.add(item.Bookmaker_2);
-      });
-      
-      return Array.from(uniqueBooks)
-        .filter(Boolean)
-        .map(book => ({
-          label: book,
-          value: book
-        }));
-    },
-  });
 
   const availableSports: Option[] = [
     { label: 'NBA', value: 'NBA' },
@@ -69,7 +44,7 @@ const Index = () => {
           onBettingAmountChange={setBettingAmount}
           onSportsbookFilter={setSelectedSportsbooks}
           onSportsFilter={setSelectedSports}
-          availableSportsbooks={sportsbooks}
+          availableSportsbooks={AVAILABLE_SPORTSBOOKS}
           availableSports={availableSports}
         />
         
