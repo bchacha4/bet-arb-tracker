@@ -28,11 +28,6 @@ export function MultiSelect({
   const [open, setOpen] = React.useState(false);
   const [selectedValues, setSelectedValues] = React.useState<string[]>(selected);
 
-  // Ensure options is always an array and has the correct shape
-  const safeOptions = React.useMemo(() => {
-    return Array.isArray(options) ? options : [];
-  }, [options]);
-
   React.useEffect(() => {
     setSelectedValues(selected || []);
   }, [selected]);
@@ -52,6 +47,11 @@ export function MultiSelect({
     onChange(newSelected);
   }, [selectedValues, onChange]);
 
+  // Ensure we always have a valid array of options
+  const safeOptions = React.useMemo(() => {
+    return Array.isArray(options) ? options : [];
+  }, [options]);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -69,13 +69,14 @@ export function MultiSelect({
             )}
             {selectedValues.map((value) => {
               const option = safeOptions.find((opt) => opt.value === value);
+              if (!option) return null;
               return (
                 <Badge
                   key={value}
                   variant="secondary"
                   className="flex items-center gap-1"
                 >
-                  {option?.label || value}
+                  {option.label}
                   <button
                     className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     onKeyDown={(e) => {
