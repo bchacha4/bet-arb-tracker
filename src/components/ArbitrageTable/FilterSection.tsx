@@ -30,8 +30,8 @@ const FilterSection = ({
   onBettingAmountChange,
   onSportsbookFilter,
   onSportsFilter,
-  availableSportsbooks,
-  availableSports,
+  availableSportsbooks = [],
+  availableSports = [],
 }: FilterSectionProps) => {
   const [lastRefreshTime, setLastRefreshTime] = useState<number>(0);
   const { toast } = useToast();
@@ -55,18 +55,28 @@ const FilterSection = ({
     });
   };
 
+  const sportsbookOptions = availableSportsbooks.map(book => ({
+    label: book,
+    value: book,
+  }));
+
+  const sportsOptions = availableSports.map(sport => ({
+    label: sport,
+    value: sport,
+  }));
+
   return (
     <div className="flex flex-wrap gap-4 items-center mb-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <MultiSelect
-          options={availableSportsbooks.map(book => ({ label: book, value: book }))}
+          options={sportsbookOptions}
           onChange={onSportsbookFilter}
           placeholder="Select Sportsbooks"
           className="w-[180px] bg-white"
         />
 
         <MultiSelect
-          options={availableSports.map(sport => ({ label: sport, value: sport }))}
+          options={sportsOptions}
           onChange={onSportsFilter}
           placeholder="Select Sports"
           className="w-[180px] bg-white"

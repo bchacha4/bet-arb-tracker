@@ -33,6 +33,8 @@ const Index = () => {
     },
   });
 
+  const availableSports = ['NBA', 'NFL', 'MLB']; // This could be fetched from the database if needed
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -58,7 +60,7 @@ const Index = () => {
           onSportsbookFilter={setSelectedSportsbooks}
           onSportsFilter={setSelectedSports}
           availableSportsbooks={sportsbooks}
-          availableSports={['NBA', 'NFL', 'MLB']} // This could be fetched from the database if needed
+          availableSports={availableSports}
         />
         
         <ArbitrageTable 
