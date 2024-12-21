@@ -6,6 +6,7 @@ import ArbitrageDescription from '@/components/ArbitrageDescription/ArbitrageDes
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
+import { Option } from '@/components/ui/multi-select';
 
 const Index = () => {
   const [bettingAmount, setBettingAmount] = useState("1000");
@@ -38,10 +39,11 @@ const Index = () => {
     },
   });
 
-  const availableSports = ['NBA', 'NFL', 'MLB'].map(sport => ({
-    label: sport,
-    value: sport
-  }));
+  const availableSports: Option[] = [
+    { label: 'NBA', value: 'NBA' },
+    { label: 'NFL', value: 'NFL' },
+    { label: 'MLB', value: 'MLB' }
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">

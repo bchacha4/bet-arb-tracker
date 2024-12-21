@@ -28,6 +28,9 @@ export function MultiSelect({
   const [open, setOpen] = React.useState(false);
   const [selectedValues, setSelectedValues] = React.useState<string[]>(selected);
 
+  // Ensure options is always an array
+  const safeOptions = Array.isArray(options) ? options : [];
+
   React.useEffect(() => {
     setSelectedValues(selected || []);
   }, [selected]);
@@ -46,9 +49,6 @@ export function MultiSelect({
     setSelectedValues(newSelected);
     onChange(newSelected);
   };
-
-  // Ensure options is always an array
-  const safeOptions = Array.isArray(options) ? options : [];
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
