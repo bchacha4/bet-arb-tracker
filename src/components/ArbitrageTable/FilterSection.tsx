@@ -3,7 +3,7 @@ import { RefreshCw, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
-import { MultiSelect } from "@/components/ui/multi-select";
+import { MultiSelect, Option } from "@/components/ui/multi-select";
 
 interface FilterSectionProps {
   isSubscribed: boolean;
@@ -11,8 +11,8 @@ interface FilterSectionProps {
   onBettingAmountChange: (value: string) => void;
   onSportsbookFilter: (values: string[]) => void;
   onSportsFilter: (values: string[]) => void;
-  availableSportsbooks?: string[];
-  availableSports?: string[];
+  availableSportsbooks?: Option[];
+  availableSports?: Option[];
 }
 
 const REFRESH_COOLDOWN = 300000; // 5 minutes in milliseconds
@@ -48,22 +48,12 @@ const FilterSection = ({
     });
   };
 
-  const sportsbookOptions = (availableSportsbooks || []).map(book => ({
-    label: book,
-    value: book,
-  }));
-
-  const sportsOptions = (availableSports || []).map(sport => ({
-    label: sport,
-    value: sport,
-  }));
-
   return (
     <div className="flex flex-wrap gap-4 items-center mb-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="relative">
           <MultiSelect
-            options={sportsbookOptions}
+            options={availableSportsbooks}
             onChange={onSportsbookFilter}
             placeholder="Select Sportsbooks"
             className="w-[180px] bg-white pr-8"
@@ -73,7 +63,7 @@ const FilterSection = ({
 
         <div className="relative">
           <MultiSelect
-            options={sportsOptions}
+            options={availableSports}
             onChange={onSportsFilter}
             placeholder="Select Sports"
             className="w-[180px] bg-white pr-8"
