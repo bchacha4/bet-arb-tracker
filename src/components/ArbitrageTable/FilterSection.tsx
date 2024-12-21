@@ -48,12 +48,12 @@ const FilterSection = ({
     });
   };
 
-  const sportsbookOptions = (availableSportsbooks || []).map(book => ({
+  const sportsbookOptions = availableSportsbooks.map(book => ({
     label: book,
     value: book,
   }));
 
-  const sportsOptions = (availableSports || []).map(sport => ({
+  const sportsOptions = availableSports.map(sport => ({
     label: sport,
     value: sport,
   }));
