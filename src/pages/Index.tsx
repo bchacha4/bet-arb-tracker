@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import ArbitrageTable from '@/components/ArbitrageTable/ArbitrageTable';
 import FilterSection from '@/components/ArbitrageTable/FilterSection';
 import Navbar from '@/components/Navbar/Navbar';
@@ -14,7 +14,7 @@ const Index = () => {
   const isSubscribed = false;
   const isMobile = useIsMobile();
 
-  const { data: sportsbooks = [] } = useQuery({
+  const { data: sportsbooks = [], isLoading } = useQuery({
     queryKey: ['sportsbooks'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -59,7 +59,7 @@ const Index = () => {
           onBettingAmountChange={setBettingAmount}
           onSportsbookFilter={setSelectedSportsbooks}
           onSportsFilter={setSelectedSports}
-          availableSportsbooks={sportsbooks}
+          availableSportsbooks={isLoading ? [] : sportsbooks}
           availableSports={availableSports}
         />
         
