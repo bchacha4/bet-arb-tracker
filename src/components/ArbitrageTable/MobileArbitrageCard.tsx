@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { formatDollarAmount } from "./utils";
 
 interface Side {
-  type: "Over" | "Under";
+  type: string;
   value: string;
   odds: string;
   book: string;
@@ -18,7 +18,6 @@ interface Prop {
   hold: string;
   profit: string;
   sides: Side[];
-  updated: string;
 }
 
 const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {

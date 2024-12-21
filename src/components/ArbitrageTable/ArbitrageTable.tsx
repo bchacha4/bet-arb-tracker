@@ -25,7 +25,6 @@ interface Prop {
 }
 
 interface ArbitrageTableProps {
-  props: Prop[];
   bettingAmount: string;
 }
 
