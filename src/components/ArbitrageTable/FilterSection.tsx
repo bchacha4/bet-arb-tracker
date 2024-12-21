@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
@@ -61,19 +61,25 @@ const FilterSection = ({
   return (
     <div className="flex flex-wrap gap-4 items-center mb-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <MultiSelect
-          options={sportsbookOptions}
-          onChange={onSportsbookFilter}
-          placeholder="Select Sportsbooks"
-          className="w-[180px] bg-white"
-        />
+        <div className="relative">
+          <MultiSelect
+            options={sportsbookOptions}
+            onChange={onSportsbookFilter}
+            placeholder="Select Sportsbooks"
+            className="w-[180px] bg-white pr-8"
+          />
+          <ChevronDown className="absolute right-2 top-3 h-4 w-4 opacity-50 pointer-events-none" />
+        </div>
 
-        <MultiSelect
-          options={sportsOptions}
-          onChange={onSportsFilter}
-          placeholder="Select Sports"
-          className="w-[180px] bg-white"
-        />
+        <div className="relative">
+          <MultiSelect
+            options={sportsOptions}
+            onChange={onSportsFilter}
+            placeholder="Select Sports"
+            className="w-[180px] bg-white pr-8"
+          />
+          <ChevronDown className="absolute right-2 top-3 h-4 w-4 opacity-50 pointer-events-none" />
+        </div>
 
         <Button
           variant="outline"
