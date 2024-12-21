@@ -19,14 +19,20 @@ interface MultiSelectProps {
 }
 
 export function MultiSelect({
-  options,
-  selected = [],
+  options = [],
+  selected,
   onChange,
   placeholder = "Select options",
   className,
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false);
-  const [selectedValues, setSelectedValues] = React.useState<string[]>(selected);
+  const [selectedValues, setSelectedValues] = React.useState<string[]>(selected || []);
+
+  React.useEffect(() => {
+    if (selected !== undefined) {
+      setSelectedValues(selected);
+    }
+  }, [selected]);
 
   const handleSelect = (value: string) => {
     const newSelected = selectedValues.includes(value)
@@ -90,7 +96,7 @@ export function MultiSelect({
           <CommandInput placeholder={`Search ${placeholder.toLowerCase()}...`} />
           <CommandEmpty>No options found.</CommandEmpty>
           <CommandGroup className="max-h-64 overflow-auto">
-            {options.map((option) => (
+            {(options || []).map((option) => (
               <CommandItem
                 key={option.value}
                 onSelect={() => handleSelect(option.value)}
