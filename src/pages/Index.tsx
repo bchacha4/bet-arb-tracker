@@ -5,61 +5,6 @@ import Navbar from '@/components/Navbar/Navbar';
 import ArbitrageDescription from '@/components/ArbitrageDescription/ArbitrageDescription';
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const mockProps = [
-  {
-    player: "Konstantinos Mavropanos",
-    team: "Bournemouth",
-    bet: "Total Shots",
-    hold: "1.8",
-    profit: "18.19",
-    sides: [
-      { 
-        type: "Over" as const, 
-        value: "0.5", 
-        odds: "-120", 
-        book: "DK",
-        wager: "555.38",
-        payout: "1,018.19"
-      },
-      { 
-        type: "Under" as const, 
-        value: "0.5", 
-        odds: "+129", 
-        book: "FD",
-        wager: "444.62",
-        payout: "1,018.19"
-      }
-    ],
-    updated: "< 1 Min"
-  },
-  {
-    player: "Kudus Mohammed",
-    team: "Bournemouth",
-    bet: "Total Shots on Goal",
-    hold: "1.4",
-    profit: "13.93",
-    sides: [
-      { 
-        type: "Over" as const, 
-        value: "1.5", 
-        odds: "+460", 
-        book: "DK",
-        wager: "181.06",
-        payout: "1,013.93"
-      },
-      { 
-        type: "Under" as const, 
-        value: "1.5", 
-        odds: "-420", 
-        book: "FD",
-        wager: "818.94",
-        payout: "1,013.93"
-      }
-    ],
-    updated: "< 1 Min"
-  }
-];
-
 const Index = () => {
   const [bettingAmount, setBettingAmount] = useState("1000");
   const isSubscribed = false;
@@ -89,10 +34,7 @@ const Index = () => {
           onBettingAmountChange={setBettingAmount}
         />
         
-        <ArbitrageTable
-          props={mockProps}
-          bettingAmount={bettingAmount}
-        />
+        <ArbitrageTable bettingAmount={bettingAmount} />
       </div>
     </div>
   );
