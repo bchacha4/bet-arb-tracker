@@ -11,8 +11,8 @@ interface FilterSectionProps {
   onBettingAmountChange: (value: string) => void;
   onSportsbookFilter: (values: string[]) => void;
   onSportsFilter: (values: string[]) => void;
-  availableSportsbooks: string[];
-  availableSports: string[];
+  availableSportsbooks?: string[];
+  availableSports?: string[];
 }
 
 const REFRESH_COOLDOWN = 300000; // 5 minutes in milliseconds
@@ -48,12 +48,12 @@ const FilterSection = ({
     });
   };
 
-  const sportsbookOptions = availableSportsbooks.map(book => ({
+  const sportsbookOptions = (availableSportsbooks || []).map(book => ({
     label: book,
     value: book,
   }));
 
-  const sportsOptions = availableSports.map(sport => ({
+  const sportsOptions = (availableSports || []).map(sport => ({
     label: sport,
     value: sport,
   }));
