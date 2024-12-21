@@ -9,51 +9,60 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      "Arb props": {
+      arb_props: {
         Row: {
-          arb_margin: number | null
-          away_team: string | null
-          bookmaker_1: string | null
-          bookmaker_2: string | null
+          Arbitrage_Margin: number | null
+          Away_Team: string | null
+          Bookmaker_1: string | null
+          Bookmaker_2: string | null
           created_at: string
-          home_team: string | null
+          Home_Team: string | null
           id: number
-          line: number | null
-          link_1: string | null
-          link_2: string | null
-          odds_1: number | null
-          odds_2: number | null
-          player: string | null
+          Line: number | null
+          Link_1: string | null
+          Link_2: string | null
+          Odds_1: number | null
+          Odds_2: number | null
+          Outcome_1: string | null
+          Outcome_2: string | null
+          Player: string | null
+          Player_Prop: string | null
         }
         Insert: {
-          arb_margin?: number | null
-          away_team?: string | null
-          bookmaker_1?: string | null
-          bookmaker_2?: string | null
+          Arbitrage_Margin?: number | null
+          Away_Team?: string | null
+          Bookmaker_1?: string | null
+          Bookmaker_2?: string | null
           created_at?: string
-          home_team?: string | null
+          Home_Team?: string | null
           id?: number
-          line?: number | null
-          link_1?: string | null
-          link_2?: string | null
-          odds_1?: number | null
-          odds_2?: number | null
-          player?: string | null
+          Line?: number | null
+          Link_1?: string | null
+          Link_2?: string | null
+          Odds_1?: number | null
+          Odds_2?: number | null
+          Outcome_1?: string | null
+          Outcome_2?: string | null
+          Player?: string | null
+          Player_Prop?: string | null
         }
         Update: {
-          arb_margin?: number | null
-          away_team?: string | null
-          bookmaker_1?: string | null
-          bookmaker_2?: string | null
+          Arbitrage_Margin?: number | null
+          Away_Team?: string | null
+          Bookmaker_1?: string | null
+          Bookmaker_2?: string | null
           created_at?: string
-          home_team?: string | null
+          Home_Team?: string | null
           id?: number
-          line?: number | null
-          link_1?: string | null
-          link_2?: string | null
-          odds_1?: number | null
-          odds_2?: number | null
-          player?: string | null
+          Line?: number | null
+          Link_1?: string | null
+          Link_2?: string | null
+          Odds_1?: number | null
+          Odds_2?: number | null
+          Outcome_1?: string | null
+          Outcome_2?: string | null
+          Player?: string | null
+          Player_Prop?: string | null
         }
         Relationships: []
       }
