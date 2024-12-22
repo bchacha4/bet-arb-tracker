@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { RefreshCw, ChevronDown } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
-import { MultiSelect, Option } from "@/components/ui/multi-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface FilterSectionProps {
   isSubscribed: boolean;
@@ -11,8 +17,8 @@ interface FilterSectionProps {
   onBettingAmountChange: (value: string) => void;
   onSportsbookFilter: (values: string[]) => void;
   onSportsFilter: (values: string[]) => void;
-  availableSportsbooks?: Option[];
-  availableSports?: Option[];
+  availableSportsbooks?: { label: string; value: string; }[];
+  availableSports?: { label: string; value: string; }[];
 }
 
 const REFRESH_COOLDOWN = 300000; // 5 minutes in milliseconds
@@ -28,6 +34,8 @@ const FilterSection = ({
 }: FilterSectionProps) => {
   const [lastRefreshTime, setLastRefreshTime] = useState<number>(0);
   const { toast } = useToast();
+  const [selectedSportsbook, setSelectedSportsbook] = useState<string>("");
+  const [selectedSport, setSelectedSport] = useState<string>("");
 
   const handleRefresh = () => {
     const now = Date.now();
@@ -35,7 +43,7 @@ const FilterSection = ({
       const remainingTime = Math.ceil((REFRESH_COOLDOWN - (now - lastRefreshTime)) / 60000);
       toast({
         title: "Refresh Limited",
-        description: `Please upgrade to Pro or wait ${remainingTime} minutes to refresh again.`,
+        description: `Please wait ${remainingTime} minutes to refresh again.`,
         variant: "destructive",
       });
       return;
@@ -48,28 +56,44 @@ const FilterSection = ({
     });
   };
 
+  const handleSportsbookChange = (value: string) => {
+    setSelectedSportsbook(value);
+    onSportsbookFilter(value ? [value] : []);
+  };
+
+  const handleSportChange = (value: string) => {
+    setSelectedSport(value);
+    onSportsFilter(value ? [value] : []);
+  };
+
   return (
     <div className="flex flex-wrap gap-4 items-center mb-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="relative">
-          <MultiSelect
-            options={availableSportsbooks}
-            onChange={onSportsbookFilter}
-            placeholder="Select Sportsbooks"
-            className="w-[180px] bg-white pr-8"
-          />
-          <ChevronDown className="absolute right-2 top-3 h-4 w-4 opacity-50 pointer-events-none" />
-        </div>
+        <Select value={selectedSportsbook} onValueChange={handleSportsbookChange}>
+          <SelectTrigger className="w-[180px] bg-white">
+            <SelectValue placeholder="Select Sportsbook" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableSportsbooks.map((book) => (
+              <SelectItem key={book.value} value={book.value}>
+                {book.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <div className="relative">
-          <MultiSelect
-            options={availableSports}
-            onChange={onSportsFilter}
-            placeholder="Select Sports"
-            className="w-[180px] bg-white pr-8"
-          />
-          <ChevronDown className="absolute right-2 top-3 h-4 w-4 opacity-50 pointer-events-none" />
-        </div>
+        <Select value={selectedSport} onValueChange={handleSportChange}>
+          <SelectTrigger className="w-[180px] bg-white">
+            <SelectValue placeholder="Select Sport" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableSports.map((sport) => (
+              <SelectItem key={sport.value} value={sport.value}>
+                {sport.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         <Button
           variant="outline"
@@ -96,12 +120,6 @@ const FilterSection = ({
           Refresh
         </Button>
       </div>
-
-      {!isSubscribed && (
-        <Button variant="default" className="bg-primary hover:bg-primary-hover text-white">
-          Upgrade to Pro
-        </Button>
-      )}
     </div>
   );
 };

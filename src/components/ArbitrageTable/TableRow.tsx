@@ -3,6 +3,13 @@ import { Button } from "@/components/ui/button";
 import { formatDollarAmount } from "./utils";
 import { Side, Prop } from "./types";
 
+const capitalizeWords = (str: string) => {
+  return str
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const TableRow = ({ prop }: { prop: Prop }) => {
   return (
     <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
@@ -12,7 +19,7 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         <span className="text-gray-500">{prop.team}</span>
       </td>
       <td className="px-6 py-4">
-        {prop.bet.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')}
+        {capitalizeWords(prop.bet)}
       </td>
       <td className="px-6 py-4">
         {prop.sides.map((side, sideIndex) => (
