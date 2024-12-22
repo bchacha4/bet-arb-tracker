@@ -67,7 +67,7 @@ const TableRow = ({ prop }: { prop: Prop }) => {
           <Button
             key={sideIndex}
             variant="outline"
-            className="mb-2 w-full text-primary border-primary hover:bg-primary hover:text-white"
+            className="mb-2 w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
           >
             PLACE BET
           </Button>

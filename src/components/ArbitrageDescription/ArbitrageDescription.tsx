@@ -14,13 +14,17 @@ const ArbitrageDescription = () => {
   const content = (
     <div className="space-y-2 text-gray-600 text-sm">
       <p className="text-sm">
-        Arbitrage betting, or "arbing," is a strategy where you place bets on all possible outcomes of an event at different sportsbooks, taking advantage of discrepancies in odds to guarantee a profit.
+        Arbitrage betting is a strategy that takes advantage of differences in odds offered by sportsbooks for the same event. By betting on all possible outcomes using specific odds, you can guarantee a profit regardless of the result.
       </p>
+      <p className="text-sm">Our table below helps you identify these opportunities by:</p>
       <ul className="list-disc pl-5 space-y-1">
         <li>Showing the best available odds across different sportsbooks</li>
         <li>Calculating optimal bet sizes based on your total betting amount</li>
         <li>Displaying guaranteed profit for each arbitrage opportunity</li>
       </ul>
+      <p className="text-sm">
+        <strong>To use the table:</strong> Enter your total betting amount, review the available opportunities, and place the recommended bets at the specified sportsbooks. The table automatically calculates how much to bet on each side to guarantee the displayed profit.
+      </p>
     </div>
   );
 

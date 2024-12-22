@@ -11,6 +11,7 @@ const BettingAmountInput = ({ value, onChange }: BettingAmountInputProps) => {
     <div className="relative w-24">
       <div className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500">$</div>
       <Input
+        id="wager-amount"
         type="number"
         value={value}
         onChange={(e) => onChange(e.target.value)}

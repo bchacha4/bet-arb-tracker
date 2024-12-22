@@ -42,14 +42,13 @@ const fetchArbitrageProps = async () => {
   }));
 };
 
-const ArbitrageTable = ({ bettingAmount, selectedSportsbooks = [] }: ArbitrageTableProps) => {
+const ArbitrageTable = ({ bettingAmount }: ArbitrageTableProps) => {
   const { data: fetchedProps = [], isLoading } = useQuery({
     queryKey: ['arbitrageProps'],
     queryFn: fetchArbitrageProps,
   });
 
   const [calculatedProps, setCalculatedProps] = useState<Prop[]>([]);
-  const [filteredProps, setFilteredProps] = useState<Prop[]>([]);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -58,20 +57,10 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbooks = [] }: ArbitrageTa
       ...prop,
       ...calculateAmounts(prop, amount)
     }));
-    setCalculatedProps(updated);
+    // Sort by percent return (hold) in descending order
+    const sorted = updated.sort((a, b) => parseFloat(b.hold) - parseFloat(a.hold));
+    setCalculatedProps(sorted);
   }, [bettingAmount, fetchedProps]);
-
-  useEffect(() => {
-    if (selectedSportsbooks.length === 0) {
-      setFilteredProps(calculatedProps);
-      return;
-    }
-
-    const filtered = calculatedProps.filter(prop => 
-      prop.sides.some(side => selectedSportsbooks.includes(side.book))
-    );
-    setFilteredProps(filtered);
-  }, [calculatedProps, selectedSportsbooks]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -80,7 +69,7 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbooks = [] }: ArbitrageTa
   if (isMobile) {
     return (
       <div className="space-y-4">
-        {filteredProps.map((prop, index) => (
+        {calculatedProps.map((prop, index) => (
           <MobileArbitrageCard key={index} prop={prop} />
         ))}
       </div>
@@ -92,7 +81,7 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbooks = [] }: ArbitrageTa
       <table className="w-full text-sm text-left text-gray-900">
         <TableHeader />
         <tbody>
-          {filteredProps.map((prop, index) => (
+          {calculatedProps.map((prop, index) => (
             <TableRow key={index} prop={prop} />
           ))}
         </tbody>
