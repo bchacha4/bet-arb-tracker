@@ -42,7 +42,7 @@ const fetchArbitrageProps = async () => {
   }));
 };
 
-const ArbitrageTable = ({ bettingAmount }: ArbitrageTableProps) => {
+const ArbitrageTable = ({ bettingAmount, selectedSportsbooks = [] }: ArbitrageTableProps) => {
   const { data: fetchedProps = [], isLoading } = useQuery({
     queryKey: ['arbitrageProps'],
     queryFn: fetchArbitrageProps,
@@ -50,7 +50,6 @@ const ArbitrageTable = ({ bettingAmount }: ArbitrageTableProps) => {
 
   const [calculatedProps, setCalculatedProps] = useState<Prop[]>([]);
   const [filteredProps, setFilteredProps] = useState<Prop[]>([]);
-  const [selectedSportsbooks, setSelectedSportsbooks] = useState<string[]>([]);
   const isMobile = useIsMobile();
 
   useEffect(() => {

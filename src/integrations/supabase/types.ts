@@ -69,6 +69,24 @@ export type Database = {
         }
         Relationships: []
       }
+      Sportsbooks: {
+        Row: {
+          created_at: string
+          id: number
+          Sportsbook: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          Sportsbook?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          Sportsbook?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -19,5 +19,4 @@ export interface Prop {
 export interface ArbitrageTableProps {
   bettingAmount: string;
   selectedSportsbooks?: string[];
-  selectedSports?: string[];
 }
