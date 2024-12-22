@@ -30,7 +30,7 @@ const FilterSection = ({
   const [lastRefreshTime, setLastRefreshTime] = useState<number>(0);
   const { toast } = useToast();
   const [selectedSportsbook, setSelectedSportsbook] = useState<string>("");
-  const [availableSportsbooks, setAvailableSportsbooks] = useState<{ label: string; value: string; }[]>([]);
+  const [availableSportsbooks, setAvailableSportsbooks] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchSportsbooks = async () => {
@@ -39,18 +39,22 @@ const FilterSection = ({
         .select('Sportsbook');
       
       if (!error && data) {
-        const formattedSportsbooks = data
-          .filter(item => item.Sportsbook) // Filter out null values
-          .map(item => ({
-            label: item.Sportsbook!,
-            value: item.Sportsbook!
-          }));
-        setAvailableSportsbooks(formattedSportsbooks);
+        const sportsbooks = data
+          .map(item => item.Sportsbook)
+          .filter((sportsbook): sportsbook is string => sportsbook !== null);
+        setAvailableSportsbooks(sportsbooks);
+      } else {
+        console.error('Error fetching sportsbooks:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load sportsbooks. Please try again later.",
+          variant: "destructive",
+        });
       }
     };
 
     fetchSportsbooks();
-  }, []);
+  }, [toast]);
 
   const handleRefresh = () => {
     const now = Date.now();
@@ -85,8 +89,8 @@ const FilterSection = ({
           </SelectTrigger>
           <SelectContent>
             {availableSportsbooks.map((book) => (
-              <SelectItem key={book.value} value={book.value}>
-                {book.label}
+              <SelectItem key={book} value={book}>
+                {book}
               </SelectItem>
             ))}
           </SelectContent>
