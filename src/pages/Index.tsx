@@ -7,7 +7,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [bettingAmount, setBettingAmount] = useState("1000");
-  const [selectedSportsbooks, setSelectedSportsbooks] = useState<string[]>([]);
   const isSubscribed = false;
   const isMobile = useIsMobile();
 
@@ -33,12 +32,10 @@ const Index = () => {
           isSubscribed={isSubscribed} 
           bettingAmount={bettingAmount}
           onBettingAmountChange={setBettingAmount}
-          onSportsbookFilter={setSelectedSportsbooks}
         />
         
         <ArbitrageTable 
           bettingAmount={bettingAmount}
-          selectedSportsbooks={selectedSportsbooks}
         />
       </div>
     </div>
