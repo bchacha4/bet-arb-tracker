@@ -36,7 +36,7 @@ const FilterSection = ({
     const fetchSportsbooks = async () => {
       const { data, error } = await supabase
         .from('Sportsbooks')
-        .select('Sportsbook');
+        .select('*');
       
       if (!error && data) {
         const sportsbooks = data
