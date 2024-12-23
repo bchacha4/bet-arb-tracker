@@ -14,7 +14,12 @@ serve(async (req) => {
   }
 
   try {
+    if (!RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not set')
+    }
+
     const { feedback, userEmail } = await req.json()
+    console.log('Received feedback request:', { feedback, userEmail })
 
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -23,7 +28,7 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Bettor-IQ <notifications@bettor-iq.com>',
+        from: 'Bettor-IQ <feedback@bettor-iq.com>',
         to: 'bryan@bettor-iq.com',
         subject: 'New Feedback Received',
         html: `
@@ -36,12 +41,18 @@ serve(async (req) => {
     })
 
     const data = await res.json()
+    console.log('Resend API response:', data)
+
+    if (!res.ok) {
+      throw new Error(`Failed to send email: ${JSON.stringify(data)}`)
+    }
 
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
   } catch (error) {
+    console.error('Error in send-feedback function:', error)
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
