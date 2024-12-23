@@ -8,7 +8,7 @@ interface BettingAmountInputProps {
 
 const BettingAmountInput = ({ value, onChange }: BettingAmountInputProps) => {
   return (
-    <div className="relative w-24">
+    <div className="relative w-32">
       <div className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500">$</div>
       <Input
         id="wager-amount"
