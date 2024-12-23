@@ -19,6 +19,7 @@ const Navbar = () => {
   const { user } = useAuth();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -33,13 +34,28 @@ const Navbar = () => {
     }
   };
 
+  const handleProfileClick = () => {
+    setIsDropdownOpen(false);
+    setIsProfileOpen(true);
+  };
+
+  const handleFeedbackClick = () => {
+    setIsDropdownOpen(false);
+    setIsFeedbackOpen(true);
+  };
+
+  const handleSignOutClick = () => {
+    setIsDropdownOpen(false);
+    handleSignOut();
+  };
+
   return (
     <nav className="w-full bg-white border-b border-gray-200 px-6 py-4">
       <div className="max-w-[1400px] mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold text-gray-900">Bettor-IQ</h1>
         {user && (
           <div className="flex items-center gap-2">
-            <DropdownMenu>
+            <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="ghost" 
@@ -55,19 +71,19 @@ const Navbar = () => {
                 className="w-48 bg-white border border-gray-200 shadow-lg rounded-md"
               >
                 <DropdownMenuItem 
-                  onClick={() => setIsProfileOpen(true)}
+                  onClick={handleProfileClick}
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem 
-                  onClick={() => setIsFeedbackOpen(true)}
+                  onClick={handleFeedbackClick}
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   Feedback
                 </DropdownMenuItem>
                 <DropdownMenuItem 
-                  onClick={handleSignOut}
+                  onClick={handleSignOutClick}
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   Sign Out
