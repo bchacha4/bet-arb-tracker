@@ -28,7 +28,7 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'Bettor-IQ <feedback@bettor-iq.com>',
+        from: 'Bettor-IQ <onboarding@resend.dev>',
         to: 'bryan@bettor-iq.com',
         subject: 'New Feedback Received',
         html: `
