@@ -12,7 +12,7 @@ const TableHeader = () => {
         <th className="px-6 py-3 border-b border-gray-200">WAGER</th>
         <th className="px-6 py-3 border-b border-gray-200">PAYOUT</th>
         <th className="px-6 py-3 border-b border-gray-200">PROFIT</th>
-        <th className="px-6 py-3 border-b border-gray-200">% RETURN</th>
+        <th className="px-6 py-3 border-b border-gray-200 whitespace-nowrap">% RETURN</th>
         <th className="px-6 py-3 border-b border-gray-200">PLACE BETS</th>
       </tr>
     </thead>
