@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 
 const LoginPage = () => {
@@ -37,6 +38,9 @@ const LoginPage = () => {
           <DialogTitle className="text-center text-2xl font-bold">
             Welcome to Arbitrage Tracker
           </DialogTitle>
+          <DialogDescription className="text-center text-gray-500">
+            Create a free account to get started
+          </DialogDescription>
         </DialogHeader>
         <div className="px-4 py-6">
           <Auth
