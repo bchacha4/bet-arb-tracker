@@ -21,13 +21,20 @@ interface Prop {
   sides: Side[];
 }
 
+const capitalizeWords = (str: string) => {
+  return str
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mb-4">
       <div className="mb-4">
         <h3 className="text-lg font-semibold">{prop.player}</h3>
         <p className="text-sm text-gray-500">{prop.team}</p>
-        <p className="text-sm font-medium mt-1">{prop.bet}</p>
+        <p className="text-sm font-medium mt-1">{capitalizeWords(prop.bet)}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

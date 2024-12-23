@@ -3,6 +3,7 @@ import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface FilterSectionProps {
   isSubscribed: boolean;
@@ -19,6 +20,7 @@ const FilterSection = ({
 }: FilterSectionProps) => {
   const [lastRefreshTime, setLastRefreshTime] = useState<number>(0);
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const handleRefresh = () => {
     const now = Date.now();
@@ -40,7 +42,7 @@ const FilterSection = ({
   };
 
   return (
-    <div className="flex items-center justify-between mb-6">
+    <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} mb-6 gap-4`}>
       <div className="flex items-center gap-4">
         <BettingAmountInput
           value={bettingAmount}
