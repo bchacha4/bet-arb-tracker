@@ -9,6 +9,7 @@ interface Side {
   book: string;
   wager: string;
   payout: string;
+  link: string;
 }
 
 interface Prop {
@@ -43,7 +44,8 @@ const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
             </p>
             <Button
               variant="outline"
-              className="w-full text-primary border-primary hover:bg-primary hover:text-white"
+              className="w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
+              onClick={() => window.open(side.link, '_blank')}
             >
               PLACE BET
             </Button>

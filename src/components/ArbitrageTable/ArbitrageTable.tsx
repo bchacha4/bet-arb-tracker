@@ -28,7 +28,8 @@ const fetchArbitrageProps = async () => {
         odds: item.Odds_1?.toString() || '',
         book: item.Bookmaker_1 || '',
         wager: '0',
-        payout: '0'
+        payout: '0',
+        link: item.Link_1 || '#'
       },
       {
         type: item.Outcome_2 || '',
@@ -36,7 +37,8 @@ const fetchArbitrageProps = async () => {
         odds: item.Odds_2?.toString() || '',
         book: item.Bookmaker_2 || '',
         wager: '0',
-        payout: '0'
+        payout: '0',
+        link: item.Link_2 || '#'
       }
     ]
   }));

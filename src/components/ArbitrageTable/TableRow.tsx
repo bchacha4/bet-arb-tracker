@@ -68,15 +68,20 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         {prop.hold}%
       </td>
       <td className="px-6 py-4">
-        {prop.sides.map((side, sideIndex) => (
-          <Button
-            key={sideIndex}
-            variant="outline"
-            className="mb-2 w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
-          >
-            PLACE BET
-          </Button>
-        ))}
+        <Button
+          variant="outline"
+          className="mb-2 w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
+          onClick={() => window.open(prop.sides[0].link, '_blank')}
+        >
+          PLACE BET
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
+          onClick={() => window.open(prop.sides[1].link, '_blank')}
+        >
+          PLACE BET
+        </Button>
       </td>
     </tr>
   );

@@ -19,24 +19,20 @@ const Index = () => {
         {!isMobile && (
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900">Arbitrage Props</h2>
-            <FilterSection 
-              isSubscribed={isSubscribed} 
-              bettingAmount={bettingAmount}
-              onBettingAmountChange={setBettingAmount}
-            />
           </div>
         )}
         
         {isMobile && (
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Arbitrage Props</h2>
-            <FilterSection 
-              isSubscribed={isSubscribed} 
-              bettingAmount={bettingAmount}
-              onBettingAmountChange={setBettingAmount}
-            />
           </div>
         )}
+        
+        <FilterSection 
+          isSubscribed={isSubscribed} 
+          bettingAmount={bettingAmount}
+          onBettingAmountChange={setBettingAmount}
+        />
         
         <ArbitrageTable 
           bettingAmount={bettingAmount}

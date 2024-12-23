@@ -5,6 +5,7 @@ export interface Side {
   book: string;
   wager: string;
   payout: string;
+  link: string;
 }
 
 export interface Prop {
@@ -18,5 +19,4 @@ export interface Prop {
 
 export interface ArbitrageTableProps {
   bettingAmount: string;
-  selectedSportsbooks?: string[];
 }
