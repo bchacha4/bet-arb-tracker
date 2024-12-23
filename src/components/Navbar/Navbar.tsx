@@ -41,19 +41,35 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="relative hover:bg-gray-100"
+                >
                   <User className="h-5 w-5" />
                   <ChevronDown className="h-3 w-3 ml-1" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => setIsProfileOpen(true)}>
+              <DropdownMenuContent 
+                align="end" 
+                className="w-48 bg-white border border-gray-200 shadow-lg rounded-md"
+              >
+                <DropdownMenuItem 
+                  onClick={() => setIsProfileOpen(true)}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setIsFeedbackOpen(true)}>
+                <DropdownMenuItem 
+                  onClick={() => setIsFeedbackOpen(true)}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
                   Feedback
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleSignOut}>
+                <DropdownMenuItem 
+                  onClick={handleSignOut}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
