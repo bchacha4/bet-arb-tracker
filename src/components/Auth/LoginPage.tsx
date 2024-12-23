@@ -1,7 +1,7 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 import {
@@ -14,15 +14,24 @@ import {
 const LoginPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     if (user) {
+      setIsOpen(false);
       navigate('/');
     }
   }, [user, navigate]);
 
+  // If dialog is closed without auth, reopen it
+  useEffect(() => {
+    if (!user && !isOpen) {
+      setIsOpen(true);
+    }
+  }, [isOpen, user]);
+
   return (
-    <Dialog open={!user} modal>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl font-bold">
