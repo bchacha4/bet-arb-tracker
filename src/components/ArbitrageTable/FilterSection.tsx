@@ -40,25 +40,25 @@ const FilterSection = ({
   };
 
   return (
-    <div className="flex items-center gap-4 mb-6">
-      <div className="flex flex-col gap-1">
-        <label htmlFor="wager-amount" className="text-sm font-medium text-gray-700">
-          Total Wager Amount
-        </label>
-        <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4">
+        <div>
+          <label htmlFor="wager-amount" className="text-sm font-medium text-gray-700">
+            Wager Amount
+          </label>
           <BettingAmountInput
             value={bettingAmount}
             onChange={onBettingAmountChange}
           />
-          <Button
-            variant="outline"
-            className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary"
-            onClick={handleRefresh}
-          >
-            <RefreshCw size={16} />
-            Refresh
-          </Button>
         </div>
+        <Button
+          variant="outline"
+          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary"
+          onClick={handleRefresh}
+        >
+          <RefreshCw size={16} />
+          Refresh
+        </Button>
       </div>
     </div>
   );

@@ -10,6 +10,11 @@ const capitalizeWords = (str: string) => {
     .join(' ');
 };
 
+const formatOdds = (odds: string) => {
+  const oddsNum = parseInt(odds);
+  return oddsNum > 0 ? `+${oddsNum}` : odds;
+};
+
 const TableRow = ({ prop }: { prop: Prop }) => {
   return (
     <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
@@ -18,7 +23,7 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         <br />
         <span className="text-gray-500">{prop.team}</span>
       </td>
-      <td className="px-6 py-4">
+      <td className="px-6 py-4 min-w-[200px]">
         {capitalizeWords(prop.bet)}
       </td>
       <td className="px-6 py-4">
@@ -38,7 +43,7 @@ const TableRow = ({ prop }: { prop: Prop }) => {
       <td className="px-6 py-4">
         {prop.sides.map((side, sideIndex) => (
           <div key={sideIndex} className="mb-2">
-            {side.value} ({side.odds})
+            {side.value} ({formatOdds(side.odds)})
           </div>
         ))}
       </td>
