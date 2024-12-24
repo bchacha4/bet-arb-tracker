@@ -62,17 +62,15 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTablePro
       ...calculateAmounts(prop, amount)
     }));
     
-    // Filter by sportsbook if one is selected and it's not "all"
     if (selectedSportsbook && selectedSportsbook !== 'all') {
       updated = updated.filter(prop => 
         prop.sides.some(side => side.book === selectedSportsbook)
       );
     }
     
-    // Sort by percent return (hold) in descending order
     const sorted = updated.sort((a, b) => parseFloat(b.hold) - parseFloat(a.hold));
     setCalculatedProps(sorted);
-  }, [bettingAmount, fetchedProps, selectedSportsbook]);
+  }, [bettingAmount, fetchedProps, selectedSportsbook]); // Added proper dependencies
 
   if (isLoading) {
     return <div>Loading...</div>;
