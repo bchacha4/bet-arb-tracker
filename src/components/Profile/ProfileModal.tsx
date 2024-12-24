@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
 
@@ -11,6 +12,51 @@ interface ProfileModalProps {
 }
 
 const ProfileModal = ({ isOpen, onClose, userEmail }: ProfileModalProps) => {
+  const [emailNotifications, setEmailNotifications] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('email_notifications')
+        .single();
+      
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return;
+      }
+      
+      setEmailNotifications(data.email_notifications);
+    };
+
+    if (isOpen) {
+      fetchProfile();
+    }
+  }, [isOpen]);
+
+  const handleEmailPreferenceChange = async () => {
+    const newValue = !emailNotifications;
+    const { error } = await supabase
+      .from('profiles')
+      .update({ email_notifications: newValue })
+      .eq('id', (await supabase.auth.getUser()).data.user?.id);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update email preferences",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setEmailNotifications(newValue);
+    toast({
+      title: "Success",
+      description: "Email preferences updated successfully",
+    });
+  };
+
   const handleUpdatePassword = async () => {
     const { error } = await supabase.auth.resetPasswordForEmail(userEmail || '');
     if (error) {
@@ -28,7 +74,6 @@ const ProfileModal = ({ isOpen, onClose, userEmail }: ProfileModalProps) => {
   };
 
   const handleDeleteAccount = async () => {
-    // This would require an edge function to properly handle account deletion
     toast({
       title: "Coming Soon",
       description: "Account deletion will be available soon.",
@@ -45,6 +90,19 @@ const ProfileModal = ({ isOpen, onClose, userEmail }: ProfileModalProps) => {
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Email</h3>
             <p className="text-sm text-gray-500">{userEmail}</p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox 
+              id="emailNotifications" 
+              checked={emailNotifications}
+              onCheckedChange={handleEmailPreferenceChange}
+            />
+            <label
+              htmlFor="emailNotifications"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Receive email notifications
+            </label>
           </div>
           <div className="space-y-2">
             <Button onClick={handleUpdatePassword} variant="outline" className="w-full">

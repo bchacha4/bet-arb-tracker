@@ -93,6 +93,24 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string
+          email_notifications: boolean | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email_notifications?: boolean | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
