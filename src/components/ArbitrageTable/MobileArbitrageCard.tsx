@@ -22,9 +22,12 @@ const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
       <div className="grid grid-cols-2 gap-4">
         {prop.sides.map((side, index) => (
           <div key={index} className="space-y-2">
-            <p className="font-medium text-center">
-              {side.type} {side.value} ({side.odds})
-            </p>
+            <div className="text-center">
+              <p className="font-medium">
+                {side.type} {side.value} ({side.odds})
+              </p>
+              <p className="text-sm text-gray-600 font-medium">{side.book}</p>
+            </div>
             <p className="text-sm text-center">
               Wager: <span className="font-semibold">${formatDollarAmount(side.wager)}</span>
             </p>
