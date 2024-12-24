@@ -3,6 +3,7 @@ import ArbitrageTable from '@/components/ArbitrageTable/ArbitrageTable';
 import FilterSection from '@/components/ArbitrageTable/FilterSection';
 import Navbar from '@/components/Navbar/Navbar';
 import ArbitrageDescription from '@/components/ArbitrageDescription/ArbitrageDescription';
+import Announcement from '@/components/Announcement/Announcement';
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="max-w-[1400px] mx-auto p-6">
+        <Announcement />
         <ArbitrageDescription />
         
         {!isMobile && (
