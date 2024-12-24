@@ -34,7 +34,19 @@ const getBookmakerUrl = (bookmaker: string): string => {
     'BetMGM': 'https://sports.betmgm.com',
     'BetRivers': 'https://betrivers.com',
     'BetUS': 'https://betus.com',
-    'Bovada': 'https://bovada.lv'
+    'Bovada': 'https://bovada.lv',
+    'Caesars': 'https://www.caesars.com/sportsbook-and-casino',
+    'DraftKings': 'https://draftkings.com',
+    'FanDuel': 'https://fanduel.com',
+    'LowVig': 'https://lowvig.ag',
+    'MyBookieAG': 'https://mybookie.ag',
+    'BallyBet': 'https://play.ballybet.com/sports#home',
+    'BetAnySports': 'https://betanysports.eu',
+    'betPARX': 'https://betparx.com',
+    'ESPNBet': 'https://espnbet.com',
+    'Fliff': 'https://getfliff.com',
+    'Hard Rock Bet': 'https://hardrock.bet',
+    'Wind Creek': 'https://play.windcreekcasino.com/'
   };
   return urls[bookmaker] || '#';
 };
