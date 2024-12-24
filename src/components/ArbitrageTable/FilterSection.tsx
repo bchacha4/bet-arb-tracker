@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQueryClient } from '@tanstack/react-query';
 
 interface FilterSectionProps {
   isSubscribed: boolean;
@@ -11,30 +12,16 @@ interface FilterSectionProps {
   onBettingAmountChange: (value: string) => void;
 }
 
-const REFRESH_COOLDOWN = 300000; // 5 minutes in milliseconds
-
 const FilterSection = ({
-  isSubscribed,
   bettingAmount,
   onBettingAmountChange,
 }: FilterSectionProps) => {
-  const [lastRefreshTime, setLastRefreshTime] = useState<number>(0);
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const queryClient = useQueryClient();
 
   const handleRefresh = () => {
-    const now = Date.now();
-    if (!isSubscribed && now - lastRefreshTime < REFRESH_COOLDOWN) {
-      const remainingTime = Math.ceil((REFRESH_COOLDOWN - (now - lastRefreshTime)) / 60000);
-      toast({
-        title: "Refresh Limited",
-        description: `Please wait ${remainingTime} minutes to refresh again.`,
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setLastRefreshTime(now);
+    queryClient.invalidateQueries({ queryKey: ['arbitrageProps'] });
     toast({
       title: "Data Refreshed",
       description: "The arbitrage opportunities have been updated.",
