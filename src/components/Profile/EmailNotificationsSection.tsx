@@ -57,11 +57,6 @@ const EmailNotificationsSection = ({ userEmail }: EmailNotificationsSectionProps
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col space-y-4">
-        <Label htmlFor="email" className="text-sm font-medium text-gray-900">Email</Label>
-        <div className="text-sm text-gray-500">{userEmail}</div>
-      </div>
-      
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
           <Label htmlFor="email-notifications" className="text-sm font-medium text-gray-900">
