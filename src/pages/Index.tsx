@@ -7,7 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [bettingAmount, setBettingAmount] = useState("1000");
-  const [selectedSportsbook, setSelectedSportsbook] = useState("");
+  const [selectedSportsbook, setSelectedSportsbook] = useState("all");
   const isSubscribed = false;
   const isMobile = useIsMobile();
 

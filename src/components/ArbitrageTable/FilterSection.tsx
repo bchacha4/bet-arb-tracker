@@ -52,7 +52,7 @@ const FilterSection = ({
             <SelectValue placeholder="Filter by sportsbook" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Sportsbooks</SelectItem>
+            <SelectItem value="all">All Sportsbooks</SelectItem>
             {AVAILABLE_SPORTSBOOKS.map((book) => (
               <SelectItem key={book.value} value={book.value}>
                 {book.label}

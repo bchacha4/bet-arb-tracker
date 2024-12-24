@@ -62,8 +62,8 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTablePro
       ...calculateAmounts(prop, amount)
     }));
     
-    // Filter by sportsbook if one is selected
-    if (selectedSportsbook) {
+    // Filter by sportsbook if one is selected and it's not "all"
+    if (selectedSportsbook && selectedSportsbook !== 'all') {
       updated = updated.filter(prop => 
         prop.sides.some(side => side.book === selectedSportsbook)
       );
