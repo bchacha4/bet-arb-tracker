@@ -16,28 +16,32 @@ const formatOdds = (odds: string) => {
 };
 
 const getBookmakerUrl = (bookmaker: string): string => {
+  // Normalize the bookmaker name by removing spaces and converting to lowercase
+  const normalizedBookmaker = bookmaker.toLowerCase().replace(/\s+/g, '');
+  
   const urls: { [key: string]: string } = {
-    'BetOnline.ag': 'https://www.betonline.ag/',
-    'BetMGM': 'https://sports.betmgm.com',
-    'BetRivers': 'https://betrivers.com',
-    'BetUS': 'https://betus.com',
-    'Bovada': 'https://bovada.lv',
-    'Caesars': 'https://www.caesars.com/sportsbook-and-casino',
-    'DraftKings': 'https://draftkings.com',
-    'FanDuel': 'https://fanduel.com',
-    'LowVig': 'https://lowvig.ag',
-    'MyBookieAG': 'https://mybookie.ag',
-    'BallyBet': 'https://play.ballybet.com/sports#home',
-    'BetAnySports': 'https://betanysports.eu',
-    'betPARX': 'https://betparx.com',
-    'ESPNBet': 'https://espnbet.com',
-    'Fliff': 'https://getfliff.com',
-    'Hard Rock Bet': 'https://hardrock.bet',
-    'Wind Creek': 'https://play.windcreekcasino.com/'
+    'betonline.ag': 'https://www.betonline.ag/',
+    'betmgm': 'https://sports.betmgm.com',
+    'betrivers': 'https://betrivers.com',
+    'betus': 'https://betus.com',
+    'bovada': 'https://bovada.lv',
+    'caesars': 'https://www.caesars.com/sportsbook-and-casino',
+    'draftkings': 'https://draftkings.com',
+    'fanduel': 'https://fanduel.com',
+    'lowvig.ag': 'https://lowvig.ag',
+    'mybookie.ag': 'https://mybookie.ag',
+    'ballybet': 'https://play.ballybet.com/sports#home',
+    'betanysports': 'https://betanysports.eu',
+    'betparx': 'https://betparx.com',
+    'espnbet': 'https://espnbet.com',
+    'fliff': 'https://getfliff.com',
+    'hardrockbet': 'https://hardrock.bet',
+    'windcreek': 'https://play.windcreekcasino.com/'
   };
-  const url = urls[bookmaker];
+  
+  const url = urls[normalizedBookmaker];
   if (!url) return '#';
-  return url.startsWith('http') ? url : `https://${url}`;
+  return url;
 };
 
 const TableRow = ({ prop }: { prop: Prop }) => {
