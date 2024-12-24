@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
 import { formatDollarAmount } from "./utils";
 import { Side, Prop } from "./types";
+import PlaceBetButton from "./components/PlaceBetButton";
 
 const capitalizeWords = (str: string) => {
   return str
@@ -13,35 +13,6 @@ const capitalizeWords = (str: string) => {
 const formatOdds = (odds: string) => {
   const oddsNum = parseInt(odds);
   return oddsNum > 0 ? `+${oddsNum}` : odds;
-};
-
-const getBookmakerUrl = (bookmaker: string): string => {
-  // Normalize the bookmaker name by removing spaces and converting to lowercase
-  const normalizedBookmaker = bookmaker.toLowerCase().replace(/\s+/g, '');
-  
-  const urls: { [key: string]: string } = {
-    'betonline.ag': 'https://www.betonline.ag/',
-    'betmgm': 'https://sports.betmgm.com',
-    'betrivers': 'https://betrivers.com',
-    'betus': 'https://betus.com',
-    'bovada': 'https://bovada.lv',
-    'caesars': 'https://www.caesars.com/sportsbook-and-casino',
-    'draftkings': 'https://draftkings.com',
-    'fanduel': 'https://fanduel.com',
-    'lowvig.ag': 'https://lowvig.ag',
-    'mybookie.ag': 'https://mybookie.ag',
-    'ballybet': 'https://play.ballybet.com/sports#home',
-    'betanysports': 'https://betanysports.eu',
-    'betparx': 'https://betparx.com',
-    'espnbet': 'https://espnbet.com',
-    'fliff': 'https://getfliff.com',
-    'hardrockbet': 'https://hardrock.bet',
-    'windcreek': 'https://play.windcreekcasino.com/'
-  };
-  
-  const url = urls[normalizedBookmaker];
-  if (!url) return '#';
-  return url;
 };
 
 const TableRow = ({ prop }: { prop: Prop }) => {
@@ -97,23 +68,14 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         {prop.hold}%
       </td>
       <td className="px-6 py-4">
-        {prop.sides.map((side, index) => {
-          const url = side.link && side.link !== '#' ? side.link : getBookmakerUrl(side.book);
-          return (
-            <Button
-              key={index}
-              variant="outline"
-              className={`${index === 0 ? 'mb-2' : ''} w-full bg-primary text-white hover:bg-white hover:text-primary border-primary`}
-              onClick={() => {
-                if (url !== '#') {
-                  window.open(url.startsWith('http') ? url : `https://${url}`, '_blank');
-                }
-              }}
-            >
-              PLACE BET
-            </Button>
-          );
-        })}
+        {prop.sides.map((side, index) => (
+          <PlaceBetButton
+            key={index}
+            link={side.link}
+            bookmaker={side.book}
+            className={index === 0 ? 'mb-2' : ''}
+          />
+        ))}
       </td>
     </tr>
   );
