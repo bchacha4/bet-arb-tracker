@@ -48,10 +48,10 @@ const FilterSection = ({
           onChange={onBettingAmountChange}
         />
         <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-          <SelectTrigger className="w-[180px] bg-white">
+          <SelectTrigger className="w-[180px] bg-white border border-gray-200">
             <SelectValue placeholder="Filter by sportsbook" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white border border-gray-200 shadow-lg">
             <SelectItem value="all">All Sportsbooks</SelectItem>
             {AVAILABLE_SPORTSBOOKS.map((book) => (
               <SelectItem key={book.value} value={book.value}>

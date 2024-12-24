@@ -1,5 +1,5 @@
 export const AVAILABLE_SPORTSBOOKS = [
-  { label: 'BetonlineAG', value: 'BetonlineAG' },
+  { label: 'BetOnline.ag', value: 'BetonlineAG' },
   { label: 'BetMGM', value: 'BetMGM' },
   { label: 'BetRivers', value: 'BetRivers' },
   { label: 'BetUS', value: 'BetUS' },
@@ -8,7 +8,7 @@ export const AVAILABLE_SPORTSBOOKS = [
   { label: 'DraftKings', value: 'DraftKings' },
   { label: 'FanDuel', value: 'FanDuel' },
   { label: 'LowVig', value: 'LowVig' },
-  { label: 'MyBookieAG', value: 'MyBookieAG' },
+  { label: 'MyBookie.ag', value: 'MyBookieAG' },
   { label: 'BallyBet', value: 'BallyBet' },
   { label: 'BetAnySports', value: 'BetAnySports' },
   { label: 'betPARX', value: 'betPARX' },
