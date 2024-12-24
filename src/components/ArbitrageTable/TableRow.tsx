@@ -35,7 +35,9 @@ const getBookmakerUrl = (bookmaker: string): string => {
     'Hard Rock Bet': 'https://hardrock.bet',
     'Wind Creek': 'https://play.windcreekcasino.com/'
   };
-  return urls[bookmaker] || '#';
+  const url = urls[bookmaker];
+  if (!url) return '#';
+  return url.startsWith('http') ? url : `https://${url}`;
 };
 
 const TableRow = ({ prop }: { prop: Prop }) => {
@@ -96,7 +98,12 @@ const TableRow = ({ prop }: { prop: Prop }) => {
             key={index}
             variant="outline"
             className={`${index === 0 ? 'mb-2' : ''} w-full bg-primary text-white hover:bg-white hover:text-primary border-primary`}
-            onClick={() => window.open(side.link || getBookmakerUrl(side.book), '_blank')}
+            onClick={() => {
+              const url = side.link || getBookmakerUrl(side.book);
+              if (url !== '#') {
+                window.open(url.startsWith('http') ? url : `https://${url}`, '_blank');
+              }
+            }}
           >
             PLACE BET
           </Button>
