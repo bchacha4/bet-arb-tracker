@@ -47,28 +47,47 @@ const FilterSection = ({
           value={bettingAmount}
           onChange={onBettingAmountChange}
         />
-        <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-          <SelectTrigger className="w-[180px] bg-white border border-gray-200">
-            <SelectValue placeholder="Filter by sportsbook" />
-          </SelectTrigger>
-          <SelectContent className="bg-white border border-gray-200 shadow-lg">
-            <SelectItem value="all">All Sportsbooks</SelectItem>
-            {AVAILABLE_SPORTSBOOKS.map((book) => (
-              <SelectItem key={book.value} value={book.value}>
-                {book.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {!isMobile && (
+          <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
+            <SelectTrigger className="w-[180px] bg-white border border-gray-200">
+              <SelectValue placeholder="Filter by sportsbook" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+              <SelectItem value="all">All Sportsbooks</SelectItem>
+              {AVAILABLE_SPORTSBOOKS.map((book) => (
+                <SelectItem key={book.value} value={book.value}>
+                  {book.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
-      <Button
-        variant="outline"
-        className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary h-10"
-        onClick={handleRefresh}
-      >
-        <RefreshCw size={16} />
-        Refresh
-      </Button>
+      <div className="flex items-center gap-4">
+        {isMobile && (
+          <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
+            <SelectTrigger className="w-[180px] bg-white border border-gray-200">
+              <SelectValue placeholder="Filter by sportsbook" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+              <SelectItem value="all">All Sportsbooks</SelectItem>
+              {AVAILABLE_SPORTSBOOKS.map((book) => (
+                <SelectItem key={book.value} value={book.value}>
+                  {book.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+        <Button
+          variant="outline"
+          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary h-10"
+          onClick={handleRefresh}
+        >
+          <RefreshCw size={16} />
+          Refresh
+        </Button>
+      </div>
     </div>
   );
 };
