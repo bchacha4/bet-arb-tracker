@@ -22,15 +22,16 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      navigate('/login');
+    } catch (error: any) {
       toast({
         title: "Error signing out",
         description: error.message,
         variant: "destructive",
       });
-    } else {
-      navigate('/login');
     }
   };
 
