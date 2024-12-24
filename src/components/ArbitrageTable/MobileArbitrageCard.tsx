@@ -67,31 +67,33 @@ const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        {prop.sides.map((side, index) => (
-          <div key={index} className="space-y-2">
-            <p className="font-medium text-center">
-              {side.type} {side.value} ({side.odds})
-            </p>
-            <p className="text-sm text-center">
-              Wager: <span className="font-semibold">${formatDollarAmount(side.wager)}</span>
-            </p>
-            <p className="text-sm text-betting-profit text-center">
-              Payout: <span className="font-semibold">${formatDollarAmount(side.payout)}</span>
-            </p>
-            <Button
-              variant="outline"
-              className="w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
-              onClick={() => {
-                const url = side.link || getBookmakerUrl(side.book);
-                if (url !== '#') {
-                  window.open(url.startsWith('http') ? url : `https://${url}`, '_blank');
-                }
-              }}
-            >
-              PLACE BET
-            </Button>
-          </div>
-        ))}
+        {prop.sides.map((side, index) => {
+          const url = side.link && side.link !== '#' ? side.link : getBookmakerUrl(side.book);
+          return (
+            <div key={index} className="space-y-2">
+              <p className="font-medium text-center">
+                {side.type} {side.value} ({side.odds})
+              </p>
+              <p className="text-sm text-center">
+                Wager: <span className="font-semibold">${formatDollarAmount(side.wager)}</span>
+              </p>
+              <p className="text-sm text-betting-profit text-center">
+                Payout: <span className="font-semibold">${formatDollarAmount(side.payout)}</span>
+              </p>
+              <Button
+                variant="outline"
+                className="w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
+                onClick={() => {
+                  if (url !== '#') {
+                    window.open(url.startsWith('http') ? url : `https://${url}`, '_blank');
+                  }
+                }}
+              >
+                PLACE BET
+              </Button>
+            </div>
+          );
+        })}
       </div>
 
       <div className="mt-4 pt-4 border-t border-gray-200">

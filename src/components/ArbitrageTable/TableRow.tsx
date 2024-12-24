@@ -97,21 +97,23 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         {prop.hold}%
       </td>
       <td className="px-6 py-4">
-        {prop.sides.map((side, index) => (
-          <Button
-            key={index}
-            variant="outline"
-            className={`${index === 0 ? 'mb-2' : ''} w-full bg-primary text-white hover:bg-white hover:text-primary border-primary`}
-            onClick={() => {
-              const url = side.link || getBookmakerUrl(side.book);
-              if (url !== '#') {
-                window.open(url.startsWith('http') ? url : `https://${url}`, '_blank');
-              }
-            }}
-          >
-            PLACE BET
-          </Button>
-        ))}
+        {prop.sides.map((side, index) => {
+          const url = side.link && side.link !== '#' ? side.link : getBookmakerUrl(side.book);
+          return (
+            <Button
+              key={index}
+              variant="outline"
+              className={`${index === 0 ? 'mb-2' : ''} w-full bg-primary text-white hover:bg-white hover:text-primary border-primary`}
+              onClick={() => {
+                if (url !== '#') {
+                  window.open(url.startsWith('http') ? url : `https://${url}`, '_blank');
+                }
+              }}
+            >
+              PLACE BET
+            </Button>
+          );
+        })}
       </td>
     </tr>
   );
