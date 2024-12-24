@@ -46,7 +46,7 @@ const fetchArbitrageProps = async () => {
   }));
 };
 
-const ArbitrageTable = ({ bettingAmount }: ArbitrageTableProps) => {
+const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTableProps) => {
   const { data: fetchedProps = [], isLoading } = useQuery({
     queryKey: ['arbitrageProps'],
     queryFn: fetchArbitrageProps,
@@ -57,14 +57,22 @@ const ArbitrageTable = ({ bettingAmount }: ArbitrageTableProps) => {
 
   useEffect(() => {
     const amount = parseFloat(bettingAmount) || 0;
-    const updated = fetchedProps.map(prop => ({
+    let updated = fetchedProps.map(prop => ({
       ...prop,
       ...calculateAmounts(prop, amount)
     }));
+    
+    // Filter by sportsbook if one is selected
+    if (selectedSportsbook) {
+      updated = updated.filter(prop => 
+        prop.sides.some(side => side.book === selectedSportsbook)
+      );
+    }
+    
     // Sort by percent return (hold) in descending order
     const sorted = updated.sort((a, b) => parseFloat(b.hold) - parseFloat(a.hold));
     setCalculatedProps(sorted);
-  }, [bettingAmount, fetchedProps]);
+  }, [bettingAmount, fetchedProps, selectedSportsbook]);
 
   if (isLoading) {
     return <div>Loading...</div>;
