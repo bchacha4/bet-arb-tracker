@@ -19,14 +19,17 @@ const ProfileModal = ({ isOpen, onClose, userEmail }: ProfileModalProps) => {
       const { data, error } = await supabase
         .from('profiles')
         .select('email_notifications')
-        .single();
+        .maybeSingle();
       
       if (error) {
         console.error('Error fetching profile:', error);
         return;
       }
       
-      setEmailNotifications(data.email_notifications);
+      // If data exists, use it; otherwise, keep the default value (true)
+      if (data) {
+        setEmailNotifications(data.email_notifications);
+      }
     };
 
     if (isOpen) {
