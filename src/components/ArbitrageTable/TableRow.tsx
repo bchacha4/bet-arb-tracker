@@ -15,6 +15,17 @@ const formatOdds = (odds: string) => {
   return oddsNum > 0 ? `+${oddsNum}` : odds;
 };
 
+const getBookmakerUrl = (bookmaker: string): string => {
+  const urls: { [key: string]: string } = {
+    'BetOnline.ag': 'https://www.betonline.ag/',
+    'BetMGM': 'https://sports.betmgm.com',
+    'BetRivers': 'https://betrivers.com',
+    'BetUS': 'https://betus.com',
+    'Bovada': 'https://bovada.lv'
+  };
+  return urls[bookmaker] || '#';
+};
+
 const TableRow = ({ prop }: { prop: Prop }) => {
   return (
     <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
@@ -68,20 +79,16 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         {prop.hold}%
       </td>
       <td className="px-6 py-4">
-        <Button
-          variant="outline"
-          className="mb-2 w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
-          onClick={() => window.open(prop.sides[0].link, '_blank')}
-        >
-          PLACE BET
-        </Button>
-        <Button
-          variant="outline"
-          className="w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
-          onClick={() => window.open(prop.sides[1].link, '_blank')}
-        >
-          PLACE BET
-        </Button>
+        {prop.sides.map((side, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            className={`${index === 0 ? 'mb-2' : ''} w-full bg-primary text-white hover:bg-white hover:text-primary border-primary`}
+            onClick={() => window.open(side.link || getBookmakerUrl(side.book), '_blank')}
+          >
+            PLACE BET
+          </Button>
+        ))}
       </td>
     </tr>
   );

@@ -28,6 +28,17 @@ const capitalizeWords = (str: string) => {
     .join(' ');
 };
 
+const getBookmakerUrl = (bookmaker: string): string => {
+  const urls: { [key: string]: string } = {
+    'BetOnline.ag': 'https://www.betonline.ag/',
+    'BetMGM': 'https://sports.betmgm.com',
+    'BetRivers': 'https://betrivers.com',
+    'BetUS': 'https://betus.com',
+    'Bovada': 'https://bovada.lv'
+  };
+  return urls[bookmaker] || '#';
+};
+
 const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mb-4">
@@ -52,7 +63,7 @@ const MobileArbitrageCard = ({ prop }: { prop: Prop }) => {
             <Button
               variant="outline"
               className="w-full bg-primary text-white hover:bg-white hover:text-primary border-primary"
-              onClick={() => window.open(side.link, '_blank')}
+              onClick={() => window.open(side.link || getBookmakerUrl(side.book), '_blank')}
             >
               PLACE BET
             </Button>
