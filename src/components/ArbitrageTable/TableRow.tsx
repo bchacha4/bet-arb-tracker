@@ -27,7 +27,11 @@ const TableRow = ({ prop }: { prop: Prop }) => {
       );
     }
     return (
-      <span className="font-bold">{prop.team}</span>
+      <>
+        {prop.team}
+        <br />
+        <span className="text-gray-500">{prop.Away_Team}</span>
+      </>
     );
   };
 
