@@ -29,8 +29,6 @@ const TableRow = ({ prop }: { prop: Prop }) => {
     return (
       <>
         {prop.team}
-        <br />
-        <span className="text-gray-500">{prop.team}</span>
       </>
     );
   };
