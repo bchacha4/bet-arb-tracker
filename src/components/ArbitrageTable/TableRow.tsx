@@ -26,11 +26,13 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         </>
       );
     }
+    // Split the team string to get Home and Away teams
+    const [homeTeam, awayTeam] = prop.team.split(' vs. ');
     return (
       <>
-        {prop.team}
+        {homeTeam}
         <br />
-        <span className="text-gray-500">{prop.Away_Team}</span>
+        <span className="text-gray-500">{awayTeam}</span>
       </>
     );
   };
