@@ -16,12 +16,25 @@ const formatOdds = (odds: string) => {
 };
 
 const TableRow = ({ prop }: { prop: Prop }) => {
+  const renderPlayerOrTeams = () => {
+    if (prop.player) {
+      return (
+        <>
+          {prop.player}
+          <br />
+          <span className="text-gray-500">{prop.team}</span>
+        </>
+      );
+    }
+    return (
+      <span className="font-bold">{prop.team}</span>
+    );
+  };
+
   return (
     <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
       <td className="px-6 py-4 font-medium">
-        {prop.player}
-        <br />
-        <span className="text-gray-500">{prop.team}</span>
+        {renderPlayerOrTeams()}
       </td>
       <td className="px-6 py-4 min-w-[200px]">
         {capitalizeWords(prop.bet)}
