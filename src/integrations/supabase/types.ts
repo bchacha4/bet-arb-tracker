@@ -26,7 +26,7 @@ export type Database = {
           Outcome_1: string | null
           Outcome_2: string | null
           Player: string | null
-          Player_Prop: string | null
+          Prop: string | null
           Sport: string | null
         }
         Insert: {
@@ -45,7 +45,7 @@ export type Database = {
           Outcome_1?: string | null
           Outcome_2?: string | null
           Player?: string | null
-          Player_Prop?: string | null
+          Prop?: string | null
           Sport?: string | null
         }
         Update: {
@@ -64,7 +64,7 @@ export type Database = {
           Outcome_1?: string | null
           Outcome_2?: string | null
           Player?: string | null
-          Player_Prop?: string | null
+          Prop?: string | null
           Sport?: string | null
         }
         Relationships: []
@@ -108,6 +108,66 @@ export type Database = {
           created_at?: string
           email_notifications?: boolean | null
           id?: string
+        }
+        Relationships: []
+      }
+      test_arb_props: {
+        Row: {
+          Arbitrage_Margin: number | null
+          Away_Team: string | null
+          Bookmaker_1: string | null
+          Bookmaker_2: string | null
+          created_at: string
+          Home_Team: string | null
+          id: number
+          Line: number | null
+          Link_1: string | null
+          Link_2: string | null
+          Odds_1: number | null
+          Odds_2: number | null
+          Outcome_1: string | null
+          Outcome_2: string | null
+          Player: string | null
+          Player_Prop: string | null
+          Sport: string | null
+        }
+        Insert: {
+          Arbitrage_Margin?: number | null
+          Away_Team?: string | null
+          Bookmaker_1?: string | null
+          Bookmaker_2?: string | null
+          created_at?: string
+          Home_Team?: string | null
+          id?: number
+          Line?: number | null
+          Link_1?: string | null
+          Link_2?: string | null
+          Odds_1?: number | null
+          Odds_2?: number | null
+          Outcome_1?: string | null
+          Outcome_2?: string | null
+          Player?: string | null
+          Player_Prop?: string | null
+          Sport?: string | null
+        }
+        Update: {
+          Arbitrage_Margin?: number | null
+          Away_Team?: string | null
+          Bookmaker_1?: string | null
+          Bookmaker_2?: string | null
+          created_at?: string
+          Home_Team?: string | null
+          id?: number
+          Line?: number | null
+          Link_1?: string | null
+          Link_2?: string | null
+          Odds_1?: number | null
+          Odds_2?: number | null
+          Outcome_1?: string | null
+          Outcome_2?: string | null
+          Player?: string | null
+          Player_Prop?: string | null
+          Sport?: string | null
         }
         Relationships: []
       }
