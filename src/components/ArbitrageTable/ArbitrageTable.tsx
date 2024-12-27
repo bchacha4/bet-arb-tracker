@@ -20,7 +20,7 @@ const fetchArbitrageProps = async () => {
   return data.map(item => ({
     player: item.Player || '',
     team: `${item.Home_Team || ''} vs. ${item.Away_Team || ''}`,
-    bet: (item.Player_Prop || '').replace(/_/g, ' '),
+    bet: (item.Prop || '').replace(/_/g, ' '),
     hold: item.Arbitrage_Margin?.toString() || '0',
     profit: '0',
     sides: [
