@@ -16,24 +16,28 @@ const Announcement = () => {
               <>
                 <p className="font-medium mb-1">Welcome to Bettor-IQ! 🎉</p>
                 <p>
-                  We're excited to have you here! This product is new and actively being improved.
-                  Currently, we're focused on NFL player props, but we'll be expanding to include:
+                  We're excited to announce that we've expanded our NFL coverage! In addition to player props, 
+                  we now support:
                 </p>
                 <ul className="list-disc list-inside mt-2 ml-2">
-                  <li>Game lines and other betting markets</li>
+                  <li>Moneyline (Head-to-head) bets</li>
+                  <li>Totals (Over/Under)</li>
+                  <li>Point Spreads</li>
+                </ul>
+                <p className="mt-2">
+                  We're continuously working to enhance your arbitrage betting experience! Coming soon:
+                </p>
+                <ul className="list-disc list-inside mt-2 ml-2">
                   <li>NBA and other sports coverage</li>
                   <li>Enhanced features and user experience improvements</li>
                 </ul>
-                <p className="mt-2">
-                  Stay tuned for regular updates as we continue to enhance your arbitrage betting experience!
-                </p>
                 <p className="mt-2 font-medium">
                   Your feedback matters! Click the user menu in the top right corner to share your thoughts 
                   and help us build the best possible product for you. 💡
                 </p>
               </>
             ) : (
-              <p className="font-medium">Welcome to Bettor-IQ! Click to learn more about upcoming features and how to share feedback. 🎉</p>
+              <p className="font-medium">Big update! 🎉 NFL Moneyline, Totals, and Spreads are now available! Click to learn more about our expanded coverage.</p>
             )}
           </AlertDescription>
         </div>
