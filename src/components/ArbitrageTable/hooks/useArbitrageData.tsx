@@ -5,13 +5,17 @@ import { calculateAmounts } from "../utils";
 import { Prop } from "../types";
 
 const fetchArbitrageProps = async () => {
-  const { data, error } = await supabase
-    .from('arb_props')
-    .select('*');
+  // Fetch data from both tables
+  const [arbResponse, nbaResponse] = await Promise.all([
+    supabase.from('arb_props').select('*'),
+    supabase.from('nba_props').select('*')
+  ]);
   
-  if (error) throw error;
+  if (arbResponse.error) throw arbResponse.error;
+  if (nbaResponse.error) throw nbaResponse.error;
   
-  return data.map(item => ({
+  // Combine and transform the data
+  const combinedData = [...arbResponse.data, ...nbaResponse.data].map(item => ({
     player: item.Player || '',
     team: `${item.Home_Team || ''} vs. ${item.Away_Team || ''}`,
     bet: (item.Prop || '').replace(/_/g, ' '),
@@ -38,6 +42,8 @@ const fetchArbitrageProps = async () => {
       }
     ]
   }));
+
+  return combinedData;
 };
 
 export const useArbitrageData = (bettingAmount: string, selectedSportsbook: string) => {

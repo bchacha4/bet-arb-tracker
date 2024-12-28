@@ -93,25 +93,7 @@ export type Database = {
         }
         Relationships: []
       }
-      profiles: {
-        Row: {
-          created_at: string
-          email_notifications: boolean | null
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          email_notifications?: boolean | null
-          id: string
-        }
-        Update: {
-          created_at?: string
-          email_notifications?: boolean | null
-          id?: string
-        }
-        Relationships: []
-      }
-      test_arb_props: {
+      nba_props: {
         Row: {
           Arbitrage_Margin: number | null
           Away_Team: string | null
@@ -128,7 +110,7 @@ export type Database = {
           Outcome_1: string | null
           Outcome_2: string | null
           Player: string | null
-          Player_Prop: string | null
+          Prop: string | null
           Sport: string | null
         }
         Insert: {
@@ -147,7 +129,7 @@ export type Database = {
           Outcome_1?: string | null
           Outcome_2?: string | null
           Player?: string | null
-          Player_Prop?: string | null
+          Prop?: string | null
           Sport?: string | null
         }
         Update: {
@@ -166,8 +148,26 @@ export type Database = {
           Outcome_1?: string | null
           Outcome_2?: string | null
           Player?: string | null
-          Player_Prop?: string | null
+          Prop?: string | null
           Sport?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email_notifications: boolean | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email_notifications?: boolean | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
         }
         Relationships: []
       }
