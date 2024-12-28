@@ -16,10 +16,11 @@ const Announcement = () => {
               <>
                 <p className="font-medium mb-1">Welcome to Bettor-IQ! 🎉</p>
                 <p>
-                  We're excited to announce that we've expanded our NFL coverage! In addition to player props, 
-                  we now support:
+                  We're excited to announce that we've expanded our coverage to include both NFL and NBA markets! 
+                  You can now access:
                 </p>
                 <ul className="list-disc list-inside mt-2 ml-2">
+                  <li>Player Props for both NFL and NBA</li>
                   <li>Moneyline (Head-to-head) bets</li>
                   <li>Totals (Over/Under)</li>
                   <li>Point Spreads</li>
@@ -28,7 +29,7 @@ const Announcement = () => {
                   We're continuously working to enhance your arbitrage betting experience! Coming soon:
                 </p>
                 <ul className="list-disc list-inside mt-2 ml-2">
-                  <li>NBA and other sports coverage</li>
+                  <li>Additional sports coverage</li>
                   <li>Enhanced features and user experience improvements</li>
                 </ul>
                 <p className="mt-2 font-medium">
@@ -37,7 +38,7 @@ const Announcement = () => {
                 </p>
               </>
             ) : (
-              <p className="font-medium">Big update! 🎉 NFL Moneyline, Totals, and Spreads are now available! Click to learn more about our expanded coverage.</p>
+              <p className="font-medium">Big update! 🎉 NBA markets are now available! Click to learn more about our expanded coverage for both NFL and NBA.</p>
             )}
           </AlertDescription>
         </div>
