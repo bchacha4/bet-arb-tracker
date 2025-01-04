@@ -6,7 +6,7 @@ const TableHeader = () => {
       <tr>
         <th className="px-6 py-3 border-b border-gray-200">PLAYER/TEAM</th>
         <th className="px-6 py-3 border-b border-gray-200">BET</th>
-        <th className="px-6 py-3 border-b border-gray-200">OVER/UNDER</th>
+        <th className="px-6 py-3 border-b border-gray-200">SIDE</th>
         <th className="px-6 py-3 border-b border-gray-200">FANDUEL</th>
         <th className="px-6 py-3 border-b border-gray-200">ESPN BET</th>
         <th className="px-6 py-3 border-b border-gray-200">DRAFTKINGS</th>

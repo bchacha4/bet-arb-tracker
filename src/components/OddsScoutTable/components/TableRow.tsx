@@ -43,20 +43,22 @@ const TableRow = ({ prop }: { prop: any }) => {
   ];
 
   return (
-    <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
-      <td className="px-6 py-4 font-medium">
-        {prop.player}
-        <br />
-        <span className="text-gray-500">{formatTeams(prop.team)}</span>
-      </td>
-      <td className="px-6 py-4 min-w-[160px] whitespace-normal capitalize">
-        {formatBet(prop.playerProp)}
-      </td>
-      {sportsbooks.map((book) => {
-        const bookData = prop.sportsbooks[book];
-        return (
-          <td key={book} className="px-6 py-4">
-            <div className="flex flex-col gap-2">
+    <>
+      {/* Over row */}
+      <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
+        <td className="px-6 py-4 font-medium" rowSpan={2}>
+          {prop.player}
+          <br />
+          <span className="text-gray-500">{formatTeams(prop.team)}</span>
+        </td>
+        <td className="px-6 py-4 min-w-[160px] whitespace-normal capitalize" rowSpan={2}>
+          {formatBet(prop.playerProp)}
+        </td>
+        <td className="px-6 py-4">Over</td>
+        {sportsbooks.map((book) => {
+          const bookData = prop.sportsbooks[book];
+          return (
+            <td key={`${book}-over`} className="px-6 py-4">
               {bookData?.Over && (
                 <OddsButton
                   odds={bookData.Over.odds}
@@ -65,6 +67,17 @@ const TableRow = ({ prop }: { prop: any }) => {
                   outcome="Over"
                 />
               )}
+            </td>
+          );
+        })}
+      </tr>
+      {/* Under row */}
+      <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
+        <td className="px-6 py-4">Under</td>
+        {sportsbooks.map((book) => {
+          const bookData = prop.sportsbooks[book];
+          return (
+            <td key={`${book}-under`} className="px-6 py-4">
               {bookData?.Under && (
                 <OddsButton
                   odds={bookData.Under.odds}
@@ -73,11 +86,11 @@ const TableRow = ({ prop }: { prop: any }) => {
                   outcome="Under"
                 />
               )}
-            </div>
-          </td>
-        );
-      })}
-    </tr>
+            </td>
+          );
+        })}
+      </tr>
+    </>
   );
 };
 
