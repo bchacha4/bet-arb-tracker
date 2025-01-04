@@ -29,9 +29,9 @@ const formatTeams = (teamString: string): string => {
   return `${formatTeamName(homeTeam)} vs ${formatTeamName(awayTeam)}`;
 };
 
-const formatBet = (bet: string | undefined): string => {
+const formatBet = (bet: string): string => {
   if (!bet) return '';
-  return bet.split('_').join(' ').toLowerCase();
+  return bet.toLowerCase().replace(/_/g, ' ');
 };
 
 const TableRow = ({ prop }: { prop: any }) => {
@@ -49,7 +49,7 @@ const TableRow = ({ prop }: { prop: any }) => {
         <br />
         <span className="text-gray-500">{formatTeams(prop.team)}</span>
       </td>
-      <td className="px-6 py-4 w-32 capitalize">{formatBet(prop['Player Prop'])}</td>
+      <td className="px-6 py-4 w-32 capitalize">{formatBet(prop.playerProp)}</td>
       <td className="px-6 py-4">{prop.outcome}</td>
       {sportsbooks.map((book) => (
         <td key={book} className="px-6 py-4">
