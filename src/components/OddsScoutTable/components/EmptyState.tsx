@@ -1,15 +1,13 @@
 import React from 'react';
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
 
 const EmptyState = () => {
   return (
-    <Alert className="bg-blue-50 border-blue-200">
-      <Info className="h-5 w-5 text-blue-500" />
-      <AlertDescription className="text-blue-700">
-        No odds data available at the moment. Please check back later for updated odds.
-      </AlertDescription>
-    </Alert>
+    <div className="text-center py-12">
+      <h3 className="text-lg font-medium text-gray-900">No odds data available</h3>
+      <p className="mt-2 text-sm text-gray-500">
+        Check back later for updated odds from various sportsbooks.
+      </p>
+    </div>
   );
 };
 

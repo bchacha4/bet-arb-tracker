@@ -1,12 +1,6 @@
 import React from 'react';
+import { AVAILABLE_SPORTSBOOKS } from '@/constants/sportsbooks';
 import OddsButton from './OddsButton';
-
-const SPORTSBOOKS = [
-  'FanDuel', 'ESPN BET', 'DraftKings', 'Fliff', 'BetMGM', 
-  'Hard Rock Bet', 'BetRivers', 'Bally Bet', 'Caesars', 
-  'BetOnline.ag', 'Bovada', 'BetUS', 'betPARX', 
-  'BetAnySports', 'LowVig.ag'
-];
 
 const TableRow = ({ prop }: { prop: any }) => {
   return (
@@ -16,27 +10,30 @@ const TableRow = ({ prop }: { prop: any }) => {
         <br />
         <span className="text-gray-500">{prop.team}</span>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap">
+      <td className="px-6 py-4">
         {prop.prop}
       </td>
-      {SPORTSBOOKS.map((book) => (
-        <td key={book} className="px-6 py-4">
-          {prop.sportsbooks[book] && (
+      <td className="px-6 py-4">
+        Over/Under
+      </td>
+      {AVAILABLE_SPORTSBOOKS.map((book, index) => (
+        <td key={index} className="px-6 py-4">
+          {prop.sportsbooks[book.value] && (
             <div className="space-y-2">
-              {prop.sportsbooks[book].Over && (
+              {prop.sportsbooks[book.value].Over && (
                 <OddsButton
+                  line={prop.sportsbooks[book.value].Over.line}
+                  odds={prop.sportsbooks[book.value].Over.odds}
+                  link={prop.sportsbooks[book.value].Over.link}
                   type="Over"
-                  line={prop.sportsbooks[book].Over.line}
-                  odds={prop.sportsbooks[book].Over.odds}
-                  link={prop.sportsbooks[book].Over.link}
                 />
               )}
-              {prop.sportsbooks[book].Under && (
+              {prop.sportsbooks[book.value].Under && (
                 <OddsButton
+                  line={prop.sportsbooks[book.value].Under.line}
+                  odds={prop.sportsbooks[book.value].Under.odds}
+                  link={prop.sportsbooks[book.value].Under.link}
                   type="Under"
-                  line={prop.sportsbooks[book].Under.line}
-                  odds={prop.sportsbooks[book].Under.odds}
-                  link={prop.sportsbooks[book].Under.link}
                 />
               )}
             </div>
