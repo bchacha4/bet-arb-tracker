@@ -2,6 +2,8 @@ import React from 'react';
 import OddsButton from './OddsButton';
 
 const formatTeamName = (fullName: string): string => {
+  if (!fullName) return '';
+  
   // Common suffixes to keep
   const keepSuffixes = ['76ers', 'Trail Blazers'];
   
@@ -21,11 +23,14 @@ const formatTeamName = (fullName: string): string => {
 };
 
 const formatTeams = (teamString: string): string => {
+  if (!teamString) return '';
+  
   const [homeTeam, awayTeam] = teamString.split(' vs ');
   return `${formatTeamName(homeTeam)} vs ${formatTeamName(awayTeam)}`;
 };
 
-const formatBet = (bet: string): string => {
+const formatBet = (bet: string | undefined): string => {
+  if (!bet) return '';
   return bet.split('_').join(' ').toLowerCase();
 };
 
