@@ -65,6 +65,7 @@ const TableRow = ({ prop }: { prop: any }) => {
                   line={bookData.Over.line}
                   link={bookData.Over.link}
                   outcome="Over"
+                  bookmaker={book}
                 />
               )}
             </td>
@@ -84,6 +85,7 @@ const TableRow = ({ prop }: { prop: any }) => {
                   line={bookData.Under.line}
                   link={bookData.Under.link}
                   outcome="Under"
+                  bookmaker={book}
                 />
               )}
             </td>

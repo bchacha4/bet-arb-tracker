@@ -1,19 +1,22 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import { formatUrl } from "@/components/ArbitrageTable/utils/urlUtils";
 
 interface OddsButtonProps {
   odds?: number;
   line?: number;
   link?: string;
   outcome: 'Over' | 'Under';
+  bookmaker: string;
 }
 
-const OddsButton = ({ odds, line, link, outcome }: OddsButtonProps) => {
+const OddsButton = ({ odds, line, link, outcome, bookmaker }: OddsButtonProps) => {
   if (!odds || !line) return null;
 
   const handleClick = () => {
-    if (link) {
-      window.open(link, '_blank');
+    const url = formatUrl(link || null, bookmaker);
+    if (url) {
+      window.open(url, '_blank');
     }
   };
 

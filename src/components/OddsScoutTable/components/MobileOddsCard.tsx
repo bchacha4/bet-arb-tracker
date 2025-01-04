@@ -31,12 +31,14 @@ const MobileOddsCard = ({ prop }: { prop: any }) => {
                   line={bookData?.Over?.line}
                   link={bookData?.Over?.link}
                   outcome="Over"
+                  bookmaker={book}
                 />
                 <OddsButton
                   odds={bookData?.Under?.odds}
                   line={bookData?.Under?.line}
                   link={bookData?.Under?.link}
                   outcome="Under"
+                  bookmaker={book}
                 />
               </div>
             </div>
