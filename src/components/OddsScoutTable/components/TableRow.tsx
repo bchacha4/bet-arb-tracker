@@ -49,7 +49,7 @@ const TableRow = ({ prop }: { prop: any }) => {
         <br />
         <span className="text-gray-500">{formatTeams(prop.team)}</span>
       </td>
-      <td className="px-6 py-4 w-32 capitalize">{formatBet(prop.playerProp)}</td>
+      <td className="px-6 py-4 w-48 capitalize whitespace-nowrap">{formatBet(prop.playerProp)}</td>
       <td className="px-6 py-4">{prop.outcome}</td>
       {sportsbooks.map((book) => (
         <td key={book} className="px-6 py-4">
