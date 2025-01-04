@@ -19,7 +19,7 @@ const OddsButton = ({ odds, line, link }: OddsButtonProps) => {
   return (
     <Button
       onClick={handleClick}
-      className="w-[100px] text-center p-2 hover:bg-gray-100 transition-colors"
+      className="w-14 h-14 text-center p-2 hover:bg-gray-100 transition-colors"
       variant="outline"
     >
       <div className="text-sm space-y-1">
