@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar/Navbar';
 import OddsScoutTable from '@/components/OddsScoutTable/OddsScoutTable';
 
 const OddsScout = () => {
   const location = useLocation();
-
-  useEffect(() => {
+  
+  React.useEffect(() => {
     console.log('OddsScout component mounted');
     console.log('Current pathname:', location.pathname);
     console.log('Full URL:', window.location.href);

@@ -1,21 +1,14 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./components/Auth/AuthProvider";
-import Index from "./pages/Index";
-import LoginPage from "./components/Auth/LoginPage";
-import OddsScout from "./pages/OddsScout";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: false,
-    },
-  },
-});
+import { Toaster } from "@/components/ui/toaster";
+import { Sonner } from "sonner";
+import { queryClient } from "@/lib/react-query";
+import { AuthProvider, useAuth } from '@/components/Auth/AuthProvider';
+import LoginPage from '@/components/Auth/LoginPage';
+import Index from '@/pages/Index';
+import OddsScout from '@/pages/OddsScout';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -24,7 +17,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   
   if (isLoading) {
     console.log("ProtectedRoute - Still loading");
-    return null; // Or a loading spinner component
+    return null;
   }
   
   if (!user) {
@@ -33,12 +26,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }
   
   console.log("ProtectedRoute - Rendering protected content");
-  return children;
+  return <>{children}</>;
 };
 
 const App = () => {
   console.log("App component rendering");
-  
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -64,12 +57,7 @@ const App = () => {
                   </ProtectedRoute>
                 } 
               />
-              <Route 
-                path="*" 
-                element={
-                  <Navigate to="/" replace />
-                } 
-              />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </AuthProvider>
         </BrowserRouter>
