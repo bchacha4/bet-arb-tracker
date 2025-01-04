@@ -31,12 +31,17 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => {
   console.log("App component rendering");
+  
+  // Get the base URL from the current window location
+  const baseUrl = window.location.pathname.split('/')[1];
+  console.log("Current base URL:", baseUrl);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename="/">
           <AuthProvider>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
@@ -54,6 +59,13 @@ const App = () => {
                   <ProtectedRoute>
                     <OddsScout />
                   </ProtectedRoute>
+                } 
+              />
+              {/* Catch-all route for unknown paths */}
+              <Route 
+                path="*" 
+                element={
+                  <Navigate to="/" replace />
                 } 
               />
             </Routes>

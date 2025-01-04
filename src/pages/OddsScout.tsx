@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar/Navbar';
 import OddsScoutTable from '@/components/OddsScoutTable/OddsScoutTable';
 
 const OddsScout = () => {
+  const location = useLocation();
+
   useEffect(() => {
     console.log('OddsScout component mounted');
-  }, []);
+    console.log('Current pathname:', location.pathname);
+    console.log('Full URL:', window.location.href);
+  }, [location]);
 
   return (
     <div className="min-h-screen bg-gray-50">
