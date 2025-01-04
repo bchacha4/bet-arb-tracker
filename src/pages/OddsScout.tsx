@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar/Navbar';
 import OddsScoutTable from '@/components/OddsScoutTable/OddsScoutTable';
 
 const OddsScout = () => {
+  console.log('OddsScout page rendered'); // Adding a console log to help debug
+  
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />

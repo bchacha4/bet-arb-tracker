@@ -28,22 +28,16 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Index />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/odds-scout"
-              element={
-                <ProtectedRoute>
-                  <OddsScout />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Index />
+              </ProtectedRoute>
+            } />
+            <Route path="/odds-scout" element={
+              <ProtectedRoute>
+                <OddsScout />
+              </ProtectedRoute>
+            } />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
