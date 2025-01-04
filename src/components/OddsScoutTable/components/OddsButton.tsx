@@ -1,26 +1,32 @@
 import React from 'react';
+import { Button } from "@/components/ui/button";
 
 interface OddsButtonProps {
-  line: number;
-  odds: number;
-  link: string;
-  type: 'Over' | 'Under';
+  odds?: number;
+  line?: number;
+  link?: string;
 }
 
-const OddsButton = ({ line, odds, link, type }: OddsButtonProps) => {
+const OddsButton = ({ odds, line, link }: OddsButtonProps) => {
+  if (!odds || !line) return null;
+
   const handleClick = () => {
-    window.open(link, '_blank');
+    if (link) {
+      window.open(link, '_blank');
+    }
   };
 
   return (
-    <button
+    <Button
       onClick={handleClick}
-      className="w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+      className="w-full text-center p-2 hover:bg-gray-100 transition-colors"
+      variant="outline"
     >
-      <div className="text-xs text-gray-500">{type}</div>
-      <div className="font-medium">{line}</div>
-      <div className="text-xs">{odds > 0 ? `+${odds}` : odds}</div>
-    </button>
+      <div className="text-sm">
+        <div>{line}</div>
+        <div>{odds > 0 ? `+${odds}` : odds}</div>
+      </div>
+    </Button>
   );
 };
 

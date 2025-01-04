@@ -1,5 +1,4 @@
 import React from 'react';
-import { AVAILABLE_SPORTSBOOKS } from '@/constants/sportsbooks';
 import OddsButton from './OddsButton';
 
 const TableRow = ({ prop }: { prop: any }) => {
@@ -10,36 +9,113 @@ const TableRow = ({ prop }: { prop: any }) => {
         <br />
         <span className="text-gray-500">{prop.team}</span>
       </td>
+      <td className="px-6 py-4">{prop.prop}</td>
+      <td className="px-6 py-4">{prop.outcome}</td>
       <td className="px-6 py-4">
-        {prop.prop}
+        <OddsButton
+          odds={prop.sportsbooks['FanDuel']?.odds}
+          line={prop.sportsbooks['FanDuel']?.line}
+          link={prop.sportsbooks['FanDuel']?.link}
+        />
       </td>
       <td className="px-6 py-4">
-        Over/Under
+        <OddsButton
+          odds={prop.sportsbooks['ESPN BET']?.odds}
+          line={prop.sportsbooks['ESPN BET']?.line}
+          link={prop.sportsbooks['ESPN BET']?.link}
+        />
       </td>
-      {AVAILABLE_SPORTSBOOKS.map((book, index) => (
-        <td key={index} className="px-6 py-4">
-          {prop.sportsbooks[book.value] && (
-            <div className="space-y-2">
-              {prop.sportsbooks[book.value].Over && (
-                <OddsButton
-                  line={prop.sportsbooks[book.value].Over.line}
-                  odds={prop.sportsbooks[book.value].Over.odds}
-                  link={prop.sportsbooks[book.value].Over.link}
-                  type="Over"
-                />
-              )}
-              {prop.sportsbooks[book.value].Under && (
-                <OddsButton
-                  line={prop.sportsbooks[book.value].Under.line}
-                  odds={prop.sportsbooks[book.value].Under.odds}
-                  link={prop.sportsbooks[book.value].Under.link}
-                  type="Under"
-                />
-              )}
-            </div>
-          )}
-        </td>
-      ))}
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['DraftKings']?.odds}
+          line={prop.sportsbooks['DraftKings']?.line}
+          link={prop.sportsbooks['DraftKings']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['Fliff']?.odds}
+          line={prop.sportsbooks['Fliff']?.line}
+          link={prop.sportsbooks['Fliff']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['BetMGM']?.odds}
+          line={prop.sportsbooks['BetMGM']?.line}
+          link={prop.sportsbooks['BetMGM']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['Hard Rock Bet']?.odds}
+          line={prop.sportsbooks['Hard Rock Bet']?.line}
+          link={prop.sportsbooks['Hard Rock Bet']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['BetRivers']?.odds}
+          line={prop.sportsbooks['BetRivers']?.line}
+          link={prop.sportsbooks['BetRivers']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['Bally Bet']?.odds}
+          line={prop.sportsbooks['Bally Bet']?.line}
+          link={prop.sportsbooks['Bally Bet']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['Caesars']?.odds}
+          line={prop.sportsbooks['Caesars']?.line}
+          link={prop.sportsbooks['Caesars']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['BetOnline.ag']?.odds}
+          line={prop.sportsbooks['BetOnline.ag']?.line}
+          link={prop.sportsbooks['BetOnline.ag']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['Bovada']?.odds}
+          line={prop.sportsbooks['Bovada']?.line}
+          link={prop.sportsbooks['Bovada']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['BetUS']?.odds}
+          line={prop.sportsbooks['BetUS']?.line}
+          link={prop.sportsbooks['BetUS']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['betPARX']?.odds}
+          line={prop.sportsbooks['betPARX']?.line}
+          link={prop.sportsbooks['betPARX']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['BetAnySports']?.odds}
+          line={prop.sportsbooks['BetAnySports']?.line}
+          link={prop.sportsbooks['BetAnySports']?.link}
+        />
+      </td>
+      <td className="px-6 py-4">
+        <OddsButton
+          odds={prop.sportsbooks['LowVig.ag']?.odds}
+          line={prop.sportsbooks['LowVig.ag']?.line}
+          link={prop.sportsbooks['LowVig.ag']?.link}
+        />
+      </td>
     </tr>
   );
 };
