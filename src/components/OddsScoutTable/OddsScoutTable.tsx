@@ -28,8 +28,7 @@ const OddsScoutTable = () => {
             player: curr.Player,
             team: `${curr["Home Team"]} vs ${curr["Away Team"]}`,
             prop: curr["Player Prop"],
-            outcome: curr.Outcome,
-            playerProp: curr["Player Prop"], // Add this line to explicitly pass the player prop
+            playerProp: curr["Player Prop"],
             sportsbooks: {}
           };
         }
@@ -43,18 +42,16 @@ const OddsScoutTable = () => {
         ];
         
         sportsbooks.forEach(book => {
-          const odds = curr[`${book}_Odds`];
-          const line = curr[`${book}_Line`];
-          const link = curr[`${book}_Link`];
+          if (!acc[key].sportsbooks[book]) {
+            acc[key].sportsbooks[book] = {};
+          }
           
-          if (odds && line) {
-            if (!acc[key].sportsbooks[book]) {
-              acc[key].sportsbooks[book] = {};
-            }
+          // Store both over and under data
+          if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
             acc[key].sportsbooks[book][curr.Outcome] = {
-              odds,
-              line,
-              link
+              odds: curr[`${book}_Odds`],
+              line: curr[`${book}_Line`],
+              link: curr[`${book}_Link`]
             };
           }
         });

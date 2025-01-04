@@ -5,9 +5,10 @@ interface OddsButtonProps {
   odds?: number;
   line?: number;
   link?: string;
+  outcome: 'Over' | 'Under';
 }
 
-const OddsButton = ({ odds, line, link }: OddsButtonProps) => {
+const OddsButton = ({ odds, line, link, outcome }: OddsButtonProps) => {
   if (!odds || !line) return null;
 
   const handleClick = () => {

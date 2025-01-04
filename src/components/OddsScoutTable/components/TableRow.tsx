@@ -50,14 +50,22 @@ const TableRow = ({ prop }: { prop: any }) => {
         <span className="text-gray-500">{formatTeams(prop.team)}</span>
       </td>
       <td className="px-6 py-4 min-w-[160px] whitespace-normal capitalize">{formatBet(prop.playerProp)}</td>
-      <td className="px-6 py-4">{prop.outcome}</td>
       {sportsbooks.map((book) => (
         <td key={book} className="px-6 py-4">
-          <OddsButton
-            odds={prop.sportsbooks[book]?.[prop.outcome]?.odds}
-            line={prop.sportsbooks[book]?.[prop.outcome]?.line}
-            link={prop.sportsbooks[book]?.[prop.outcome]?.link}
-          />
+          <div className="flex flex-col gap-2">
+            <OddsButton
+              odds={prop.sportsbooks[book]?.Over?.odds}
+              line={prop.sportsbooks[book]?.Over?.line}
+              link={prop.sportsbooks[book]?.Over?.link}
+              outcome="Over"
+            />
+            <OddsButton
+              odds={prop.sportsbooks[book]?.Under?.odds}
+              line={prop.sportsbooks[book]?.Under?.line}
+              link={prop.sportsbooks[book]?.Under?.link}
+              outcome="Under"
+            />
+          </div>
         </td>
       ))}
     </tr>
