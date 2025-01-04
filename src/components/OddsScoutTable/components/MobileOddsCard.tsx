@@ -15,22 +15,28 @@ const MobileOddsCard = ({ prop }: { prop: any }) => {
         <h3 className="text-lg font-semibold">{prop.player}</h3>
         <p className="text-sm text-gray-500">{prop.team}</p>
         <p className="text-sm font-medium mt-1">{prop.prop}</p>
-        <p className="text-sm font-medium">{prop.outcome}</p>
       </div>
 
       <div className="space-y-4">
         {sportsbooks.map((book) => {
           const bookData = prop.sportsbooks[book];
-          if (!bookData?.odds || !bookData?.line) return null;
+          if (!bookData?.Over && !bookData?.Under) return null;
 
           return (
             <div key={book} className="flex justify-between items-center">
               <span className="text-sm font-medium">{book}</span>
-              <div className="w-32">
+              <div className="flex flex-col gap-2">
                 <OddsButton
-                  odds={bookData.odds}
-                  line={bookData.line}
-                  link={bookData.link}
+                  odds={bookData?.Over?.odds}
+                  line={bookData?.Over?.line}
+                  link={bookData?.Over?.link}
+                  outcome="Over"
+                />
+                <OddsButton
+                  odds={bookData?.Under?.odds}
+                  line={bookData?.Under?.line}
+                  link={bookData?.Under?.link}
+                  outcome="Under"
                 />
               </div>
             </div>
