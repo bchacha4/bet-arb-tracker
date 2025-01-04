@@ -22,9 +22,9 @@ const OddsButton = ({ odds, line, link }: OddsButtonProps) => {
       className="w-full text-center p-2 hover:bg-gray-100 transition-colors"
       variant="outline"
     >
-      <div className="text-sm">
-        <div>{line}</div>
-        <div>{odds > 0 ? `+${odds}` : odds}</div>
+      <div className="text-sm space-y-1">
+        <div className="font-medium">{line}</div>
+        <div className="text-gray-600">{odds > 0 ? `+${odds}` : odds}</div>
       </div>
     </Button>
   );
