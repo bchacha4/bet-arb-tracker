@@ -49,25 +49,34 @@ const TableRow = ({ prop }: { prop: any }) => {
         <br />
         <span className="text-gray-500">{formatTeams(prop.team)}</span>
       </td>
-      <td className="px-6 py-4 min-w-[160px] whitespace-normal capitalize">{formatBet(prop.playerProp)}</td>
-      {sportsbooks.map((book) => (
-        <td key={book} className="px-6 py-4">
-          <div className="flex flex-col gap-2">
-            <OddsButton
-              odds={prop.sportsbooks[book]?.Over?.odds}
-              line={prop.sportsbooks[book]?.Over?.line}
-              link={prop.sportsbooks[book]?.Over?.link}
-              outcome="Over"
-            />
-            <OddsButton
-              odds={prop.sportsbooks[book]?.Under?.odds}
-              line={prop.sportsbooks[book]?.Under?.line}
-              link={prop.sportsbooks[book]?.Under?.link}
-              outcome="Under"
-            />
-          </div>
-        </td>
-      ))}
+      <td className="px-6 py-4 min-w-[160px] whitespace-normal capitalize">
+        {formatBet(prop.playerProp)}
+      </td>
+      {sportsbooks.map((book) => {
+        const bookData = prop.sportsbooks[book];
+        return (
+          <td key={book} className="px-6 py-4">
+            <div className="flex flex-col gap-2">
+              {bookData?.Over && (
+                <OddsButton
+                  odds={bookData.Over.odds}
+                  line={bookData.Over.line}
+                  link={bookData.Over.link}
+                  outcome="Over"
+                />
+              )}
+              {bookData?.Under && (
+                <OddsButton
+                  odds={bookData.Under.odds}
+                  line={bookData.Under.line}
+                  link={bookData.Under.link}
+                  outcome="Under"
+                />
+              )}
+            </div>
+          </td>
+        );
+      })}
     </tr>
   );
 };
