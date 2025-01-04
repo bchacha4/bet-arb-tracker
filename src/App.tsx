@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./components/Auth/AuthProvider";
 import Index from "./pages/Index";
 import LoginPage from "./components/Auth/LoginPage";
+import OddsScout from "./pages/OddsScout";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Index />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/odds-scout"
+              element={
+                <ProtectedRoute>
+                  <OddsScout />
                 </ProtectedRoute>
               }
             />
