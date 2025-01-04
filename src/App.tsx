@@ -19,12 +19,19 @@ const queryClient = new QueryClient({
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
-  console.log("ProtectedRoute - User status:", !!user);
+  const { user, isLoading } = useAuth();
+  console.log("ProtectedRoute - Loading:", isLoading, "User status:", !!user);
+  
+  if (isLoading) {
+    console.log("ProtectedRoute - Still loading");
+    return null; // Or a loading spinner component
+  }
+  
   if (!user) {
     console.log("ProtectedRoute - Redirecting to login");
     return <Navigate to="/login" replace />;
   }
+  
   console.log("ProtectedRoute - Rendering protected content");
   return children;
 };
@@ -32,16 +39,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const App = () => {
   console.log("App component rendering");
   
-  // Get the base URL from the current window location
-  const baseUrl = window.location.pathname.split('/')[1];
-  console.log("Current base URL:", baseUrl);
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter basename="/">
+        <BrowserRouter>
           <AuthProvider>
             <Routes>
               <Route path="/login" element={<LoginPage />} />
@@ -61,7 +64,6 @@ const App = () => {
                   </ProtectedRoute>
                 } 
               />
-              {/* Catch-all route for unknown paths */}
               <Route 
                 path="*" 
                 element={
