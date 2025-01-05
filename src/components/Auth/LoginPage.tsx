@@ -61,6 +61,7 @@ const LoginPage = () => {
                   },
                   anchor: {
                     color: '#1edb95',
+                    textDecoration: 'none',
                   },
                   container: {
                     color: '#333',
@@ -82,11 +83,11 @@ const LoginPage = () => {
           {/* Footer */}
           <p className="mt-6 text-center text-sm text-gray-600">
             By signing up, you agree to our{' '}
-            <a href="#" className="text-primary hover:text-primary-hover">
+            <a href="#" className="text-primary hover:text-primary-hover no-underline">
               Terms of Service
             </a>{' '}
             and{' '}
-            <a href="#" className="text-primary hover:text-primary-hover">
+            <a href="#" className="text-primary hover:text-primary-hover no-underline">
               Privacy Policy
             </a>
           </p>
