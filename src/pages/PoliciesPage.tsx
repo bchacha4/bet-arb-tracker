@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
@@ -8,6 +11,13 @@ const PoliciesPage = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        <Link to="/">
+          <Button variant="ghost" className="mb-6 hover:bg-gray-100">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Button>
+        </Link>
+        
         <div className="space-y-12">
           {/* Terms of Service Section */}
           <section>
