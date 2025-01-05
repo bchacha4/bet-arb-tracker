@@ -27,9 +27,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => {
   React.useEffect(() => {
-    // Force dark mode
-    document.documentElement.classList.add('dark');
-    // Also set the background color at the document level
+    // Set light background color at the document level
     document.body.className = 'bg-background text-foreground';
   }, []);
 

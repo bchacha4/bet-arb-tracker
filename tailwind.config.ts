@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -29,10 +28,10 @@ export default {
           hover: "#1bc585",
         },
         table: {
-          dark: "#1A1F2C",
-          row: "#1E1E1E",
-          altRow: "#252525",
-          border: "#333333",
+          dark: "#ffffff",
+          row: "#ffffff",
+          altRow: "#f9fafb",
+          border: "#e5e7eb",
         },
         betting: {
           profit: "#1edb95",
