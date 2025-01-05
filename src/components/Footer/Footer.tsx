@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Github, Twitter } from 'lucide-react';
+import { Twitter } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
 const Footer = () => {
@@ -51,15 +51,7 @@ const Footer = () => {
             <h4 className="text-sm font-semibold uppercase tracking-wider">Follow Us</h4>
             <div className="flex space-x-4">
               <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors"
-              >
-                <Github className="h-5 w-5" />
-              </a>
-              <a
-                href="https://twitter.com"
+                href="https://x.com/bettor_iq"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-primary transition-colors"
