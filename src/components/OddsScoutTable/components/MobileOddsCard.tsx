@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import OddsButton from './OddsButton';
 import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
