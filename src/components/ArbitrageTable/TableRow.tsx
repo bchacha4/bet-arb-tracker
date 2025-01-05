@@ -22,7 +22,7 @@ const TableRow = ({ prop }: { prop: Prop }) => {
         <>
           {prop.player}
           <br />
-          <span className="text-gray-500">{prop.team}</span>
+          <span className="text-foreground/60">{prop.team}</span>
         </>
       );
     }
@@ -34,7 +34,7 @@ const TableRow = ({ prop }: { prop: Prop }) => {
   };
 
   return (
-    <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
+    <tr className="bg-table-row border-b border-table-border hover:bg-table-altRow">
       <td className="px-6 py-4 font-medium">
         {renderPlayerOrTeams()}
       </td>

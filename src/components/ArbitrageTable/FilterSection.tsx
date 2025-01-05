@@ -15,33 +15,32 @@ import {
 import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 
 interface FilterSectionProps {
-  isSubscribed: boolean;
   bettingAmount: string;
   onBettingAmountChange: (value: string) => void;
   selectedSportsbook: string;
   onSportsbookChange: (value: string) => void;
 }
 
-const FilterSection = ({
+const FilterSection: React.FC<FilterSectionProps> = ({
   bettingAmount,
   onBettingAmountChange,
   selectedSportsbook,
   onSportsbookChange,
-}: FilterSectionProps) => {
+}) => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
 
-  const handleRefresh = () => {
+  const handleRefresh = React.useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['arbitrageProps'] });
     toast({
       title: "Data Refreshed",
       description: "The arbitrage opportunities have been updated.",
     });
-  };
+  }, [queryClient, toast]);
 
   return (
-    <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} mb-6 gap-4`}>
+    <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} gap-4 p-4 bg-white rounded-lg shadow-sm border border-border/50`}>
       <div className="flex items-center gap-4">
         <BettingAmountInput
           value={bettingAmount}
@@ -49,13 +48,17 @@ const FilterSection = ({
         />
         {!isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border border-gray-200">
+            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-lg">
-              <SelectItem value="all">All Sportsbooks</SelectItem>
+            <SelectContent className="bg-white border-border/50">
+              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
-                <SelectItem key={book.value} value={book.value}>
+                <SelectItem 
+                  key={book.value} 
+                  value={book.value}
+                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                >
                   {book.label}
                 </SelectItem>
               ))}
@@ -66,13 +69,17 @@ const FilterSection = ({
       <div className="flex items-center gap-4">
         {isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border border-gray-200">
+            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-lg">
-              <SelectItem value="all">All Sportsbooks</SelectItem>
+            <SelectContent className="bg-white border-border/50">
+              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
-                <SelectItem key={book.value} value={book.value}>
+                <SelectItem 
+                  key={book.value} 
+                  value={book.value}
+                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                >
                   {book.label}
                 </SelectItem>
               ))}
@@ -81,7 +88,7 @@ const FilterSection = ({
         )}
         <Button
           variant="outline"
-          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary h-10"
+          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary transition-colors duration-200 h-10"
           onClick={handleRefresh}
         >
           <RefreshCw size={16} />

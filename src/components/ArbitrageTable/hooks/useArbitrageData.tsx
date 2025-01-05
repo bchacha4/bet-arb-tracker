@@ -5,17 +5,25 @@ import { calculateAmounts } from "../utils";
 import { Prop } from "../types";
 
 const fetchArbitrageProps = async () => {
-  // Fetch data from both tables
+  // Use Promise.all for parallel requests
   const [arbResponse, nbaResponse] = await Promise.all([
-    supabase.from('arb_props').select('*'),
-    supabase.from('nba_props').select('*')
+    supabase
+      .from('arb_props')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(100), // Limit the number of records for better performance
+    supabase
+      .from('nba_props')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(100)
   ]);
   
   if (arbResponse.error) throw arbResponse.error;
   if (nbaResponse.error) throw nbaResponse.error;
   
-  // Combine and transform the data
-  const combinedData = [...arbResponse.data, ...nbaResponse.data].map(item => ({
+  // Transform data using a more efficient method
+  return [...arbResponse.data, ...nbaResponse.data].map(item => ({
     player: item.Player || '',
     team: `${item.Home_Team || ''} vs. ${item.Away_Team || ''}`,
     bet: (item.Prop || '').replace(/_/g, ' '),
@@ -42,14 +50,14 @@ const fetchArbitrageProps = async () => {
       }
     ]
   }));
-
-  return combinedData;
 };
 
 export const useArbitrageData = (bettingAmount: string, selectedSportsbook: string) => {
   const { data: fetchedProps = [], isLoading } = useQuery({
-    queryKey: ['arbitrageProps'],
+    queryKey: ['arbitrageProps', selectedSportsbook],
     queryFn: fetchArbitrageProps,
+    staleTime: 30000, // Cache data for 30 seconds
+    refetchInterval: 30000, // Refetch every 30 seconds
   });
 
   const processedData = React.useMemo(() => {

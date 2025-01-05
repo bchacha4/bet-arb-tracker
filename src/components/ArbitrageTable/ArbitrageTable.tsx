@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileArbitrageCard from "./MobileArbitrageCard";
 import TableHeader from "./TableHeader";
@@ -7,6 +7,10 @@ import LoadingState from "./components/LoadingState";
 import EmptyState from "./components/EmptyState";
 import { useArbitrageData } from "./hooks/useArbitrageData";
 import { ArbitrageTableProps } from "./types";
+
+// Memoize the table row component to prevent unnecessary re-renders
+const MemoizedTableRow = memo(TableRow);
+const MemoizedMobileCard = memo(MobileArbitrageCard);
 
 const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTableProps) => {
   const { data: calculatedProps, isLoading } = useArbitrageData(bettingAmount, selectedSportsbook);
@@ -24,19 +28,19 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTablePro
     return (
       <div className="space-y-4">
         {calculatedProps.map((prop, index) => (
-          <MobileArbitrageCard key={index} prop={prop} />
+          <MemoizedMobileCard key={`${prop.player}-${index}`} prop={prop} />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto border border-gray-200 rounded-lg">
-      <table className="w-full text-sm text-left text-gray-900">
+    <div className="overflow-x-auto border border-table-border rounded-lg bg-table-dark">
+      <table className="w-full text-sm text-left text-foreground">
         <TableHeader />
         <tbody>
           {calculatedProps.map((prop, index) => (
-            <TableRow key={index} prop={prop} />
+            <MemoizedTableRow key={`${prop.player}-${index}`} prop={prop} />
           ))}
         </tbody>
       </table>
@@ -44,4 +48,4 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTablePro
   );
 };
 
-export default ArbitrageTable;
+export default memo(ArbitrageTable);
