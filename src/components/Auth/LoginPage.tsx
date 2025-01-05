@@ -1,87 +1,98 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     if (user) {
-      setIsOpen(false);
-      navigate('/');
+      navigate('/arbitrage-tracker');
     }
   }, [user, navigate]);
 
-  // If dialog is closed without auth, reopen it
-  useEffect(() => {
-    if (!user && !isOpen) {
-      setIsOpen(true);
-    }
-  }, [isOpen, user]);
-
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-center text-2xl font-bold">
-            Welcome to Arbitrage Tracker
-          </DialogTitle>
-          <DialogDescription className="text-center text-gray-500">
-            Sign in or Create a free account to get started
-          </DialogDescription>
-        </DialogHeader>
-        <div className="px-4 py-6">
-          <Auth
-            supabaseClient={supabase}
-            appearance={{
-              theme: ThemeSupa,
-              variables: {
-                default: {
-                  colors: {
-                    brand: '#3b82f6',
-                    brandAccent: '#2563eb',
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 flex flex-col">
+      {/* Navigation */}
+      <nav className="w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <span className="text-xl font-bold text-gray-900">Bettor-IQ</span>
+          </div>
+        </div>
+      </nav>
+
+      {/* Auth Container */}
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-md">
+          <div className="bg-white px-8 py-10 shadow-lg rounded-2xl border border-gray-100">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-gray-900">
+                Welcome to Bettor-IQ
+              </h2>
+              <p className="mt-2 text-sm text-gray-600">
+                Sign in or create an account to access powerful betting tools
+              </p>
+            </div>
+
+            {/* Auth UI */}
+            <Auth
+              supabaseClient={supabase}
+              appearance={{
+                theme: ThemeSupa,
+                variables: {
+                  default: {
+                    colors: {
+                      brand: '#1edb95',
+                      brandAccent: '#1bc585',
+                    },
                   },
                 },
-              },
-              style: {
-                button: {
-                  background: '#3b82f6',
-                  color: 'white',
-                  borderRadius: '0.5rem',
+                style: {
+                  button: {
+                    background: '#1edb95',
+                    color: 'white',
+                    borderRadius: '0.5rem',
+                  },
+                  anchor: {
+                    color: '#1edb95',
+                  },
+                  container: {
+                    color: '#333',
+                  },
+                  label: {
+                    color: '#4b5563',
+                  },
+                  input: {
+                    backgroundColor: 'white',
+                    borderColor: '#e5e7eb',
+                    color: '#1f2937',
+                  },
                 },
-                anchor: {
-                  color: '#3b82f6',
-                },
-                container: {
-                  color: '#333',
-                },
-                label: {
-                  color: '#4b5563',
-                },
-                input: {
-                  backgroundColor: 'white',
-                  borderColor: '#e5e7eb',
-                  color: '#1f2937',
-                },
-              },
-            }}
-            providers={[]}
-          />
+              }}
+              providers={[]}
+            />
+          </div>
+
+          {/* Footer */}
+          <p className="mt-6 text-center text-sm text-gray-600">
+            By signing up, you agree to our{' '}
+            <a href="#" className="text-primary hover:text-primary-hover">
+              Terms of Service
+            </a>{' '}
+            and{' '}
+            <a href="#" className="text-primary hover:text-primary-hover">
+              Privacy Policy
+            </a>
+          </p>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 };
 
