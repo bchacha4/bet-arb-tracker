@@ -48,13 +48,17 @@ const FilterSection: React.FC<FilterSectionProps> = ({
         />
         {!isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border-border/50">
+            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
             <SelectContent className="bg-white border-border/50">
-              <SelectItem value="all">All Sportsbooks</SelectItem>
+              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
-                <SelectItem key={book.value} value={book.value}>
+                <SelectItem 
+                  key={book.value} 
+                  value={book.value}
+                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                >
                   {book.label}
                 </SelectItem>
               ))}
@@ -65,13 +69,17 @@ const FilterSection: React.FC<FilterSectionProps> = ({
       <div className="flex items-center gap-4">
         {isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border-border/50">
+            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
             <SelectContent className="bg-white border-border/50">
-              <SelectItem value="all">All Sportsbooks</SelectItem>
+              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
-                <SelectItem key={book.value} value={book.value}>
+                <SelectItem 
+                  key={book.value} 
+                  value={book.value}
+                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                >
                   {book.label}
                 </SelectItem>
               ))}
