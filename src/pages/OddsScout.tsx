@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar/Navbar';
 import OddsScoutTable from '@/components/OddsScoutTable/OddsScoutTable';
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search, RefreshCw } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Collapsible,
@@ -25,44 +25,64 @@ const OddsScout = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-[1400px] mx-auto p-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold text-gray-900">Odds Scout</h2>
+            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Odds Scout</h1>
           </div>
 
           {isMobile ? (
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-              <Card className="mb-4 bg-white">
-                <CardContent className="pt-3">
+              <Card className="mb-4 bg-white border-0 shadow-sm">
+                <CardContent className="p-6">
                   <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-semibold mb-2 text-gray-900">Welcome to Odds Scout – Find the Best Player Prop Deals!</h2>
-                    <CollapsibleTrigger className="p-2">
-                      <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
+                    <h2 className="text-xl font-semibold mb-2 text-gray-900">Welcome to Odds Scout</h2>
+                    <CollapsibleTrigger className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''}`} />
                     </CollapsibleTrigger>
                   </div>
-                  <CollapsibleContent>
-                    <div className="space-y-2 text-gray-600 text-sm">
-                      <p>
-                        Odds Scout is designed to help bettors like you find the best value for your player prop bets by comparing odds and lines across multiple sportsbooks.
+                  <CollapsibleContent className="animate-accordion-down">
+                    <div className="space-y-4 text-gray-600 text-sm">
+                      <p className="leading-relaxed">
+                        Find the best value for your player prop bets by comparing odds and lines across multiple sportsbooks.
                       </p>
                       
-                      <h3 className="text-base font-semibold mt-4 mb-2 text-gray-900">What Can Odds Scout Do for You?</h3>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li><span className="font-medium text-gray-900">Find the Best Deal:</span> Shop around for the most favorable odds and lines. Why settle for -180 when another sportsbook offers -120 for the same prop?</li>
-                        <li><span className="font-medium text-gray-900">Identify Line Discrepancies:</span> Spot inconsistencies between sportsbooks, such as one offering a line at 22.5 while others have moved to 23.5 or 24.5. These differences could give you a unique betting advantage.</li>
-                        <li><span className="font-medium text-gray-900">Stay Informed:</span> Monitor odds and line updates to make smarter, more profitable betting decisions.</li>
-                      </ul>
+                      <div className="space-y-4">
+                        <div className="bg-gray-50 p-4 rounded-lg">
+                          <h3 className="text-base font-semibold mb-2 text-gray-900">What Can Odds Scout Do for You?</h3>
+                          <ul className="space-y-2">
+                            <li className="flex items-start gap-2">
+                              <span className="flex-shrink-0 w-1 h-1 mt-2 rounded-full bg-primary"/>
+                              <span><span className="font-medium text-gray-900">Find the Best Deal:</span> Shop around for the most favorable odds and lines.</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="flex-shrink-0 w-1 h-1 mt-2 rounded-full bg-primary"/>
+                              <span><span className="font-medium text-gray-900">Identify Line Discrepancies:</span> Spot inconsistencies between sportsbooks.</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <span className="flex-shrink-0 w-1 h-1 mt-2 rounded-full bg-primary"/>
+                              <span><span className="font-medium text-gray-900">Stay Informed:</span> Monitor odds and line updates in real-time.</span>
+                            </li>
+                          </ul>
+                        </div>
 
-                      <h3 className="text-base font-semibold mt-4 mb-2 text-gray-900">How to Use Odds Scout</h3>
-                      <ul className="list-disc pl-5 space-y-1">
-                        <li><span className="font-medium text-gray-900">Search and Filter:</span> Use the dropdown menu or search bar to find specific players, props, or teams.</li>
-                        <li><span className="font-medium text-gray-900">Compare:</span> Review the odds and lines across sportsbooks to choose the best option for your bet.</li>
-                        <li><span className="font-medium text-gray-900">Act:</span> Click on the odds in the table to be directed to the sportsbook and place your bet. Maximize your returns by betting on the sportsbook with the most advantageous line or odds.</li>
-                      </ul>
+                        <div className="bg-gray-50 p-4 rounded-lg">
+                          <h3 className="text-base font-semibold mb-2 text-gray-900">How to Use Odds Scout</h3>
+                          <ul className="space-y-2">
+                            <li className="flex items-start gap-2">
+                              <Search className="flex-shrink-0 h-4 w-4 mt-1 text-primary"/>
+                              <span><span className="font-medium text-gray-900">Search and Filter:</span> Find specific players, props, or teams.</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                              <RefreshCw className="flex-shrink-0 h-4 w-4 mt-1 text-primary"/>
+                              <span><span className="font-medium text-gray-900">Compare:</span> Review odds and lines across sportsbooks.</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
 
-                      <p className="text-sm text-gray-500 mt-4 italic">
-                        Note: Odds are updated regularly to ensure you have the most accurate data available.
+                      <p className="text-sm text-gray-500 italic border-l-2 border-primary pl-3 mt-4">
+                        Odds are updated regularly to ensure you have the most accurate data available.
                       </p>
                     </div>
                   </CollapsibleContent>
@@ -70,30 +90,50 @@ const OddsScout = () => {
               </Card>
             </Collapsible>
           ) : (
-            <Card className="mb-4 bg-white">
-              <CardContent className="pt-3">
-                <h2 className="text-xl font-semibold mb-2 text-gray-900">Welcome to Odds Scout – Find the Best Player Prop Deals!</h2>
-                <div className="space-y-2 text-gray-600 text-sm">
-                  <p>
-                    Odds Scout is designed to help bettors like you find the best value for your player prop bets by comparing odds and lines across multiple sportsbooks.
+            <Card className="mb-4 bg-white border-0 shadow-sm">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-semibold mb-4 text-gray-900">Welcome to Odds Scout</h2>
+                <div className="space-y-6 text-gray-600">
+                  <p className="text-lg leading-relaxed">
+                    Find the best value for your player prop bets by comparing odds and lines across multiple sportsbooks.
                   </p>
                   
-                  <h3 className="text-base font-semibold mt-4 mb-2 text-gray-900">What Can Odds Scout Do for You?</h3>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li><span className="font-medium text-gray-900">Find the Best Deal:</span> Shop around for the most favorable odds and lines. Why settle for -180 when another sportsbook offers -120 for the same prop?</li>
-                    <li><span className="font-medium text-gray-900">Identify Line Discrepancies:</span> Spot inconsistencies between sportsbooks, such as one offering a line at 22.5 while others have moved to 23.5 or 24.5. These differences could give you a unique betting advantage.</li>
-                    <li><span className="font-medium text-gray-900">Stay Informed:</span> Monitor odds and line updates to make smarter, more profitable betting decisions.</li>
-                  </ul>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-gray-50 p-6 rounded-lg">
+                      <h3 className="text-lg font-semibold mb-3 text-gray-900">What Can Odds Scout Do for You?</h3>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3">
+                          <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-primary"/>
+                          <span><span className="font-medium text-gray-900">Find the Best Deal:</span> Shop around for the most favorable odds and lines.</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-primary"/>
+                          <span><span className="font-medium text-gray-900">Identify Line Discrepancies:</span> Spot inconsistencies between sportsbooks.</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-primary"/>
+                          <span><span className="font-medium text-gray-900">Stay Informed:</span> Monitor odds and line updates in real-time.</span>
+                        </li>
+                      </ul>
+                    </div>
 
-                  <h3 className="text-base font-semibold mt-4 mb-2 text-gray-900">How to Use Odds Scout</h3>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li><span className="font-medium text-gray-900">Search and Filter:</span> Use the dropdown menu or search bar to find specific players, props, or teams.</li>
-                    <li><span className="font-medium text-gray-900">Compare:</span> Review the odds and lines across sportsbooks to choose the best option for your bet.</li>
-                    <li><span className="font-medium text-gray-900">Act:</span> Click on the odds in the table to be directed to the sportsbook and place your bet. Maximize your returns by betting on the sportsbook with the most advantageous line or odds.</li>
-                  </ul>
+                    <div className="bg-gray-50 p-6 rounded-lg">
+                      <h3 className="text-lg font-semibold mb-3 text-gray-900">How to Use Odds Scout</h3>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3">
+                          <Search className="flex-shrink-0 h-5 w-5 mt-1 text-primary"/>
+                          <span><span className="font-medium text-gray-900">Search and Filter:</span> Find specific players, props, or teams.</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <RefreshCw className="flex-shrink-0 h-5 w-5 mt-1 text-primary"/>
+                          <span><span className="font-medium text-gray-900">Compare:</span> Review odds and lines across sportsbooks.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
 
-                  <p className="text-sm text-gray-500 mt-4 italic">
-                    Note: Odds are updated regularly to ensure you have the most accurate data available.
+                  <p className="text-sm text-gray-500 italic border-l-2 border-primary pl-4 py-2 bg-gray-50 rounded-r-lg">
+                    Odds are updated regularly to ensure you have the most accurate data available.
                   </p>
                 </div>
               </CardContent>
