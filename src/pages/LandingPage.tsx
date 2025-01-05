@@ -15,11 +15,8 @@ const LandingPage = () => {
             </Link>
             <div className="flex items-center gap-4">
               <Link to="/login">
-                <Button variant="ghost" className="font-medium text-gray-600 hover:text-gray-900">Log in</Button>
-              </Link>
-              <Link to="/login">
                 <Button className="bg-primary hover:bg-primary-hover text-white font-medium">
-                  Start Free Trial
+                  Get Started
                 </Button>
               </Link>
             </div>
@@ -118,7 +115,7 @@ const LandingPage = () => {
           </p>
           <Link to="/login">
             <Button className="bg-primary hover:bg-primary-hover text-white px-8 py-6 text-lg font-medium">
-              Start Free Trial <ArrowRight className="ml-2" />
+              Get Started Now <ArrowRight className="ml-2" />
             </Button>
           </Link>
         </div>
