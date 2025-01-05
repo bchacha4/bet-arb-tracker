@@ -23,7 +23,7 @@ const OddsButton = ({ odds, line, link, outcome, bookmaker }: OddsButtonProps) =
   return (
     <Button
       onClick={handleClick}
-      className="w-14 h-14 text-center p-2 hover:bg-gray-100 transition-colors"
+      className="flex-1 h-14 text-center p-2 hover:bg-gray-100 transition-colors"
       variant="outline"
     >
       <div className="text-sm space-y-1">

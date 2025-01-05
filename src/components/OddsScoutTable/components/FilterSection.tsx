@@ -23,7 +23,6 @@ interface FilterSectionProps {
 
 const formatBet = (bet: string): string => {
   if (!bet) return '';
-  // Split by both spaces and underscores to handle both cases
   return bet.split(/[\s_]+/)
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
@@ -60,32 +59,46 @@ const FilterSection = ({
             className="pl-10 bg-white border-gray-200"
           />
         </div>
-        <Select value={selectedProp} onValueChange={onPropChange}>
-          <SelectTrigger className="w-[200px] bg-white border-gray-200">
-            <SelectValue placeholder="Filter by prop type" />
-          </SelectTrigger>
-          <SelectContent className="bg-white border-gray-200">
-            <SelectItem value="all" className="cursor-pointer hover:bg-gray-100">All Props</SelectItem>
-            {availablePropTypes.map((prop) => (
-              <SelectItem 
-                key={prop} 
-                value={prop.toLowerCase()}
-                className="cursor-pointer hover:bg-gray-100"
-              >
-                {formatBet(prop)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-2">
+          <Select value={selectedProp} onValueChange={onPropChange}>
+            <SelectTrigger className="w-[200px] bg-white border-gray-200">
+              <SelectValue placeholder="Filter by prop type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border-gray-200">
+              <SelectItem value="all" className="cursor-pointer hover:bg-gray-100">All Props</SelectItem>
+              {availablePropTypes.map((prop) => (
+                <SelectItem 
+                  key={prop} 
+                  value={prop.toLowerCase()}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
+                  {formatBet(prop)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {isMobile && (
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-primary text-white hover:bg-white hover:text-primary border-primary h-10 w-10"
+              onClick={handleRefresh}
+            >
+              <RefreshCw size={16} />
+            </Button>
+          )}
+        </div>
       </div>
-      <Button
-        variant="outline"
-        className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary h-10 whitespace-nowrap"
-        onClick={handleRefresh}
-      >
-        <RefreshCw size={16} />
-        Refresh
-      </Button>
+      {!isMobile && (
+        <Button
+          variant="outline"
+          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary h-10 whitespace-nowrap"
+          onClick={handleRefresh}
+        >
+          <RefreshCw size={16} />
+          Refresh
+        </Button>
+      )}
     </div>
   );
 };
