@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -22,7 +22,7 @@ interface FilterSectionProps {
   onSportsbookChange: (value: string) => void;
 }
 
-const FilterSection = ({
+const FilterSection = memo(({
   bettingAmount,
   onBettingAmountChange,
   selectedSportsbook,
@@ -32,13 +32,13 @@ const FilterSection = ({
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
 
-  const handleRefresh = () => {
+  const handleRefresh = React.useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['arbitrageProps'] });
     toast({
       title: "Data Refreshed",
       description: "The arbitrage opportunities have been updated.",
     });
-  };
+  }, [queryClient, toast]);
 
   return (
     <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} gap-4 p-4 bg-white rounded-lg shadow-sm border border-border/50`}>
@@ -90,6 +90,8 @@ const FilterSection = ({
       </div>
     </div>
   );
-};
+});
+
+FilterSection.displayName = 'FilterSection';
 
 export default FilterSection;
