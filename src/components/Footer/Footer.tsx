@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Bettor-IQ</h3>
             <p className="text-sm text-gray-600">
-              Making sports betting smarter through data-driven insights and real-time arbitrage opportunities.
+              Making sports betting smarter through data-driven insights and profitable arbitrage opportunities.
             </p>
           </div>
           
