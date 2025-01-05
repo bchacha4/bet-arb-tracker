@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Crosshair, LineChart, BarChart2, DollarSign, Scale, Trophy } from 'lucide-react';
+import Footer from '@/components/Footer/Footer';
 
 const LandingPage = () => {
   return (
@@ -125,6 +126,9 @@ const LandingPage = () => {
           </Link>
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
