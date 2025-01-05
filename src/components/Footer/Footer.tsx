@@ -19,12 +19,12 @@ const Footer = () => {
             <h4 className="text-sm font-semibold uppercase tracking-wider">Product</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/arbitrage" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link to="/login" className="text-sm text-gray-600 hover:text-primary transition-colors">
                   Arbitrage Tracker
                 </Link>
               </li>
               <li>
-                <Link to="/odds" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                <Link to="/login" className="text-sm text-gray-600 hover:text-primary transition-colors">
                   Odds Scout
                 </Link>
               </li>
