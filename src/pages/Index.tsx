@@ -16,14 +16,11 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-background to-gray-50">
       <Navbar />
       <div className="max-w-[1400px] mx-auto p-4 md:p-6 space-y-6">
+        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+          Arbitrage Tracker
+        </h1>
         <Announcement />
         <ArbitrageDescription />
-        
-        <div className={`${isMobile ? '' : 'flex justify-between items-center'} mb-6`}>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4 md:mb-0">
-            Arbitrage Tracker
-          </h2>
-        </div>
         
         <FilterSection 
           isSubscribed={isSubscribed} 
