@@ -19,7 +19,7 @@ const BettingAmountInput = ({ value, onChange }: BettingAmountInputProps) => {
           type="number"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="pl-6 bg-background text-foreground border-border [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="pl-6 bg-white text-foreground border-border/50 transition-colors duration-200 focus:border-primary [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           placeholder="1000"
         />
       </div>

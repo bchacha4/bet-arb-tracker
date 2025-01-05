@@ -41,7 +41,7 @@ const FilterSection = ({
   };
 
   return (
-    <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} mb-6 gap-4`}>
+    <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} gap-4 p-4 bg-white rounded-lg shadow-sm border border-border/50`}>
       <div className="flex items-center gap-4">
         <BettingAmountInput
           value={bettingAmount}
@@ -49,10 +49,10 @@ const FilterSection = ({
         />
         {!isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-background border-border">
+            <SelectTrigger className="w-[180px] bg-white border-border/50">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
-            <SelectContent className="bg-background border-border">
+            <SelectContent className="bg-white border-border/50">
               <SelectItem value="all">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
                 <SelectItem key={book.value} value={book.value}>
@@ -66,10 +66,10 @@ const FilterSection = ({
       <div className="flex items-center gap-4">
         {isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-background border-border">
+            <SelectTrigger className="w-[180px] bg-white border-border/50">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
-            <SelectContent className="bg-background border-border">
+            <SelectContent className="bg-white border-border/50">
               <SelectItem value="all">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
                 <SelectItem key={book.value} value={book.value}>
@@ -81,7 +81,7 @@ const FilterSection = ({
         )}
         <Button
           variant="outline"
-          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary h-10"
+          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary transition-colors duration-200 h-10"
           onClick={handleRefresh}
         >
           <RefreshCw size={16} />
