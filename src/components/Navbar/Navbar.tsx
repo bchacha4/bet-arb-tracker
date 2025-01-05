@@ -47,7 +47,7 @@ const Navbar = () => {
     <nav className="w-full bg-white border-b border-gray-200 px-6 py-4">
       <div className="max-w-[1400px] mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-8">
-          <h1 className="text-xl font-bold text-gray-900">Bettor-IQ</h1>
+          <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap">Bettor-IQ</h1>
           {user && (
             <div className="flex items-center space-x-6">
               <Link
