@@ -36,7 +36,7 @@ const OddsScout = () => {
               <Card className="mb-4 bg-white">
                 <CardContent className="pt-3">
                   <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-semibold mb-2 text-gray-900">Welcome to Odds Scout</h2>
+                    <h2 className="text-xl font-semibold mb-2 text-gray-900">Welcome to Odds Scout – Find the Best Player Prop Deals!</h2>
                     <CollapsibleTrigger className="p-2">
                       <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
                     </CollapsibleTrigger>
@@ -72,7 +72,7 @@ const OddsScout = () => {
           ) : (
             <Card className="mb-4 bg-white">
               <CardContent className="pt-3">
-                <h2 className="text-xl font-semibold mb-2 text-gray-900">Welcome to Odds Scout</h2>
+                <h2 className="text-xl font-semibold mb-2 text-gray-900">Welcome to Odds Scout – Find the Best Player Prop Deals!</h2>
                 <div className="space-y-2 text-gray-600 text-sm">
                   <p>
                     Odds Scout is designed to help bettors like you find the best value for your player prop bets by comparing odds and lines across multiple sportsbooks.
