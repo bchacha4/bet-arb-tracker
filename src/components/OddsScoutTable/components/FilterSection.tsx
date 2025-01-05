@@ -62,9 +62,13 @@ const FilterSection = ({
             <SelectValue placeholder="Filter by prop type" />
           </SelectTrigger>
           <SelectContent className="bg-white border-gray-200">
-            <SelectItem value="all">All Props</SelectItem>
+            <SelectItem value="all" className="cursor-pointer hover:bg-gray-100">All Props</SelectItem>
             {availablePropTypes.map((prop) => (
-              <SelectItem key={prop} value={prop.toLowerCase()}>
+              <SelectItem 
+                key={prop} 
+                value={prop.toLowerCase()}
+                className="cursor-pointer hover:bg-gray-100"
+              >
                 {formatBet(prop)}
               </SelectItem>
             ))}
