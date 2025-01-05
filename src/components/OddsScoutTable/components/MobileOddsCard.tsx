@@ -122,15 +122,20 @@ const MobileOddsCard = ({ prop }: { prop: any }) => {
 
           {/* Show more button */}
           {remainingSportsbooks.length > 0 && (
-            <CollapsibleTrigger className="w-full">
-              <Button
-                variant="outline"
-                className="w-full flex items-center justify-center gap-2"
+            <CollapsibleTrigger asChild>
+              <div 
                 onClick={() => setIsOpen(!isOpen)}
+                className="mt-2 flex items-center justify-center gap-2 py-3 text-sm text-gray-500 hover:text-gray-700 transition-colors cursor-pointer border-t"
               >
-                <span>{isOpen ? 'Show Less' : 'Show More'}</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
-              </Button>
+                <span className="font-medium">
+                  {isOpen ? 'Show Less' : `Show ${remainingSportsbooks.length} More Sportsbooks`}
+                </span>
+                <ChevronDown 
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    isOpen ? 'transform rotate-180' : ''
+                  }`} 
+                />
+              </div>
             </CollapsibleTrigger>
           )}
         </div>
