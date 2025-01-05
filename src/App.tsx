@@ -42,7 +42,7 @@ const App = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route 
-                path="/dashboard" 
+                path="/arbitrage-tracker" 
                 element={
                   <ProtectedRoute>
                     <Index />
