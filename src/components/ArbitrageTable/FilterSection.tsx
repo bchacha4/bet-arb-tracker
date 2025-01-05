@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -15,14 +15,13 @@ import {
 import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 
 interface FilterSectionProps {
-  isSubscribed: boolean;
   bettingAmount: string;
   onBettingAmountChange: (value: string) => void;
   selectedSportsbook: string;
   onSportsbookChange: (value: string) => void;
 }
 
-const FilterSection = memo(({
+const FilterSection = ({
   bettingAmount,
   onBettingAmountChange,
   selectedSportsbook,
@@ -90,8 +89,6 @@ const FilterSection = memo(({
       </div>
     </div>
   );
-});
-
-FilterSection.displayName = 'FilterSection';
+};
 
 export default FilterSection;
