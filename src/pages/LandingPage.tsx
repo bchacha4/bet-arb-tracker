@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Navigation Bar */}
-      <nav className="w-full bg-white border-b border-gray-200 px-6 py-4">
+      <nav className="w-full bg-white border-b border-gray-200 px-6 py-4 fixed top-0 z-50">
         <div className="max-w-[1400px] mx-auto flex justify-between items-center">
           <Link to="/" className="flex items-center">
             <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap">Bettor-IQ</h1>
@@ -26,17 +26,26 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div className="flex flex-col items-center justify-center py-20">
-        <h2 className="text-4xl font-bold text-gray-900">Welcome to Bettor-IQ</h2>
-        <p className="mt-4 text-lg text-gray-600">Maximize your sports betting profits with our platform.</p>
-      </div>
+      {/* Main Content with proper spacing from fixed navbar */}
+      <main className="flex-1 pt-20">
+        {/* Hero Section */}
+        <div className="flex flex-col items-center justify-center py-20 px-6">
+          <h2 className="text-4xl font-bold text-gray-900 text-center">
+            Welcome to Bettor-IQ
+          </h2>
+          <p className="mt-4 text-lg text-gray-600 text-center max-w-2xl">
+            Maximize your sports betting profits with our platform.
+          </p>
+        </div>
 
-      {/* Additional Landing Page Content */}
-      <div className="max-w-[1400px] mx-auto p-6">
-        <h3 className="text-2xl font-bold text-gray-900">Get Started</h3>
-        <p className="mt-2 text-gray-600">Join us today and start finding the best arbitrage opportunities!</p>
-      </div>
+        {/* Additional Landing Page Content */}
+        <div className="max-w-[1400px] mx-auto px-6 pb-20">
+          <h3 className="text-2xl font-bold text-gray-900">Get Started</h3>
+          <p className="mt-2 text-gray-600">
+            Join us today and start finding the best arbitrage opportunities!
+          </p>
+        </div>
+      </main>
     </div>
   );
 };
