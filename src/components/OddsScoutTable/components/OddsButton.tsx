@@ -28,7 +28,7 @@ const OddsButton = ({ odds, line, link, outcome, bookmaker }: OddsButtonProps) =
       onClick={handleClick}
       className={`
         ${isMobile 
-          ? 'w-[60px] h-[60px] shadow-sm bg-white border-gray-100 hover:border-primary hover:text-primary' 
+          ? 'w-full h-[60px] shadow-sm bg-white border-gray-100 hover:border-primary hover:text-primary' 
           : 'w-[60px] h-[60px]'
         } 
         text-center p-2 hover:bg-gray-100 transition-all duration-200
