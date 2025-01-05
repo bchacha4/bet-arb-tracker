@@ -1,9 +1,10 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 import Navbar from '@/components/Navbar/Navbar';
 import OddsScoutTable from '@/components/OddsScoutTable/OddsScoutTable';
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronDown, Search, RefreshCw } from "lucide-react";
+import { ChevronDown, Search, RefreshCw, MousePointerClick } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Collapsible,
@@ -24,6 +25,15 @@ const OddsScout = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>Odds Scout - Compare Sports Betting Odds Across Sportsbooks</title>
+        <meta name="description" content="Compare sports betting odds across multiple sportsbooks. Find the best value for player props and betting lines with our comprehensive odds comparison tool." />
+        <meta name="keywords" content="sports betting, odds comparison, betting odds, sportsbooks, player props, betting lines" />
+        <meta property="og:title" content="Odds Scout - Compare Sports Betting Odds" />
+        <meta property="og:description" content="Find the best betting odds across multiple sportsbooks. Compare player props and betting lines to maximize your value." />
+        <link rel="canonical" href={window.location.href} />
+      </Helmet>
+
       <Navbar />
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-6">
@@ -77,6 +87,10 @@ const OddsScout = () => {
                               <RefreshCw className="flex-shrink-0 h-4 w-4 mt-1 text-primary"/>
                               <span><span className="font-medium text-gray-900">Compare:</span> Review odds and lines across sportsbooks.</span>
                             </li>
+                            <li className="flex items-start gap-2">
+                              <MousePointerClick className="flex-shrink-0 h-4 w-4 mt-1 text-primary"/>
+                              <span><span className="font-medium text-gray-900">Place Bets:</span> Click on any odds to be directed to the corresponding sportsbook where you can place your bet.</span>
+                            </li>
                           </ul>
                         </div>
                       </div>
@@ -127,6 +141,10 @@ const OddsScout = () => {
                         <li className="flex items-start gap-3">
                           <RefreshCw className="flex-shrink-0 h-5 w-5 mt-1 text-primary"/>
                           <span><span className="font-medium text-gray-900">Compare:</span> Review odds and lines across sportsbooks.</span>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <MousePointerClick className="flex-shrink-0 h-5 w-5 mt-1 text-primary"/>
+                          <span><span className="font-medium text-gray-900">Place Bets:</span> Click on any odds to be directed to the corresponding sportsbook where you can place your bet.</span>
                         </li>
                       </ul>
                     </div>
