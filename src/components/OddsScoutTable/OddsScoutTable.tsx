@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -7,9 +7,12 @@ import EmptyState from "./components/EmptyState";
 import TableHeader from "./components/TableHeader";
 import TableRow from "./components/TableRow";
 import MobileOddsCard from "./components/MobileOddsCard";
+import FilterSection from "./components/FilterSection";
 
 const OddsScoutTable = () => {
   const isMobile = useIsMobile();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProp, setSelectedProp] = useState('all');
 
   const { data: oddsData, isLoading } = useQuery({
     queryKey: ['oddsScout'],
@@ -63,34 +66,56 @@ const OddsScoutTable = () => {
     }
   });
 
+  const filteredData = useMemo(() => {
+    if (!oddsData) return [];
+
+    return oddsData.filter((item: any) => {
+      const searchMatch = searchQuery.toLowerCase().trim() === '' || 
+        item.player?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.team?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.prop?.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const propMatch = selectedProp === 'all' || 
+        item.prop?.toLowerCase() === selectedProp;
+
+      return searchMatch && propMatch;
+    });
+  }, [oddsData, searchQuery, selectedProp]);
+
   if (isLoading) {
     return <LoadingState />;
   }
 
-  if (!oddsData || oddsData.length === 0) {
+  if (!filteredData || filteredData.length === 0) {
     return <EmptyState />;
   }
 
-  if (isMobile) {
-    return (
-      <div className="space-y-4">
-        {oddsData.map((prop: any, index: number) => (
-          <MobileOddsCard key={index} prop={prop} />
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div className="border border-gray-200 rounded-lg overflow-auto max-h-[800px]">
-      <table className="w-full text-sm text-left text-gray-900">
-        <TableHeader />
-        <tbody>
-          {oddsData.map((prop: any, index: number) => (
-            <TableRow key={index} prop={prop} />
+    <div className="space-y-4">
+      <FilterSection
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        selectedProp={selectedProp}
+        onPropChange={setSelectedProp}
+      />
+      {isMobile ? (
+        <div className="space-y-4">
+          {filteredData.map((prop: any, index: number) => (
+            <MobileOddsCard key={index} prop={prop} />
           ))}
-        </tbody>
-      </table>
+        </div>
+      ) : (
+        <div className="border border-gray-200 rounded-lg overflow-auto max-h-[800px]">
+          <table className="w-full text-sm text-left text-gray-900">
+            <TableHeader />
+            <tbody>
+              {filteredData.map((prop: any, index: number) => (
+                <TableRow key={index} prop={prop} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
