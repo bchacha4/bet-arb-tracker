@@ -49,10 +49,10 @@ const FilterSection = ({
         />
         {!isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border border-gray-200">
+            <SelectTrigger className="w-[180px] bg-background border-border">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+            <SelectContent className="bg-background border-border">
               <SelectItem value="all">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
                 <SelectItem key={book.value} value={book.value}>
@@ -66,10 +66,10 @@ const FilterSection = ({
       <div className="flex items-center gap-4">
         {isMobile && (
           <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border border-gray-200">
+            <SelectTrigger className="w-[180px] bg-background border-border">
               <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
-            <SelectContent className="bg-white border border-gray-200 shadow-lg">
+            <SelectContent className="bg-background border-border">
               <SelectItem value="all">All Sportsbooks</SelectItem>
               {AVAILABLE_SPORTSBOOKS.map((book) => (
                 <SelectItem key={book.value} value={book.value}>

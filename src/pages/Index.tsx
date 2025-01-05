@@ -13,7 +13,7 @@ const Index = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <div className="max-w-[1400px] mx-auto p-6">
         <Announcement />
@@ -21,13 +21,13 @@ const Index = () => {
         
         {!isMobile && (
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Arbitrage Tracker</h2>
+            <h2 className="text-2xl font-bold text-foreground">Arbitrage Tracker</h2>
           </div>
         )}
         
         {isMobile && (
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Arbitrage Tracker</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">Arbitrage Tracker</h2>
           </div>
         )}
         
