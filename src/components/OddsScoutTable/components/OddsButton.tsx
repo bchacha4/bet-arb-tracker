@@ -27,7 +27,7 @@ const OddsButton = ({ odds, line, link, outcome, bookmaker }: OddsButtonProps) =
     <Button
       onClick={handleClick}
       className={`
-        shadow-sm bg-white border-gray-100 hover:border-primary hover:text-primary group
+        shadow-sm bg-white border-gray-100 hover:border-primary group
         ${isMobile 
           ? 'w-full h-[45px]' 
           : 'w-[60px] h-[60px]'
@@ -37,7 +37,7 @@ const OddsButton = ({ odds, line, link, outcome, bookmaker }: OddsButtonProps) =
       variant="outline"
     >
       <div className={`text-sm space-y-1 ${isMobile ? 'font-medium' : ''}`}>
-        <div className={`${isMobile ? 'text-gray-800' : 'font-medium'}`}>{line}</div>
+        <div className={`${isMobile ? 'text-gray-800' : 'text-gray-900'}`}>{line}</div>
         <div className={`${isMobile ? 'text-primary text-xs' : 'text-gray-600'} ${!isMobile && 'group-hover:text-primary'}`}>
           {odds > 0 ? `+${odds}` : odds}
         </div>
