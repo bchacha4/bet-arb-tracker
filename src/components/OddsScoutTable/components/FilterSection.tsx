@@ -23,11 +23,10 @@ interface FilterSectionProps {
 
 const formatBet = (bet: string): string => {
   if (!bet) return '';
-  return bet.toLowerCase()
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
-    .replace(/_/g, ' ');
+  // Split by both spaces and underscores to handle both cases
+  return bet.split(/[\s_]+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
 };
 
 const FilterSection = ({
