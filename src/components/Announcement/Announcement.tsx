@@ -7,7 +7,7 @@ const Announcement = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Alert className="mb-6 bg-[#9b87f5] bg-opacity-10 border-[#9b87f5] border shadow-sm">
+    <Alert className="mb-6 bg-[#D3E4FD] bg-opacity-10 border-[#D3E4FD] border shadow-sm">
       <div className="flex items-start justify-between w-full">
         <div className="flex gap-2">
           <Info className="h-5 w-5 text-primary mt-1" />
