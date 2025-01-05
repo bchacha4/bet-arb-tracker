@@ -27,6 +27,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => {
+  React.useEffect(() => {
+    // Enable dark mode by default
+    document.documentElement.classList.add('dark');
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
