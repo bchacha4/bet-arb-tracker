@@ -2,7 +2,7 @@ import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 
 const LoginPage = () => {
@@ -21,7 +21,9 @@ const LoginPage = () => {
       <nav className="w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <span className="text-xl font-bold text-gray-900">Bettor-IQ</span>
+            <Link to="/" className="text-xl font-bold text-gray-900 hover:text-primary transition-colors">
+              Bettor-IQ
+            </Link>
           </div>
         </div>
       </nav>
