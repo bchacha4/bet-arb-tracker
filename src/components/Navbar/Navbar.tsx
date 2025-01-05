@@ -51,9 +51,9 @@ const Navbar = () => {
           {user && (
             <div className="flex items-center space-x-6">
               <Link
-                to="/"
+                to="/arbitrage-tracker"
                 className={`text-sm font-medium transition-colors hover:text-gray-900 ${
-                  location.pathname === '/' ? 'text-gray-900' : 'text-gray-500'
+                  location.pathname === '/arbitrage-tracker' ? 'text-gray-900' : 'text-gray-500'
                 }`}
               >
                 Arbitrage Tracker
