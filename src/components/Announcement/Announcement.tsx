@@ -7,11 +7,11 @@ const Announcement = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Alert className="mb-6 bg-blue-50 border-blue-200">
+    <Alert className="mb-6 bg-background/50 border-border">
       <div className="flex items-start justify-between w-full">
         <div className="flex gap-2">
-          <Info className="h-5 w-5 text-blue-500 mt-1" />
-          <AlertDescription className="text-blue-700">
+          <Info className="h-5 w-5 text-primary mt-1" />
+          <AlertDescription className="text-foreground">
             {isExpanded ? (
               <>
                 <p className="font-medium mb-1">Welcome to Bettor-IQ! 🎉</p>
@@ -45,7 +45,7 @@ const Announcement = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="text-blue-500 hover:text-blue-600 hover:bg-blue-100 -mt-1"
+          className="text-primary hover:text-primary/80 hover:bg-background/80 -mt-1"
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {isExpanded ? (

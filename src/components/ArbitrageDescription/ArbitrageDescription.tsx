@@ -12,7 +12,7 @@ const ArbitrageDescription = () => {
   const isMobile = useIsMobile();
 
   const content = (
-    <div className="space-y-2 text-gray-600 text-sm">
+    <div className="space-y-2 text-foreground/80">
       <p className="text-sm">
         Arbitrage betting is a strategy that takes advantage of differences in odds offered by sportsbooks for the same event. By betting on all possible outcomes using specific odds, you can guarantee a profit regardless of the result.
       </p>
@@ -30,12 +30,12 @@ const ArbitrageDescription = () => {
 
   if (isMobile) {
     return (
-      <Card className="mb-4 bg-white">
+      <Card className="mb-4 bg-background border-border">
         <CardContent className="pt-3 px-0">
           <Accordion type="single" collapsible>
             <AccordionItem value="description" className="border-none">
               <AccordionTrigger className="px-6">
-                <h2 className="text-xl font-semibold text-gray-900">Understanding Arbitrage Betting</h2>
+                <h2 className="text-xl font-semibold text-foreground">Understanding Arbitrage Betting</h2>
               </AccordionTrigger>
               <AccordionContent className="px-6">
                 {content}
@@ -48,9 +48,9 @@ const ArbitrageDescription = () => {
   }
 
   return (
-    <Card className="mb-4 bg-white">
+    <Card className="mb-4 bg-background border-border">
       <CardContent className="pt-3">
-        <h2 className="text-xl font-semibold mb-2 text-gray-900">Understanding Arbitrage Betting</h2>
+        <h2 className="text-xl font-semibold mb-2 text-foreground">Understanding Arbitrage Betting</h2>
         {content}
       </CardContent>
     </Card>

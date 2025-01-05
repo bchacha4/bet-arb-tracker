@@ -30,9 +30,9 @@ export default {
         },
         table: {
           dark: "#1A1F2C",
-          row: "#222222",
-          altRow: "#333333",
-          border: "#403E43",
+          row: "#1E1E1E",
+          altRow: "#252525",
+          border: "#333333",
         },
         betting: {
           profit: "#1edb95",
