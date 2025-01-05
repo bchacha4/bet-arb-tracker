@@ -21,12 +21,12 @@ interface FilterSectionProps {
   onSportsbookChange: (value: string) => void;
 }
 
-const FilterSection = ({
+const FilterSection: React.FC<FilterSectionProps> = ({
   bettingAmount,
   onBettingAmountChange,
   selectedSportsbook,
   onSportsbookChange,
-}: FilterSectionProps) => {
+}) => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();

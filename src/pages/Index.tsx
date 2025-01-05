@@ -9,7 +9,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const Index = () => {
   const [bettingAmount, setBettingAmount] = useState("1000");
   const [selectedSportsbook, setSelectedSportsbook] = useState("all");
-  const isSubscribed = false;
   const isMobile = useIsMobile();
 
   return (
@@ -23,7 +22,6 @@ const Index = () => {
         <ArbitrageDescription />
         
         <FilterSection 
-          isSubscribed={isSubscribed} 
           bettingAmount={bettingAmount}
           onBettingAmountChange={setBettingAmount}
           selectedSportsbook={selectedSportsbook}
