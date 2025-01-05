@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, BarChart2, Target, DollarSign, Signal, Trophy, ChartBar, Lightning } from 'lucide-react';
+import { ArrowRight, BarChart2, Target, DollarSign, Signal, Trophy, ChartBar, Zap } from 'lucide-react';
 
 const LandingPage = () => {
   return (
@@ -74,7 +74,7 @@ const LandingPage = () => {
                 description: "Automatically identify profitable betting opportunities"
               },
               {
-                icon: <Lightning className="w-6 h-6 text-primary" />,
+                icon: <Zap className="w-6 h-6 text-primary" />,
                 title: "Instant Alerts",
                 description: "Get notified when profitable opportunities arise"
               },
