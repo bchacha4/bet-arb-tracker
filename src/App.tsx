@@ -11,7 +11,6 @@ import LandingPage from '@/pages/LandingPage';
 import Index from '@/pages/Index';
 import OddsScout from '@/pages/OddsScout';
 
-// Protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useAuth();
   
@@ -28,8 +27,10 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => {
   React.useEffect(() => {
-    // Enable dark mode by default
+    // Force dark mode
     document.documentElement.classList.add('dark');
+    // Also set the background color at the document level
+    document.body.className = 'bg-background text-foreground';
   }, []);
 
   return (

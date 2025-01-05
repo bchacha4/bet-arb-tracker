@@ -31,8 +31,8 @@ const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTablePro
   }
 
   return (
-    <div className="overflow-x-auto border border-gray-200 rounded-lg">
-      <table className="w-full text-sm text-left text-gray-900">
+    <div className="overflow-x-auto border border-table-border rounded-lg bg-table-dark">
+      <table className="w-full text-sm text-left text-foreground">
         <TableHeader />
         <tbody>
           {calculatedProps.map((prop, index) => (
