@@ -66,6 +66,13 @@ const OddsScoutTable = () => {
     }
   });
 
+  // Get unique prop types from the data
+  const availablePropTypes = useMemo(() => {
+    if (!oddsData) return [];
+    const propTypes = new Set(oddsData.map((item: any) => item.prop));
+    return Array.from(propTypes).filter(Boolean);
+  }, [oddsData]);
+
   const filteredData = useMemo(() => {
     if (!oddsData) return [];
 
@@ -76,7 +83,7 @@ const OddsScoutTable = () => {
         item.prop?.toLowerCase().includes(searchQuery.toLowerCase());
 
       const propMatch = selectedProp === 'all' || 
-        item.prop?.toLowerCase() === selectedProp;
+        item.prop?.toLowerCase() === selectedProp.toLowerCase();
 
       return searchMatch && propMatch;
     });
@@ -97,6 +104,7 @@ const OddsScoutTable = () => {
         onSearchChange={setSearchQuery}
         selectedProp={selectedProp}
         onPropChange={setSelectedProp}
+        availablePropTypes={availablePropTypes}
       />
       {isMobile ? (
         <div className="space-y-4">

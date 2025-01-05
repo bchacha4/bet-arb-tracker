@@ -18,24 +18,15 @@ interface FilterSectionProps {
   onSearchChange: (value: string) => void;
   selectedProp: string;
   onPropChange: (value: string) => void;
+  availablePropTypes: string[];
 }
-
-const PROP_TYPES = [
-  "Points",
-  "Rebounds",
-  "Assists",
-  "Three Pointers Made",
-  "Steals",
-  "Blocks",
-  "Double Double",
-  "Triple Double",
-];
 
 const FilterSection = ({
   searchQuery,
   onSearchChange,
   selectedProp,
   onPropChange,
+  availablePropTypes,
 }: FilterSectionProps) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -51,11 +42,11 @@ const FilterSection = ({
 
   return (
     <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} mb-6 gap-4`}>
-      <div className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4 flex-1`}>
-        <div className="relative flex-1">
+      <div className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4`}>
+        <div className="relative w-[300px]">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
-            placeholder="Search players, teams, or props..."
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="pl-10 bg-white border-gray-200"
@@ -67,7 +58,7 @@ const FilterSection = ({
           </SelectTrigger>
           <SelectContent className="bg-white border-gray-200">
             <SelectItem value="all">All Props</SelectItem>
-            {PROP_TYPES.map((prop) => (
+            {availablePropTypes.map((prop) => (
               <SelectItem key={prop} value={prop.toLowerCase()}>
                 {prop}
               </SelectItem>
