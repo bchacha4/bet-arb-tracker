@@ -10,6 +10,7 @@ import LoginPage from '@/components/Auth/LoginPage';
 import LandingPage from '@/pages/LandingPage';
 import Index from '@/pages/Index';
 import OddsScout from '@/pages/OddsScout';
+import PoliciesPage from '@/pages/PoliciesPage';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useAuth();
@@ -44,6 +45,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/policies" element={<PoliciesPage />} />
               <Route 
                 path="/arbitrage-tracker" 
                 element={
