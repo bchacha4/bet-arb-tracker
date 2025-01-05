@@ -21,6 +21,11 @@ interface FilterSectionProps {
   availablePropTypes: string[];
 }
 
+const formatBet = (bet: string): string => {
+  if (!bet) return '';
+  return bet.toLowerCase().replace(/_/g, ' ');
+};
+
 const FilterSection = ({
   searchQuery,
   onSearchChange,
@@ -60,7 +65,7 @@ const FilterSection = ({
             <SelectItem value="all">All Props</SelectItem>
             {availablePropTypes.map((prop) => (
               <SelectItem key={prop} value={prop.toLowerCase()}>
-                {prop}
+                {formatBet(prop)}
               </SelectItem>
             ))}
           </SelectContent>
