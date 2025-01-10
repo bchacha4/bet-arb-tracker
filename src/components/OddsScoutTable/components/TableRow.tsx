@@ -1,6 +1,32 @@
 import React from 'react';
 import OddsButton from './OddsButton';
 
+interface GroupedOddsData {
+  player: string | null;
+  team: string;
+  prop: string | null;
+  created_at: string;
+  sportsbooks: {
+    [key: string]: {
+      Over: {
+        odds: number | null;
+        line: number | null;
+        link: string | null;
+      } | null;
+      Under: {
+        odds: number | null;
+        line: number | null;
+        link: string | null;
+      } | null;
+    };
+  };
+}
+
+interface TableRowProps {
+  prop: GroupedOddsData;
+  visibleSportsbooks: string[];
+}
+
 const formatTeamName = (fullName: string): string => {
   if (!fullName) return '';
   
@@ -33,11 +59,6 @@ const formatBet = (bet: string): string => {
   if (!bet) return '';
   return bet.toLowerCase().replace(/_/g, ' ');
 };
-
-interface TableRowProps {
-  prop: any;
-  visibleSportsbooks: string[];
-}
 
 const TableRow = ({ prop, visibleSportsbooks }: TableRowProps) => {
   return (
