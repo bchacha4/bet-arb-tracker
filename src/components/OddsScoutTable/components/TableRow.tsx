@@ -56,18 +56,15 @@ const TableRow = ({ prop }: { prop: any }) => {
         </td>
         <td className="px-6 py-4">Over</td>
         {sportsbooks.map((book) => {
-          const bookData = prop.sportsbooks[book];
-          const odds = prop.sportsbooks[book]?.Over?.odds;
-          const line = prop.sportsbooks[book]?.Over?.line;
-          const link = prop.sportsbooks[book]?.Over?.link;
+          const overData = prop.sportsbooks[book]?.Over;
           
           return (
             <td key={`${book}-over`} className="px-6 py-4">
-              {bookData?.Over && (
+              {overData && (
                 <OddsButton
-                  odds={odds}
-                  line={line}
-                  link={link}
+                  odds={overData.odds}
+                  line={overData.line}
+                  link={overData.link}
                   outcome="Over"
                   bookmaker={book}
                 />
@@ -80,18 +77,15 @@ const TableRow = ({ prop }: { prop: any }) => {
       <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
         <td className="px-6 py-4">Under</td>
         {sportsbooks.map((book) => {
-          const bookData = prop.sportsbooks[book];
-          const odds = prop.sportsbooks[book]?.Under?.odds;
-          const line = prop.sportsbooks[book]?.Under?.line;
-          const link = prop.sportsbooks[book]?.Under?.link;
+          const underData = prop.sportsbooks[book]?.Under;
           
           return (
             <td key={`${book}-under`} className="px-6 py-4">
-              {bookData?.Under && (
+              {underData && (
                 <OddsButton
-                  odds={odds}
-                  line={line}
-                  link={link}
+                  odds={underData.odds}
+                  line={underData.line}
+                  link={underData.link}
                   outcome="Under"
                   bookmaker={book}
                 />

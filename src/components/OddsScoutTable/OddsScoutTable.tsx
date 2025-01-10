@@ -52,20 +52,27 @@ const OddsScoutTable = () => {
           'BetAnySports', 'LowVig.ag'
         ];
         
-        sportsbooks.forEach(book => {
-          if (!acc[key].sportsbooks[book]) {
-            acc[key].sportsbooks[book] = {};
-          }
-          
-          // Store both over and under data
-          if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
-            acc[key].sportsbooks[book][curr.Outcome] = {
-              odds: curr[`${book}_Odds`],
-              line: curr[`${book}_Line`],
-              link: curr[`${book}_Link`]
-            };
-          }
-        });
+        // Only process this row's data if it hasn't been processed yet
+        if (!acc[key].sportsbooks[curr.Outcome]) {
+          sportsbooks.forEach(book => {
+            const formattedBook = book.replace(/\s/g, ' ');
+            if (!acc[key].sportsbooks[book]) {
+              acc[key].sportsbooks[book] = {
+                Over: null,
+                Under: null
+              };
+            }
+            
+            // Check if this is the current outcome's data
+            if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
+              acc[key].sportsbooks[book][curr.Outcome] = {
+                odds: curr[`${formattedBook}_Odds`],
+                line: curr[`${formattedBook}_Line`],
+                link: curr[`${formattedBook}_Link`]
+              };
+            }
+          });
+        }
         
         return acc;
       }, {});
