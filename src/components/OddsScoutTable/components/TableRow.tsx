@@ -1,31 +1,6 @@
 import React from 'react';
 import OddsButton from './OddsButton';
-
-interface GroupedOddsData {
-  player: string | null;
-  team: string;
-  prop: string | null;
-  created_at: string;
-  sportsbooks: {
-    [key: string]: {
-      Over: {
-        odds: number | null;
-        line: number | null;
-        link: string | null;
-      } | null;
-      Under: {
-        odds: number | null;
-        line: number | null;
-        link: string | null;
-      } | null;
-    };
-  };
-}
-
-interface TableRowProps {
-  prop: GroupedOddsData;
-  visibleSportsbooks: string[];
-}
+import { GroupedOddsData, TableRowProps } from '../types';
 
 const formatTeamName = (fullName: string): string => {
   if (!fullName) return '';
