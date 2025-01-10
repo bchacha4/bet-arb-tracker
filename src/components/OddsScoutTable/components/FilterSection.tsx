@@ -9,8 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import SportsbookFilter from './SportsbookFilter';
 import { formatDistanceToNow } from 'date-fns';
+import SportsbookFilter from './SportsbookFilter';
 
 interface FilterSectionProps {
   searchQuery: string;
@@ -67,7 +67,7 @@ const FilterSection = ({
           onChange={(e) => onSearchChange(e.target.value)}
           className="w-full"
         />
-        <div className="flex flex-row gap-4 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
           <Select value={selectedProp} onValueChange={onPropChange}>
             <SelectTrigger className="w-full sm:w-[180px] bg-white">
               <SelectValue placeholder="Filter by prop type" />
