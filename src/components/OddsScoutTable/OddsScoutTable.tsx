@@ -8,7 +8,7 @@ import MobileOddsCard from "./components/MobileOddsCard";
 import FilterSection from "./components/FilterSection";
 import { useOddsData } from "./hooks/useOddsData";
 import { useOddsFilters } from "./hooks/useOddsFilters";
-import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
+import { GroupedOddsData } from './types';
 
 const OddsScoutTable = () => {
   const isMobile = useIsMobile();
@@ -49,7 +49,7 @@ const OddsScoutTable = () => {
       />
       {isMobile ? (
         <div className="space-y-4">
-          {filteredData.map((prop, index) => (
+          {filteredData.map((prop: GroupedOddsData, index) => (
             <MobileOddsCard 
               key={index} 
               prop={prop}
@@ -63,7 +63,7 @@ const OddsScoutTable = () => {
             <table className="w-full text-sm text-left text-gray-900">
               <TableHeader visibleSportsbooks={selectedSportsbooks} />
               <tbody>
-                {filteredData.map((prop, index) => (
+                {filteredData.map((prop: GroupedOddsData, index) => (
                   <TableRow 
                     key={index} 
                     prop={prop}

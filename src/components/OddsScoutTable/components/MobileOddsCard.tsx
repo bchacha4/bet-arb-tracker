@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import OddsButton from './OddsButton';
 import { ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { TableRowProps } from '../types';
 
 const formatBet = (bet: string): string => {
   if (!bet) return '';
@@ -15,25 +15,19 @@ const formatBet = (bet: string): string => {
     .join(' ');
 };
 
-const MobileOddsCard = ({ prop }: { prop: any }) => {
+const MobileOddsCard = ({ prop, visibleSportsbooks }: TableRowProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const sportsbooks = [
-    'FanDuel', 'ESPN BET', 'DraftKings', 'Fliff', 'BetMGM',
-    'Hard Rock Bet', 'BetRivers', 'Bally Bet', 'Caesars',
-    'BetOnline.ag', 'Bovada', 'BetUS', 'betPARX',
-    'BetAnySports', 'LowVig.ag'
-  ];
 
   // Get first two visible sportsbooks
-  const visibleSportsbooks = sportsbooks.filter(book => {
+  const visibleBookmakers = visibleSportsbooks.filter(book => {
     const bookData = prop.sportsbooks[book];
     return bookData?.Over || bookData?.Under;
   }).slice(0, 2);
 
   // Get remaining sportsbooks
-  const remainingSportsbooks = sportsbooks.filter(book => {
+  const remainingSportsbooks = visibleSportsbooks.filter(book => {
     const bookData = prop.sportsbooks[book];
-    return (bookData?.Over || bookData?.Under) && !visibleSportsbooks.includes(book);
+    return (bookData?.Over || bookData?.Under) && !visibleBookmakers.includes(book);
   });
 
   return (
@@ -47,7 +41,7 @@ const MobileOddsCard = ({ prop }: { prop: any }) => {
 
         <div className="space-y-4">
           {/* Always visible sportsbooks */}
-          {visibleSportsbooks.map((book) => {
+          {visibleBookmakers.map((book) => {
             const bookData = prop.sportsbooks[book];
             if (!bookData?.Over && !bookData?.Under) return null;
 

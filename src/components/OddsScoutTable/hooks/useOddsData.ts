@@ -4,7 +4,7 @@ import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 import { GroupedOddsData } from '../types';
 
 export const useOddsData = () => {
-  return useQuery({
+  return useQuery<GroupedOddsData[]>({
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
