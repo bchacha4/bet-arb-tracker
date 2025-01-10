@@ -1,7 +1,5 @@
 import React from 'react';
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -9,8 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { formatDistanceToNow } from 'date-fns';
 import SportsbookFilter from './SportsbookFilter';
+import LastUpdatedSection from './LastUpdatedSection';
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface FilterSectionProps {
@@ -43,21 +41,7 @@ const FilterSection = ({
   selectedSportsbooks,
   onSportsbooksChange
 }: FilterSectionProps) => {
-  const [timeAgo, setTimeAgo] = React.useState('');
   const isMobile = useIsMobile();
-
-  React.useEffect(() => {
-    const updateTimeAgo = () => {
-      if (lastUpdated) {
-        const date = new Date(lastUpdated);
-        setTimeAgo(formatDistanceToNow(date, { addSuffix: true }));
-      }
-    };
-
-    updateTimeAgo();
-    const interval = setInterval(updateTimeAgo, 60000);
-    return () => clearInterval(interval);
-  }, [lastUpdated]);
 
   return (
     <div className="space-y-4">
@@ -91,17 +75,7 @@ const FilterSection = ({
         </div>
       </div>
 
-      <div className="flex items-center justify-between border-t pt-4">
-        <span className="text-sm text-gray-500">Last updated: {timeAgo}</span>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={onRefresh}
-          className="h-9 w-9"
-        >
-          <RefreshCw className="h-4 w-4" />
-        </Button>
-      </div>
+      <LastUpdatedSection lastUpdated={lastUpdated} onRefresh={onRefresh} />
     </div>
   );
 };
