@@ -148,15 +148,17 @@ const OddsScoutTable = () => {
           ))}
         </div>
       ) : (
-        <div className="border border-gray-200 rounded-lg overflow-auto max-h-[800px] relative">
-          <table className="w-full text-sm text-left text-gray-900">
-            <TableHeader />
-            <tbody>
-              {filteredData.map((prop: GroupedOddsData, index: number) => (
-                <TableRow key={index} prop={prop} />
-              ))}
-            </tbody>
-          </table>
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <div className="max-h-[800px] overflow-auto relative">
+            <table className="w-full text-sm text-left text-gray-900">
+              <TableHeader />
+              <tbody>
+                {filteredData.map((prop: GroupedOddsData, index: number) => (
+                  <TableRow key={index} prop={prop} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
