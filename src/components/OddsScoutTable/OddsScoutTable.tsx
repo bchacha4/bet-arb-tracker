@@ -8,20 +8,29 @@ import TableHeader from "./components/TableHeader";
 import TableRow from "./components/TableRow";
 import MobileOddsCard from "./components/MobileOddsCard";
 import FilterSection from "./components/FilterSection";
+import { formatDistanceToNow } from 'date-fns';
 
 const OddsScoutTable = () => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProp, setSelectedProp] = useState('all');
+  const [lastUpdated, setLastUpdated] = useState<string>('');
 
   const { data: oddsData, isLoading } = useQuery({
     queryKey: ['oddsScout'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('odds_scout')
-        .select('*');
+        .select('*')
+        .order('created_at', { ascending: false });
       
       if (error) throw error;
+      
+      // Set last updated time
+      if (data && data.length > 0) {
+        const mostRecent = new Date(data[0].created_at);
+        setLastUpdated(formatDistanceToNow(mostRecent, { addSuffix: true }));
+      }
       
       // Group the data by Player and Prop
       const groupedData = data.reduce((acc: any, curr: any) => {
@@ -105,6 +114,7 @@ const OddsScoutTable = () => {
         selectedProp={selectedProp}
         onPropChange={setSelectedProp}
         availablePropTypes={availablePropTypes}
+        lastUpdated={lastUpdated}
       />
       {isMobile ? (
         <div className="space-y-4">
@@ -113,9 +123,11 @@ const OddsScoutTable = () => {
           ))}
         </div>
       ) : (
-        <div className="border border-gray-200 rounded-lg overflow-auto max-h-[800px]">
+        <div className="border border-gray-200 rounded-lg overflow-auto max-h-[800px] relative">
           <table className="w-full text-sm text-left text-gray-900">
-            <TableHeader />
+            <thead className="text-xs uppercase bg-gray-50 sticky top-0 z-10">
+              <TableHeader />
+            </thead>
             <tbody>
               {filteredData.map((prop: any, index: number) => (
                 <TableRow key={index} prop={prop} />
