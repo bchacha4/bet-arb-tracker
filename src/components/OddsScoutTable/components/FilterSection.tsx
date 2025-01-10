@@ -52,43 +52,44 @@ const FilterSection = ({
       }
     };
 
-    // Update immediately when lastUpdated changes
     updateTimeAgo();
-
-    // Then update every minute
     const interval = setInterval(updateTimeAgo, 60000);
-
     return () => clearInterval(interval);
   }, [lastUpdated]);
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
-      <div className="flex flex-1 gap-4 w-full sm:w-auto">
+    <div className="flex flex-col gap-4">
+      {/* Search and Filters */}
+      <div className="flex flex-col sm:flex-row gap-4 w-full">
         <Input
           placeholder="Search by player, team, or prop type..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full sm:max-w-xs"
+          className="w-full"
         />
-        <Select value={selectedProp} onValueChange={onPropChange}>
-          <SelectTrigger className="w-[180px] bg-white">
-            <SelectValue placeholder="Filter by prop type" />
-          </SelectTrigger>
-          <SelectContent className="bg-white border shadow-md">
-            <SelectItem value="all">All Props</SelectItem>
-            {availablePropTypes.map((prop) => (
-              <SelectItem key={prop} value={prop.toLowerCase()}>
-                {formatPropType(prop)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <SportsbookFilter
-          selectedSportsbooks={selectedSportsbooks}
-          onSportsbooksChange={onSportsbooksChange}
-        />
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <Select value={selectedProp} onValueChange={onPropChange}>
+            <SelectTrigger className="w-full sm:w-[180px] bg-white">
+              <SelectValue placeholder="Filter by prop type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border shadow-md">
+              <SelectItem value="all">All Props</SelectItem>
+              {availablePropTypes.map((prop) => (
+                <SelectItem key={prop} value={prop.toLowerCase()}>
+                  {formatPropType(prop)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <SportsbookFilter
+            selectedSportsbooks={selectedSportsbooks}
+            onSportsbooksChange={onSportsbooksChange}
+          />
+        </div>
       </div>
-      <div className="flex items-center gap-4">
+
+      {/* Last Updated Section */}
+      <div className="flex items-center justify-between gap-4 border-t pt-4 mt-2">
         <span className="text-sm text-gray-500">Last updated: {timeAgo}</span>
         <Button
           variant="outline"

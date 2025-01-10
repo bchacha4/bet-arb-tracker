@@ -36,7 +36,7 @@ const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: Sportsbo
       <PopoverTrigger asChild>
         <Button 
           variant="outline" 
-          className="w-[180px] justify-between bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200 font-normal"
+          className="w-full sm:w-[180px] justify-between bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200 font-normal"
         >
           Sportsbooks
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
