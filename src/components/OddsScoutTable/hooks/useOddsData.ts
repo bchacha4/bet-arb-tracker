@@ -3,12 +3,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 import { GroupedOddsData } from '../types';
 
+interface RawOddsData {
+  Player: string | null;
+  "Player Prop": string | null;
+  "Home Team": string;
+  "Away Team": string;
+  Outcome: string;
+  created_at: string;
+  [key: string]: any; // For dynamic sportsbook fields
+}
+
 export const useOddsData = () => {
   return useQuery<GroupedOddsData[], Error>({
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      let allData: any[] = [];
+      let allData: RawOddsData[] = [];
       let page = 0;
       const pageSize = 1000;
 
@@ -26,14 +36,14 @@ export const useOddsData = () => {
 
         if (!data || data.length === 0) break;
 
-        allData = [...allData, ...data];
+        allData = [...allData, ...data] as RawOddsData[];
         page++;
       }
 
       console.log('Raw data count:', allData.length);
 
       // Transform the data into GroupedOddsData format
-      const groupedData = allData.reduce((acc: Record<string, GroupedOddsData>, curr: any) => {
+      const groupedData = allData.reduce<Record<string, GroupedOddsData>>((acc, curr) => {
         const key = `${curr.Player}-${curr["Player Prop"]}`;
         
         if (!acc[key]) {
@@ -60,7 +70,7 @@ export const useOddsData = () => {
           
           if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
             acc[key].sportsbooks[book][curr.Outcome] = {
-              odds: curr[`${bookKey}_Odds`] || curr[`${bookKey}_odds`], // Handle both cases
+              odds: curr[`${bookKey}_Odds`] || curr[`${bookKey}_odds`],
               line: curr[`${bookKey}_Line`],
               link: curr[`${bookKey}_Link`]
             };
