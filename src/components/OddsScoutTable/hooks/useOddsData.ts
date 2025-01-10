@@ -8,7 +8,7 @@ export const useOddsData = () => {
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      let allData = [];
+      let allData: any[] = [];
       let page = 0;
       const pageSize = 1000;
       
