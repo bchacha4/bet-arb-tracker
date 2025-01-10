@@ -42,10 +42,10 @@ const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: Sportsbo
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent className="w-[200px] p-0 bg-white shadow-md border" align="start">
         <div className="p-2 grid gap-2">
           <div className="flex items-center justify-between px-2 py-1 border-b">
-            <span className="text-sm font-medium">Filter Sportsbooks</span>
+            <span className="text-sm">Filter Sportsbooks</span>
           </div>
           <div className="px-2 py-1 flex justify-between gap-2">
             <Button
@@ -79,7 +79,7 @@ const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: Sportsbo
                 />
                 <label
                   htmlFor={book.value}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
                   {book.label}
                 </label>

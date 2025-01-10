@@ -24,6 +24,13 @@ interface FilterSectionProps {
   onSportsbooksChange: (sportsbooks: string[]) => void;
 }
 
+const formatPropType = (prop: string): string => {
+  return prop
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const FilterSection = ({
   searchQuery,
   onSearchChange,
@@ -62,11 +69,11 @@ const FilterSection = ({
           <SelectTrigger className="w-[180px] bg-white">
             <SelectValue placeholder="Filter by prop type" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white border shadow-md">
             <SelectItem value="all">All Props</SelectItem>
             {availablePropTypes.map((prop) => (
               <SelectItem key={prop} value={prop.toLowerCase()}>
-                {prop}
+                {formatPropType(prop)}
               </SelectItem>
             ))}
           </SelectContent>
