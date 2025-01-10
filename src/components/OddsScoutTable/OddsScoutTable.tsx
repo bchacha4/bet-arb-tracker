@@ -52,27 +52,23 @@ const OddsScoutTable = () => {
           'BetAnySports', 'LowVig.ag'
         ];
         
-        // Only process this row's data if it hasn't been processed yet
-        if (!acc[key].sportsbooks[curr.Outcome]) {
-          sportsbooks.forEach(book => {
-            const formattedBook = book.replace(/\s/g, ' ');
-            if (!acc[key].sportsbooks[book]) {
-              acc[key].sportsbooks[book] = {
-                Over: null,
-                Under: null
-              };
-            }
-            
-            // Check if this is the current outcome's data
-            if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
-              acc[key].sportsbooks[book][curr.Outcome] = {
-                odds: curr[`${formattedBook}_Odds`],
-                line: curr[`${formattedBook}_Line`],
-                link: curr[`${formattedBook}_Link`]
-              };
-            }
-          });
-        }
+        sportsbooks.forEach(book => {
+          const formattedBook = book.replace(/\./g, '\\.').replace(/\s/g, ' ');
+          if (!acc[key].sportsbooks[book]) {
+            acc[key].sportsbooks[book] = {
+              Over: null,
+              Under: null
+            };
+          }
+          
+          if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
+            acc[key].sportsbooks[book][curr.Outcome] = {
+              odds: curr[`${formattedBook}_Odds`],
+              line: curr[`${formattedBook}_Line`],
+              link: curr[`${formattedBook}_Link`]
+            };
+          }
+        });
         
         return acc;
       }, {});
@@ -131,9 +127,7 @@ const OddsScoutTable = () => {
       ) : (
         <div className="border border-gray-200 rounded-lg overflow-auto max-h-[800px] relative">
           <table className="w-full text-sm text-left text-gray-900">
-            <thead className="text-xs uppercase bg-gray-50 sticky top-0 z-10">
-              <TableHeader />
-            </thead>
+            <TableHeader />
             <tbody>
               {filteredData.map((prop: any, index: number) => (
                 <TableRow key={index} prop={prop} />
