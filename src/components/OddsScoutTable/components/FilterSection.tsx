@@ -42,16 +42,21 @@ const FilterSection = ({
   selectedSportsbooks,
   onSportsbooksChange
 }: FilterSectionProps) => {
-  const [timeAgo, setTimeAgo] = React.useState(lastUpdated);
+  const [timeAgo, setTimeAgo] = React.useState('');
 
   React.useEffect(() => {
-    setTimeAgo(lastUpdated);
-    const interval = setInterval(() => {
+    const updateTimeAgo = () => {
       if (lastUpdated) {
         const date = new Date(lastUpdated);
         setTimeAgo(formatDistanceToNow(date, { addSuffix: true }));
       }
-    }, 60000); // Update every minute
+    };
+
+    // Update immediately when lastUpdated changes
+    updateTimeAgo();
+
+    // Then update every minute
+    const interval = setInterval(updateTimeAgo, 60000);
 
     return () => clearInterval(interval);
   }, [lastUpdated]);
