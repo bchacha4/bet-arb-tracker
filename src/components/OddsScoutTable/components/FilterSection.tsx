@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { formatDistanceToNow } from 'date-fns';
 import SportsbookFilter from './SportsbookFilter';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface FilterSectionProps {
   searchQuery: string;
@@ -43,6 +44,7 @@ const FilterSection = ({
   onSportsbooksChange
 }: FilterSectionProps) => {
   const [timeAgo, setTimeAgo] = React.useState('');
+  const isMobile = useIsMobile();
 
   React.useEffect(() => {
     const updateTimeAgo = () => {
@@ -52,26 +54,23 @@ const FilterSection = ({
       }
     };
 
-    // Update immediately when lastUpdated changes
     updateTimeAgo();
-
-    // Then update every minute
     const interval = setInterval(updateTimeAgo, 60000);
-
     return () => clearInterval(interval);
   }, [lastUpdated]);
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
-      <div className="flex flex-1 gap-4 w-full sm:w-auto">
-        <Input
-          placeholder="Search by player, team, or prop type..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full sm:max-w-xs"
-        />
+    <div className="space-y-4">
+      <Input
+        placeholder="Search by player, team, or prop type..."
+        value={searchQuery}
+        onChange={(e) => onSearchChange(e.target.value)}
+        className="w-full"
+      />
+      
+      <div className={`flex ${isMobile ? 'gap-2' : 'gap-4'} ${isMobile ? 'w-full' : ''}`}>
         <Select value={selectedProp} onValueChange={onPropChange}>
-          <SelectTrigger className="w-[180px] bg-white">
+          <SelectTrigger className={`bg-white ${isMobile ? 'flex-1' : 'w-[180px]'}`}>
             <SelectValue placeholder="Filter by prop type" />
           </SelectTrigger>
           <SelectContent className="bg-white border shadow-md">
@@ -83,12 +82,16 @@ const FilterSection = ({
             ))}
           </SelectContent>
         </Select>
-        <SportsbookFilter
-          selectedSportsbooks={selectedSportsbooks}
-          onSportsbooksChange={onSportsbooksChange}
-        />
+        
+        <div className={`${isMobile ? 'flex-1' : ''}`}>
+          <SportsbookFilter
+            selectedSportsbooks={selectedSportsbooks}
+            onSportsbooksChange={onSportsbooksChange}
+          />
+        </div>
       </div>
-      <div className="flex items-center gap-4">
+
+      <div className="flex items-center justify-between border-t pt-4">
         <span className="text-sm text-gray-500">Last updated: {timeAgo}</span>
         <Button
           variant="outline"

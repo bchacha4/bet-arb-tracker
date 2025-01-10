@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SportsbookFilterProps {
   selectedSportsbooks: string[];
@@ -15,6 +16,8 @@ interface SportsbookFilterProps {
 }
 
 const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: SportsbookFilterProps) => {
+  const isMobile = useIsMobile();
+  
   const toggleSportsbook = (sportsbook: string) => {
     if (selectedSportsbooks.includes(sportsbook)) {
       onSportsbooksChange(selectedSportsbooks.filter(s => s !== sportsbook));
@@ -36,7 +39,7 @@ const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: Sportsbo
       <PopoverTrigger asChild>
         <Button 
           variant="outline" 
-          className="w-[180px] justify-between bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200 font-normal"
+          className={`${isMobile ? 'w-full' : 'w-[180px]'} justify-between bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200 font-normal`}
         >
           Sportsbooks
           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

@@ -1,10 +1,13 @@
 import { useState, useMemo } from 'react';
 import { GroupedOddsData } from '../types';
+import { AVAILABLE_SPORTSBOOKS } from '@/constants/sportsbooks';
 
 export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProp, setSelectedProp] = useState('all');
-  const [selectedSportsbooks, setSelectedSportsbooks] = useState<string[]>([]);
+  const [selectedSportsbooks, setSelectedSportsbooks] = useState<string[]>(
+    AVAILABLE_SPORTSBOOKS.map(book => book.value)
+  );
 
   const availablePropTypes = useMemo(() => {
     if (!oddsData) return [];
