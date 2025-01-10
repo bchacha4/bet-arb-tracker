@@ -8,15 +8,13 @@ import TableHeader from "./components/TableHeader";
 import TableRow from "./components/TableRow";
 import MobileOddsCard from "./components/MobileOddsCard";
 import FilterSection from "./components/FilterSection";
-import { formatDistanceToNow } from 'date-fns';
 
 const OddsScoutTable = () => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProp, setSelectedProp] = useState('all');
-  const [lastUpdated, setLastUpdated] = useState<string>('');
 
-  const { data: oddsData, isLoading } = useQuery({
+  const { data: oddsData, isLoading, refetch } = useQuery({
     queryKey: ['oddsScout'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -26,12 +24,6 @@ const OddsScoutTable = () => {
       
       if (error) throw error;
       
-      // Set last updated time
-      if (data && data.length > 0) {
-        const mostRecent = new Date(data[0].created_at);
-        setLastUpdated(formatDistanceToNow(mostRecent, { addSuffix: true }));
-      }
-      
       // Group the data by Player and Prop
       const groupedData = data.reduce((acc: any, curr: any) => {
         const key = `${curr.Player}-${curr["Player Prop"]}`;
@@ -40,6 +32,7 @@ const OddsScoutTable = () => {
             player: curr.Player,
             team: `${curr["Home Team"]} vs ${curr["Away Team"]}`,
             prop: curr["Player Prop"],
+            created_at: curr.created_at,
             sportsbooks: {}
           };
         }
@@ -100,6 +93,11 @@ const OddsScoutTable = () => {
     });
   }, [oddsData, searchQuery, selectedProp]);
 
+  const lastUpdated = useMemo(() => {
+    if (!oddsData || oddsData.length === 0) return '';
+    return oddsData[0].created_at;
+  }, [oddsData]);
+
   if (isLoading) {
     return <LoadingState />;
   }
@@ -117,6 +115,7 @@ const OddsScoutTable = () => {
         onPropChange={setSelectedProp}
         availablePropTypes={availablePropTypes}
         lastUpdated={lastUpdated}
+        onRefresh={() => refetch()}
       />
       {isMobile ? (
         <div className="space-y-4">

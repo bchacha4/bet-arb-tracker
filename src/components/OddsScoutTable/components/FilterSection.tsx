@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -8,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RefreshCw } from "lucide-react";
+import { formatDistanceToNow } from 'date-fns';
 
 interface FilterSectionProps {
   searchQuery: string;
@@ -16,6 +18,7 @@ interface FilterSectionProps {
   onPropChange: (value: string) => void;
   availablePropTypes: string[];
   lastUpdated: string;
+  onRefresh: () => void;
 }
 
 const FilterSection = ({
@@ -24,19 +27,32 @@ const FilterSection = ({
   selectedProp,
   onPropChange,
   availablePropTypes,
-  lastUpdated
+  lastUpdated,
+  onRefresh
 }: FilterSectionProps) => {
+  const [timeAgo, setTimeAgo] = useState(lastUpdated);
+
+  useEffect(() => {
+    setTimeAgo(lastUpdated);
+    const interval = setInterval(() => {
+      if (lastUpdated) {
+        const date = new Date(lastUpdated);
+        setTimeAgo(formatDistanceToNow(date, { addSuffix: true }));
+      }
+    }, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, [lastUpdated]);
+
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-4 items-start sm:items-center">
-      <div className="flex-1 w-full sm:w-auto">
+      <div className="flex flex-1 gap-4 w-full sm:w-auto">
         <Input
           placeholder="Search by player, team, or prop type..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           className="w-full sm:max-w-xs"
         />
-      </div>
-      <div className="flex items-center gap-4">
         <Select value={selectedProp} onValueChange={onPropChange}>
           <SelectTrigger className="w-[180px] bg-white">
             <SelectValue placeholder="Filter by prop type" />
@@ -50,10 +66,17 @@ const FilterSection = ({
             ))}
           </SelectContent>
         </Select>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500">{lastUpdated}</span>
-          <RefreshCw className="h-4 w-4 text-gray-500" />
-        </div>
+      </div>
+      <div className="flex items-center gap-4">
+        <span className="text-sm text-gray-500">Last updated: {timeAgo}</span>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={onRefresh}
+          className="h-9 w-9"
+        >
+          <RefreshCw className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
