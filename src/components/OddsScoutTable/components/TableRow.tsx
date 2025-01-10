@@ -34,14 +34,12 @@ const formatBet = (bet: string): string => {
   return bet.toLowerCase().replace(/_/g, ' ');
 };
 
-const TableRow = ({ prop }: { prop: any }) => {
-  const sportsbooks = [
-    'FanDuel', 'ESPN BET', 'DraftKings', 'Fliff', 'BetMGM',
-    'Hard Rock Bet', 'BetRivers', 'Bally Bet', 'Caesars',
-    'BetOnline.ag', 'Bovada', 'BetUS', 'betPARX',
-    'BetAnySports', 'LowVig.ag'
-  ];
+interface TableRowProps {
+  prop: any;
+  visibleSportsbooks: string[];
+}
 
+const TableRow = ({ prop, visibleSportsbooks }: TableRowProps) => {
   return (
     <>
       {/* Over row */}
@@ -55,7 +53,7 @@ const TableRow = ({ prop }: { prop: any }) => {
           {formatBet(prop.prop)}
         </td>
         <td className="px-6 py-4">Over</td>
-        {sportsbooks.map((book) => {
+        {visibleSportsbooks.map((book) => {
           const overData = prop.sportsbooks[book]?.Over;
           
           return (
@@ -76,7 +74,7 @@ const TableRow = ({ prop }: { prop: any }) => {
       {/* Under row */}
       <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
         <td className="px-6 py-4">Under</td>
-        {sportsbooks.map((book) => {
+        {visibleSportsbooks.map((book) => {
           const underData = prop.sportsbooks[book]?.Under;
           
           return (

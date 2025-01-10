@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -8,8 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RefreshCw } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
+import SportsbookFilter from './SportsbookFilter';
 
 interface FilterSectionProps {
   searchQuery: string;
@@ -19,6 +20,8 @@ interface FilterSectionProps {
   availablePropTypes: string[];
   lastUpdated: string;
   onRefresh: () => void;
+  selectedSportsbooks: string[];
+  onSportsbooksChange: (sportsbooks: string[]) => void;
 }
 
 const FilterSection = ({
@@ -28,11 +31,13 @@ const FilterSection = ({
   onPropChange,
   availablePropTypes,
   lastUpdated,
-  onRefresh
+  onRefresh,
+  selectedSportsbooks,
+  onSportsbooksChange
 }: FilterSectionProps) => {
-  const [timeAgo, setTimeAgo] = useState(lastUpdated);
+  const [timeAgo, setTimeAgo] = React.useState(lastUpdated);
 
-  useEffect(() => {
+  React.useEffect(() => {
     setTimeAgo(lastUpdated);
     const interval = setInterval(() => {
       if (lastUpdated) {
@@ -66,6 +71,10 @@ const FilterSection = ({
             ))}
           </SelectContent>
         </Select>
+        <SportsbookFilter
+          selectedSportsbooks={selectedSportsbooks}
+          onSportsbooksChange={onSportsbooksChange}
+        />
       </div>
       <div className="flex items-center gap-4">
         <span className="text-sm text-gray-500">Last updated: {timeAgo}</span>

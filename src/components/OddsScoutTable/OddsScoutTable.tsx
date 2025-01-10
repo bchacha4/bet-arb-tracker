@@ -8,6 +8,7 @@ import TableHeader from "./components/TableHeader";
 import TableRow from "./components/TableRow";
 import MobileOddsCard from "./components/MobileOddsCard";
 import FilterSection from "./components/FilterSection";
+import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 import type { Database } from '@/integrations/supabase/types';
 
 type OddsScoutRow = Database['public']['Tables']['odds_scout']['Row'];
@@ -37,6 +38,9 @@ const OddsScoutTable = () => {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProp, setSelectedProp] = useState('all');
+  const [selectedSportsbooks, setSelectedSportsbooks] = useState(
+    AVAILABLE_SPORTSBOOKS.map(book => book.value)
+  );
 
   const { data: oddsData, isLoading, refetch } = useQuery({
     queryKey: ['oddsScout'],
@@ -62,12 +66,7 @@ const OddsScoutTable = () => {
         }
         
         // Add sportsbook data
-        const sportsbooks = [
-          'FanDuel', 'ESPN BET', 'DraftKings', 'Fliff', 'BetMGM', 
-          'Hard Rock Bet', 'BetRivers', 'Bally Bet', 'Caesars', 
-          'BetOnline.ag', 'Bovada', 'BetUS', 'betPARX', 
-          'BetAnySports', 'LowVig.ag'
-        ];
+        const sportsbooks = AVAILABLE_SPORTSBOOKS.map(book => book.value);
         
         sportsbooks.forEach(book => {
           const formattedBook = book.replace(/\./g, '\\.').replace(/\s/g, ' ');
@@ -140,21 +139,31 @@ const OddsScoutTable = () => {
         availablePropTypes={availablePropTypes}
         lastUpdated={lastUpdated}
         onRefresh={() => refetch()}
+        selectedSportsbooks={selectedSportsbooks}
+        onSportsbooksChange={setSelectedSportsbooks}
       />
       {isMobile ? (
         <div className="space-y-4">
-          {filteredData.map((prop: GroupedOddsData, index: number) => (
-            <MobileOddsCard key={index} prop={prop} />
+          {filteredData.map((prop, index) => (
+            <MobileOddsCard 
+              key={index} 
+              prop={prop} 
+              visibleSportsbooks={selectedSportsbooks}
+            />
           ))}
         </div>
       ) : (
         <div className="border border-gray-200 rounded-lg overflow-hidden">
           <div className="max-h-[800px] overflow-auto relative">
             <table className="w-full text-sm text-left text-gray-900">
-              <TableHeader />
+              <TableHeader visibleSportsbooks={selectedSportsbooks} />
               <tbody>
-                {filteredData.map((prop: GroupedOddsData, index: number) => (
-                  <TableRow key={index} prop={prop} />
+                {filteredData.map((prop, index) => (
+                  <TableRow 
+                    key={index} 
+                    prop={prop} 
+                    visibleSportsbooks={selectedSportsbooks}
+                  />
                 ))}
               </tbody>
             </table>
