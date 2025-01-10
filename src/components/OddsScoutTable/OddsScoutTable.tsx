@@ -25,16 +25,28 @@ const OddsScoutTable = () => {
   const { data: oddsData, isLoading, refetch } = useQuery({
     queryKey: ['oddsScout'],
     queryFn: async () => {
+      console.log('Fetching data from Supabase...');
       const { data, error } = await supabase
         .from('odds_scout')
         .select('*')
         .order('created_at', { ascending: false });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching data:', error);
+        throw error;
+      }
+      
+      console.log('Raw data count:', data?.length);
       
       // Group the data by Player and Prop
       const groupedData = (data as OddsScoutRow[]).reduce((acc: Record<string, GroupedOddsData>, curr) => {
         const key = `${curr.Player}-${curr["Player Prop"]}`;
+        console.log('Processing row:', {
+          player: curr.Player,
+          prop: curr["Player Prop"],
+          outcome: curr.Outcome
+        });
+        
         if (!acc[key]) {
           acc[key] = {
             player: curr.Player,
@@ -69,7 +81,9 @@ const OddsScoutTable = () => {
         return acc;
       }, {});
 
-      return Object.values(groupedData);
+      const groupedArray = Object.values(groupedData);
+      console.log('Grouped data count:', groupedArray.length);
+      return groupedArray;
     }
   });
 
@@ -108,6 +122,8 @@ const OddsScoutTable = () => {
   if (!filteredData || filteredData.length === 0) {
     return <EmptyState />;
   }
+
+  console.log('Final filtered data count:', filteredData.length);
 
   return (
     <div className="space-y-4">
