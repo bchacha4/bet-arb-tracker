@@ -26,22 +26,38 @@ const OddsScoutTable = () => {
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      const { data, error, count } = await supabase
-        .from('odds_scout')
-        .select('*', { count: 'exact' })
-        .order('created_at', { ascending: false })
-        .limit(5000); // Increased limit to ensure we get all rows
+      let allData: OddsScoutRow[] = [];
+      let page = 0;
+      const pageSize = 1000;
       
-      if (error) {
-        console.error('Error fetching data:', error);
-        throw error;
+      while (true) {
+        const { data, error, count } = await supabase
+          .from('odds_scout')
+          .select('*', { count: 'exact' })
+          .order('created_at', { ascending: false })
+          .range(page * pageSize, (page + 1) * pageSize - 1);
+        
+        if (error) {
+          console.error('Error fetching data:', error);
+          throw error;
+        }
+
+        if (!data || data.length === 0) break;
+        
+        allData = [...allData, ...data];
+        
+        if (page === 0) {
+          console.log('Total rows in database:', count);
+        }
+        
+        if (data.length < pageSize) break;
+        page++;
       }
       
-      console.log('Total rows in database:', count);
-      console.log('Raw data count:', data?.length);
+      console.log('Raw data count:', allData.length);
       
       // Group the data by Player and Prop
-      const groupedData = (data as OddsScoutRow[]).reduce((acc: Record<string, GroupedOddsData>, curr) => {
+      const groupedData = allData.reduce((acc: Record<string, GroupedOddsData>, curr) => {
         const key = `${curr.Player}-${curr["Player Prop"]}`;
         console.log('Processing row:', {
           player: curr.Player,
@@ -145,7 +161,7 @@ const OddsScoutTable = () => {
           {filteredData.map((prop, index) => (
             <MobileOddsCard 
               key={index} 
-              prop={prop} 
+              prop={prop}
               visibleSportsbooks={selectedSportsbooks}
             />
           ))}
@@ -159,7 +175,7 @@ const OddsScoutTable = () => {
                 {filteredData.map((prop, index) => (
                   <TableRow 
                     key={index} 
-                    prop={prop} 
+                    prop={prop}
                     visibleSportsbooks={selectedSportsbooks}
                   />
                 ))}
