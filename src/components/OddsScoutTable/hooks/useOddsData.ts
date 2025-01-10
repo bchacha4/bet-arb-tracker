@@ -39,7 +39,7 @@ export const useOddsData = () => {
       console.log('Raw data count:', allData.length);
       
       // Group the data by Player and Prop
-      const groupedData = allData.reduce((acc: Record<string, GroupedOddsData>, curr) => {
+      const groupedData = allData.reduce((acc: Record<string, GroupedOddsData>, curr: any) => {
         const key = `${curr.Player}-${curr["Player Prop"]}`;
         
         if (!acc[key]) {
@@ -78,7 +78,7 @@ export const useOddsData = () => {
 
       const groupedArray = Object.values(groupedData);
       console.log('Grouped data count:', groupedArray.length);
-      return groupedArray;
+      return groupedArray as GroupedOddsData[];
     }
   });
 };
