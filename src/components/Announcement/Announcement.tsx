@@ -1,53 +1,46 @@
-import { Info, ChevronDown, ChevronUp } from "lucide-react";
+import React, { useState } from 'react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const Announcement = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Alert className="mb-6 bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 shadow-sm">
-      <div className="flex items-start justify-between w-full">
-        <div className="flex gap-2">
-          <Info className="h-5 w-5 text-primary mt-1" />
+    <Alert className="relative cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+      <div className="flex items-start justify-between">
+        <div className="flex-1">
           <AlertDescription className="text-foreground">
             {isExpanded ? (
               <>
                 <p className="font-semibold mb-2">Welcome to the New Odds Scout! 🎉</p>
                 <p className="text-sm text-foreground/80">
-                  We've made some exciting improvements to enhance your experience:
+                  We've made some important improvements to enhance your odds comparison experience:
                 </p>
                 <ul className="list-disc list-inside mt-2 ml-2 text-sm text-foreground/80 space-y-1">
-                  <li>Improved layout for better readability</li>
-                  <li>Enhanced filters for easier odds comparison</li>
-                  <li>More compact and organized desktop view</li>
-                  <li>Better mobile experience with optimized layout</li>
+                  <li>Fixed column headers now stay visible while scrolling through the table</li>
+                  <li>Added a last updated timer to show data freshness (updates every 25 minutes)</li>
+                  <li>Resolved the bug that was limiting the display of available props</li>
+                  <li>New sportsbook filter to customize which odds you want to see</li>
                 </ul>
                 <p className="mt-3 text-sm font-medium text-foreground/90">
-                  We're continuously working to make Odds Scout better for you! Have feedback? 
-                  Click the user menu in the top right corner to let us know what you think. 💡
+                  We're working on decreasing the update interval to provide you with even fresher odds! 
+                  Have feedback? Click the user menu in the top right corner to share your thoughts. 💡
                 </p>
               </>
             ) : (
               <p className="font-medium">
-                Check out our latest updates! 🎉 We've improved the layout and added new features to make odds comparison easier.
+                New features are here! 🎉 Fixed headers, last updated timer, and custom sportsbook filters now available.
               </p>
             )}
           </AlertDescription>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-primary hover:text-primary/80 hover:bg-primary/5 -mt-1"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          {isExpanded ? (
-            <ChevronUp className="h-5 w-5" />
-          ) : (
-            <ChevronDown className="h-5 w-5" />
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 transition-transform duration-200",
+            isExpanded ? "transform rotate-180" : ""
           )}
-        </Button>
+        />
       </div>
     </Alert>
   );
