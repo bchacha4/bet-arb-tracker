@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import Navbar from '@/components/Navbar/Navbar';
 import OddsScoutTable from '@/components/OddsScoutTable/OddsScoutTable';
+import Announcement from '@/components/Announcement/Announcement';
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, Search, RefreshCw, MousePointerClick } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -40,6 +41,8 @@ const OddsScout = () => {
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Odds Scout</h1>
           </div>
+
+          <Announcement />
 
           {isMobile ? (
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
