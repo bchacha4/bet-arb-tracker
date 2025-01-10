@@ -26,16 +26,18 @@ const OddsScoutTable = () => {
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      const { data, error } = await supabase
+      const { data, error, count } = await supabase
         .from('odds_scout')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .select('*', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .limit(5000); // Increased limit to ensure we get all rows
       
       if (error) {
         console.error('Error fetching data:', error);
         throw error;
       }
       
+      console.log('Total rows in database:', count);
       console.log('Raw data count:', data?.length);
       
       // Group the data by Player and Prop
