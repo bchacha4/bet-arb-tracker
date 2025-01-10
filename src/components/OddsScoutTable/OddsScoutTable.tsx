@@ -40,7 +40,6 @@ const OddsScoutTable = () => {
             player: curr.Player,
             team: `${curr["Home Team"]} vs ${curr["Away Team"]}`,
             prop: curr["Player Prop"],
-            playerProp: curr["Player Prop"],
             sportsbooks: {}
           };
         }

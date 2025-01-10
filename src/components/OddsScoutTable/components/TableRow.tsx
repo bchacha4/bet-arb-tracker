@@ -52,18 +52,22 @@ const TableRow = ({ prop }: { prop: any }) => {
           <span className="text-gray-500">{formatTeams(prop.team)}</span>
         </td>
         <td className="px-6 py-4 min-w-[160px] whitespace-normal capitalize" rowSpan={2}>
-          {formatBet(prop.playerProp)}
+          {formatBet(prop.prop)}
         </td>
         <td className="px-6 py-4">Over</td>
         {sportsbooks.map((book) => {
           const bookData = prop.sportsbooks[book];
+          const odds = prop.sportsbooks[book]?.Over?.odds;
+          const line = prop.sportsbooks[book]?.Over?.line;
+          const link = prop.sportsbooks[book]?.Over?.link;
+          
           return (
             <td key={`${book}-over`} className="px-6 py-4">
               {bookData?.Over && (
                 <OddsButton
-                  odds={bookData.Over.odds}
-                  line={bookData.Over.line}
-                  link={bookData.Over.link}
+                  odds={odds}
+                  line={line}
+                  link={link}
                   outcome="Over"
                   bookmaker={book}
                 />
@@ -77,13 +81,17 @@ const TableRow = ({ prop }: { prop: any }) => {
         <td className="px-6 py-4">Under</td>
         {sportsbooks.map((book) => {
           const bookData = prop.sportsbooks[book];
+          const odds = prop.sportsbooks[book]?.Under?.odds;
+          const line = prop.sportsbooks[book]?.Under?.line;
+          const link = prop.sportsbooks[book]?.Under?.link;
+          
           return (
             <td key={`${book}-under`} className="px-6 py-4">
               {bookData?.Under && (
                 <OddsButton
-                  odds={bookData.Under.odds}
-                  line={bookData.Under.line}
-                  link={bookData.Under.link}
+                  odds={odds}
+                  line={line}
+                  link={link}
                   outcome="Under"
                   bookmaker={book}
                 />
