@@ -25,7 +25,7 @@ const LastUpdatedSection = ({ lastUpdated, onRefresh }: LastUpdatedSectionProps)
   }, [lastUpdated]);
 
   return (
-    <div className="flex items-center justify-between border-t pt-4">
+    <div className="flex items-center gap-2">
       <span className="text-sm text-gray-500">Last updated: {timeAgo}</span>
       <Button
         variant="outline"

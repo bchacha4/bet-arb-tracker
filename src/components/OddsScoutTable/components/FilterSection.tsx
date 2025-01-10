@@ -74,15 +74,16 @@ const FilterSection = ({
               />
             </div>
           </div>
+          <LastUpdatedSection lastUpdated={lastUpdated} onRefresh={onRefresh} />
         </>
       ) : (
-        <>
-          <div className="flex gap-4">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
             <Input
               placeholder="Search by player, team, or prop type..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full"
+              className="w-[300px] bg-white"
             />
             <Select value={selectedProp} onValueChange={onPropChange}>
               <SelectTrigger className="w-[180px] bg-white">
@@ -102,9 +103,9 @@ const FilterSection = ({
               onSportsbooksChange={onSportsbooksChange}
             />
           </div>
-        </>
+          <LastUpdatedSection lastUpdated={lastUpdated} onRefresh={onRefresh} />
+        </div>
       )}
-      <LastUpdatedSection lastUpdated={lastUpdated} onRefresh={onRefresh} />
     </div>
   );
 };
