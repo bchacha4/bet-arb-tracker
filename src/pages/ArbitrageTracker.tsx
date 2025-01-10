@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from "react-helmet";
 import Navbar from '@/components/Navbar/Navbar';
 import ArbitrageTable from '@/components/ArbitrageTable/ArbitrageTable';
+import FilterSection from '@/components/ArbitrageTable/FilterSection';
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, RefreshCw, MousePointerClick, DollarSign } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -150,6 +151,13 @@ const ArbitrageTracker = () => {
               </CardContent>
             </Card>
           )}
+
+          <FilterSection 
+            bettingAmount={bettingAmount}
+            onBettingAmountChange={setBettingAmount}
+            selectedSportsbook={selectedSportsbook}
+            onSportsbookChange={setSelectedSportsbook}
+          />
 
           <ArbitrageTable
             bettingAmount={bettingAmount}
