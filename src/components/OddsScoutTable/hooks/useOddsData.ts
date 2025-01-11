@@ -56,9 +56,9 @@ export const useOddsData = () => {
           }
 
           // Handle special cases for column names
-          const oddsColumn = `${book}_Odds`;
-          const lineColumn = `${book}_Line`;
-          const linkColumn = `${book}_Link`;
+          const oddsColumn = book === 'ESPN BET' ? 'ESPN BET_Odds' : `${book}_Odds`;
+          const lineColumn = book === 'ESPN BET' ? 'ESPN BET_Line' : `${book}_Line`;
+          const linkColumn = book === 'ESPN BET' ? 'ESPN BET_Link' : `${book}_Link`;
 
           // Special case for BetUS which uses lowercase 'odds'
           const oddsValue = book === 'BetUS' ? curr[`${book}_odds`] : curr[oddsColumn];
@@ -77,6 +77,10 @@ export const useOddsData = () => {
 
       const groupedArray = Object.values(groupedData);
       console.log('Grouped data count:', groupedArray.length);
+      
+      // Add debug logging for ESPN BET data
+      console.log('Sample ESPN BET data:', groupedArray[0]?.sportsbooks['ESPN BET']);
+      
       return groupedArray;
     },
     staleTime: 30000, // Cache data for 30 seconds
