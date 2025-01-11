@@ -9,9 +9,13 @@ import FilterSection from "./components/FilterSection";
 import { useOddsData } from "./hooks/useOddsData";
 import { useOddsFilters } from "./hooks/useOddsFilters";
 import { GroupedOddsData } from './types';
+import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from "@/components/ui/use-toast";
 
 const OddsScoutTable = () => {
   const isMobile = useIsMobile();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
   const { data: oddsData, isLoading } = useOddsData();
   const {
     searchQuery,
@@ -23,6 +27,14 @@ const OddsScoutTable = () => {
     availablePropTypes,
     filteredData
   } = useOddsFilters(oddsData);
+
+  const handleRefresh = React.useCallback(async () => {
+    await queryClient.invalidateQueries({ queryKey: ['oddsScout'] });
+    toast({
+      title: "Data Refreshed",
+      description: "The odds data has been updated to the latest version.",
+    });
+  }, [queryClient, toast]);
 
   if (isLoading) {
     return <LoadingState />;
@@ -43,7 +55,7 @@ const OddsScoutTable = () => {
         onPropChange={setSelectedProp}
         availablePropTypes={availablePropTypes}
         lastUpdated={oddsData?.[0]?.created_at || ''}
-        onRefresh={() => {}}
+        onRefresh={handleRefresh}
         selectedSportsbooks={selectedSportsbooks}
         onSportsbooksChange={setSelectedSportsbooks}
       />

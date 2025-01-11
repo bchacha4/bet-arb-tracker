@@ -14,13 +14,18 @@ const LastUpdatedSection = ({ lastUpdated, onRefresh }: LastUpdatedSectionProps)
   React.useEffect(() => {
     const updateTimeAgo = () => {
       if (lastUpdated) {
-        const date = new Date(lastUpdated);
-        setTimeAgo(formatDistanceToNow(date, { addSuffix: true }));
+        try {
+          const date = new Date(lastUpdated);
+          setTimeAgo(formatDistanceToNow(date, { addSuffix: true }));
+        } catch (error) {
+          console.error('Error formatting date:', error);
+          setTimeAgo('unknown');
+        }
       }
     };
 
     updateTimeAgo();
-    const interval = setInterval(updateTimeAgo, 60000);
+    const interval = setInterval(updateTimeAgo, 10000); // Update every 10 seconds
     return () => clearInterval(interval);
   }, [lastUpdated]);
 
@@ -31,7 +36,7 @@ const LastUpdatedSection = ({ lastUpdated, onRefresh }: LastUpdatedSectionProps)
         variant="outline"
         size="icon"
         onClick={onRefresh}
-        className="h-9 w-9"
+        className="h-9 w-9 hover:bg-gray-100 transition-colors duration-200"
       >
         <RefreshCw className="h-4 w-4" />
       </Button>
