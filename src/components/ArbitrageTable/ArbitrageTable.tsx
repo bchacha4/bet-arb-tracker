@@ -12,8 +12,8 @@ import { ArbitrageTableProps } from "./types";
 const MemoizedTableRow = memo(TableRow);
 const MemoizedMobileCard = memo(MobileArbitrageCard);
 
-const ArbitrageTable = ({ bettingAmount, selectedSportsbook, selectedProp }: ArbitrageTableProps) => {
-  const { data: calculatedProps, isLoading } = useArbitrageData(bettingAmount, selectedSportsbook, selectedProp);
+const ArbitrageTable = ({ bettingAmount, selectedSportsbook }: ArbitrageTableProps) => {
+  const { data: calculatedProps, isLoading } = useArbitrageData(bettingAmount, selectedSportsbook);
   const isMobile = useIsMobile();
 
   if (isLoading) {

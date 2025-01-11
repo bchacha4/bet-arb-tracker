@@ -5,7 +5,6 @@ import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQueryClient } from '@tanstack/react-query';
-import SportsbookFilter from '@/components/OddsScoutTable/components/SportsbookFilter';
 import {
   Select,
   SelectContent,
@@ -13,15 +12,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useArbitrageData } from "./hooks/useArbitrageData";
+import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 
 interface FilterSectionProps {
   bettingAmount: string;
   onBettingAmountChange: (value: string) => void;
   selectedSportsbook: string;
   onSportsbookChange: (value: string) => void;
-  selectedProp?: string;
-  onPropChange?: (value: string) => void;
 }
 
 const FilterSection: React.FC<FilterSectionProps> = ({
@@ -29,21 +26,10 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   onBettingAmountChange,
   selectedSportsbook,
   onSportsbookChange,
-  selectedProp = 'all',
-  onPropChange = () => {},
 }) => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
-
-  // Fetch data to get available prop types
-  const { data: calculatedProps } = useArbitrageData(bettingAmount, 'all', 'all');
-  
-  // Get unique prop types from the data
-  const availablePropTypes = React.useMemo(() => {
-    const uniqueProps = new Set(calculatedProps.map(prop => prop.bet.toLowerCase()));
-    return Array.from(uniqueProps).sort();
-  }, [calculatedProps]);
 
   const handleRefresh = React.useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['arbitrageProps'] });
@@ -53,53 +39,53 @@ const FilterSection: React.FC<FilterSectionProps> = ({
     });
   }, [queryClient, toast]);
 
-  const handleSportsbookChange = (sportsbooks: string[]) => {
-    onSportsbookChange(sportsbooks.length > 0 ? sportsbooks[0] : 'all');
-  };
-
   return (
     <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} gap-4 p-4 bg-white rounded-lg shadow-sm border border-border/50`}>
-      <div className="flex items-center gap-4 flex-wrap">
+      <div className="flex items-center gap-4">
         <BettingAmountInput
           value={bettingAmount}
           onChange={onBettingAmountChange}
         />
-        <SportsbookFilter
-          selectedSportsbooks={selectedSportsbook === 'all' ? [] : [selectedSportsbook]}
-          onSportsbooksChange={handleSportsbookChange}
-          singleSelect={true}
-        />
-        <div className="relative z-10">
-          <Select
-            value={selectedProp}
-            onValueChange={onPropChange}
-          >
-            <SelectTrigger className="w-[180px] bg-white">
-              <SelectValue placeholder="Select prop type" />
+        {!isMobile && (
+          <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
+            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
+              <SelectValue placeholder="Filter by sportsbook" />
             </SelectTrigger>
-            <SelectContent className="bg-white border shadow-lg">
-              <SelectItem 
-                value="all"
-                className="cursor-pointer hover:bg-gray-100"
-              >
-                All Props
-              </SelectItem>
-              {availablePropTypes.map((propType) => (
+            <SelectContent className="bg-white border-border/50">
+              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
+              {AVAILABLE_SPORTSBOOKS.map((book) => (
                 <SelectItem 
-                  key={propType} 
-                  value={propType}
-                  className="cursor-pointer hover:bg-gray-100"
+                  key={book.value} 
+                  value={book.value}
+                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
                 >
-                  {propType.split('_')
-                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')}
+                  {book.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-        </div>
+        )}
       </div>
       <div className="flex items-center gap-4">
+        {isMobile && (
+          <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
+            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
+              <SelectValue placeholder="Filter by sportsbook" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border-border/50">
+              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
+              {AVAILABLE_SPORTSBOOKS.map((book) => (
+                <SelectItem 
+                  key={book.value} 
+                  value={book.value}
+                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
+                >
+                  {book.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
         <Button
           variant="outline"
           className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary transition-colors duration-200 h-10"
