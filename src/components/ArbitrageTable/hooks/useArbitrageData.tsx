@@ -67,17 +67,19 @@ export const useArbitrageData = (bettingAmount: string, selectedSportsbook: stri
       ...calculateAmounts(prop, amount)
     }));
     
+    // Filter by sportsbook if selected
     if (selectedSportsbook && selectedSportsbook !== 'all') {
       updated = updated.filter(prop => 
         prop.sides.some(side => side.book === selectedSportsbook)
       );
     }
 
+    // Filter by prop type if selected
     if (selectedProp && selectedProp !== 'all') {
       updated = updated.filter(prop => {
-        const normalizedPropType = prop.bet.toLowerCase();
-        const normalizedSelectedProp = selectedProp.toLowerCase();
-        return normalizedPropType.includes(normalizedSelectedProp);
+        const normalizedPropType = prop.bet.toLowerCase().trim();
+        const normalizedSelectedProp = selectedProp.toLowerCase().trim();
+        return normalizedPropType === normalizedSelectedProp;
       });
     }
     
