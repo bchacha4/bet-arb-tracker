@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useArbitrageData } from "./hooks/useArbitrageData";
 
 interface FilterSectionProps {
   bettingAmount: string;
@@ -22,17 +23,6 @@ interface FilterSectionProps {
   selectedProp?: string;
   onPropChange?: (value: string) => void;
 }
-
-const PROP_OPTIONS = [
-  { value: 'all', label: 'All Props' },
-  { value: 'points', label: 'Points' },
-  { value: 'rebounds', label: 'Rebounds' },
-  { value: 'assists', label: 'Assists' },
-  { value: 'threes', label: '3-Pointers Made' },
-  { value: 'steals', label: 'Steals' },
-  { value: 'blocks', label: 'Blocks' },
-  { value: 'turnovers', label: 'Turnovers' },
-];
 
 const FilterSection: React.FC<FilterSectionProps> = ({
   bettingAmount,
@@ -45,6 +35,15 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
+
+  // Fetch data to get available prop types
+  const { data: calculatedProps } = useArbitrageData(bettingAmount, 'all', 'all');
+  
+  // Get unique prop types from the data
+  const availablePropTypes = React.useMemo(() => {
+    const uniqueProps = new Set(calculatedProps.map(prop => prop.bet.toLowerCase()));
+    return Array.from(uniqueProps).sort();
+  }, [calculatedProps]);
 
   const handleRefresh = React.useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['arbitrageProps'] });
@@ -79,13 +78,21 @@ const FilterSection: React.FC<FilterSectionProps> = ({
               <SelectValue placeholder="Select prop type" />
             </SelectTrigger>
             <SelectContent className="bg-white border shadow-lg">
-              {PROP_OPTIONS.map((option) => (
+              <SelectItem 
+                value="all"
+                className="cursor-pointer hover:bg-gray-100"
+              >
+                All Props
+              </SelectItem>
+              {availablePropTypes.map((propType) => (
                 <SelectItem 
-                  key={option.value} 
-                  value={option.value}
+                  key={propType} 
+                  value={propType}
                   className="cursor-pointer hover:bg-gray-100"
                 >
-                  {option.label}
+                  {propType.split('_')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')}
                 </SelectItem>
               ))}
             </SelectContent>
