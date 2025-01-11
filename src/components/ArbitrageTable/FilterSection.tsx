@@ -5,14 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
+import SportsbookFilter from '@/components/OddsScoutTable/components/SportsbookFilter';
 
 interface FilterSectionProps {
   bettingAmount: string;
@@ -39,6 +32,12 @@ const FilterSection: React.FC<FilterSectionProps> = ({
     });
   }, [queryClient, toast]);
 
+  const handleSportsbookChange = (sportsbooks: string[]) => {
+    // Since we only support single sportsbook selection for arbitrage,
+    // we'll take the first selected sportsbook or 'all' if none selected
+    onSportsbookChange(sportsbooks.length > 0 ? sportsbooks[0] : 'all');
+  };
+
   return (
     <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} gap-4 p-4 bg-white rounded-lg shadow-sm border border-border/50`}>
       <div className="flex items-center gap-4">
@@ -46,46 +45,13 @@ const FilterSection: React.FC<FilterSectionProps> = ({
           value={bettingAmount}
           onChange={onBettingAmountChange}
         />
-        {!isMobile && (
-          <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
-              <SelectValue placeholder="Filter by sportsbook" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border-border/50">
-              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
-              {AVAILABLE_SPORTSBOOKS.map((book) => (
-                <SelectItem 
-                  key={book.value} 
-                  value={book.value}
-                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                >
-                  {book.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
+        <SportsbookFilter
+          selectedSportsbooks={selectedSportsbook === 'all' ? [] : [selectedSportsbook]}
+          onSportsbooksChange={handleSportsbookChange}
+          singleSelect={true}
+        />
       </div>
       <div className="flex items-center gap-4">
-        {isMobile && (
-          <Select value={selectedSportsbook} onValueChange={onSportsbookChange}>
-            <SelectTrigger className="w-[180px] bg-white border-border/50 hover:bg-gray-50 transition-colors duration-200">
-              <SelectValue placeholder="Filter by sportsbook" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border-border/50">
-              <SelectItem value="all" className="cursor-pointer hover:bg-gray-50 transition-colors duration-200">All Sportsbooks</SelectItem>
-              {AVAILABLE_SPORTSBOOKS.map((book) => (
-                <SelectItem 
-                  key={book.value} 
-                  value={book.value}
-                  className="cursor-pointer hover:bg-gray-50 transition-colors duration-200"
-                >
-                  {book.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
         <Button
           variant="outline"
           className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary transition-colors duration-200 h-10"

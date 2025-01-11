@@ -13,12 +13,23 @@ import { useIsMobile } from "@/hooks/use-mobile";
 interface SportsbookFilterProps {
   selectedSportsbooks: string[];
   onSportsbooksChange: (sportsbooks: string[]) => void;
+  singleSelect?: boolean;
 }
 
-const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: SportsbookFilterProps) => {
+const SportsbookFilter = ({ 
+  selectedSportsbooks, 
+  onSportsbooksChange,
+  singleSelect = false 
+}: SportsbookFilterProps) => {
   const isMobile = useIsMobile();
   
   const toggleSportsbook = (sportsbook: string) => {
+    if (singleSelect) {
+      // In single select mode, we either select the new sportsbook or clear the selection
+      onSportsbooksChange(selectedSportsbooks.includes(sportsbook) ? [] : [sportsbook]);
+      return;
+    }
+
     if (selectedSportsbooks.includes(sportsbook)) {
       onSportsbooksChange(selectedSportsbooks.filter(s => s !== sportsbook));
     } else {
@@ -27,6 +38,7 @@ const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: Sportsbo
   };
 
   const selectAll = () => {
+    if (singleSelect) return; // Disable select all in single select mode
     onSportsbooksChange(AVAILABLE_SPORTSBOOKS.map(book => book.value));
   };
 
@@ -50,24 +62,26 @@ const SportsbookFilter = ({ selectedSportsbooks, onSportsbooksChange }: Sportsbo
           <div className="flex items-center justify-between px-2 py-1 border-b">
             <span className="text-sm">Filter Sportsbooks</span>
           </div>
-          <div className="px-2 py-1 flex justify-between gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs"
-              onClick={selectAll}
-            >
-              Select All
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs"
-              onClick={clearAll}
-            >
-              Clear All
-            </Button>
-          </div>
+          {!singleSelect && (
+            <div className="px-2 py-1 flex justify-between gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs"
+                onClick={selectAll}
+              >
+                Select All
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs"
+                onClick={clearAll}
+              >
+                Clear All
+              </Button>
+            </div>
+          )}
           <div className="max-h-[300px] overflow-auto">
             {AVAILABLE_SPORTSBOOKS.map((book) => (
               <div
