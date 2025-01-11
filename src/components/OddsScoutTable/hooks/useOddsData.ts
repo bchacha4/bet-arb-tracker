@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { GroupedOddsData } from '../types';
+import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 
 export const useOddsData = () => {
   return useQuery<GroupedOddsData[], Error>({
@@ -44,27 +45,9 @@ export const useOddsData = () => {
             sportsbooks: {}
           };
         }
-        
-        // Handle all sportsbooks, including those with spaces in their names
-        const sportsbooks = [
-          'FanDuel',
-          'ESPN BET',
-          'DraftKings',
-          'Fliff',
-          'BetMGM',
-          'Hard Rock Bet',
-          'BetRivers',
-          'Bally Bet',
-          'Caesars',
-          'BetOnline.ag',
-          'Bovada',
-          'BetUS',
-          'betPARX',
-          'BetAnySports',
-          'LowVig.ag'
-        ];
 
-        sportsbooks.forEach(book => {
+        // Use the order from AVAILABLE_SPORTSBOOKS to maintain consistent column order
+        AVAILABLE_SPORTSBOOKS.forEach(({ value: book }) => {
           if (!acc[key].sportsbooks[book]) {
             acc[key].sportsbooks[book] = {
               Over: null,
@@ -72,14 +55,17 @@ export const useOddsData = () => {
             };
           }
 
-          // Use exact column names from the database
+          // Handle special cases for column names
           const oddsColumn = `${book}_Odds`;
           const lineColumn = `${book}_Line`;
           const linkColumn = `${book}_Link`;
 
+          // Special case for BetUS which uses lowercase 'odds'
+          const oddsValue = book === 'BetUS' ? curr[`${book}_odds`] : curr[oddsColumn];
+
           if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
             acc[key].sportsbooks[book][curr.Outcome] = {
-              odds: curr[oddsColumn],
+              odds: oddsValue,
               line: curr[lineColumn],
               link: curr[linkColumn]
             };
