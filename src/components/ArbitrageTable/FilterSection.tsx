@@ -55,8 +55,6 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   }, [queryClient, toast]);
 
   const handleSportsbookChange = (sportsbooks: string[]) => {
-    // Since we only support single sportsbook selection for arbitrage,
-    // we'll take the first selected sportsbook or 'all' if none selected
     onSportsbookChange(sportsbooks.length > 0 ? sportsbooks[0] : 'all');
   };
 
@@ -72,21 +70,27 @@ const FilterSection: React.FC<FilterSectionProps> = ({
           onSportsbooksChange={handleSportsbookChange}
           singleSelect={true}
         />
-        <Select
-          value={selectedProp}
-          onValueChange={onPropChange}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select prop type" />
-          </SelectTrigger>
-          <SelectContent>
-            {PROP_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="relative z-10">
+          <Select
+            value={selectedProp}
+            onValueChange={onPropChange}
+          >
+            <SelectTrigger className="w-[180px] bg-white">
+              <SelectValue placeholder="Select prop type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border shadow-lg">
+              {PROP_OPTIONS.map((option) => (
+                <SelectItem 
+                  key={option.value} 
+                  value={option.value}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <div className="flex items-center gap-4">
         <Button
