@@ -55,19 +55,14 @@ export const useOddsData = () => {
             };
           }
 
-          // Handle special cases for column names
-          const oddsColumn = book === 'ESPN BET' ? 'ESPN BET_Odds' : `${book}_Odds`;
-          const lineColumn = book === 'ESPN BET' ? 'ESPN BET_Line' : `${book}_Line`;
-          const linkColumn = book === 'ESPN BET' ? 'ESPN BET_Link' : `${book}_Link`;
-
           // Special case for BetUS which uses lowercase 'odds'
-          const oddsValue = book === 'BetUS' ? curr[`${book}_odds`] : curr[oddsColumn];
+          const oddsValue = book === 'BetUS' ? curr[`${book}_odds`] : curr[`${book}_Odds`];
 
           if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
             acc[key].sportsbooks[book][curr.Outcome] = {
               odds: oddsValue,
-              line: curr[lineColumn],
-              link: curr[linkColumn]
+              line: curr[`${book}_Line`],
+              link: curr[`${book}_Link`]
             };
           }
         });

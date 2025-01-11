@@ -9,10 +9,10 @@ export const AVAILABLE_SPORTSBOOKS = [
   { label: 'FanDuel', value: 'FanDuel' },
   { label: 'LowVig.ag', value: 'LowVig.ag' },
   { label: 'MyBookie.ag', value: 'MyBookie.ag' },
-  { label: 'BallyBet', value: 'BallyBet' },
+  { label: 'BallyBet', value: 'Bally Bet' },
   { label: 'BetAnySports', value: 'BetAnySports' },
   { label: 'betPARX', value: 'betPARX' },
-  { label: 'ESPNBet', value: 'ESPNBet' },
+  { label: 'ESPN BET', value: 'ESPN BET' },
   { label: 'Fliff', value: 'Fliff' },
   { label: 'Hard Rock Bet', value: 'Hard Rock Bet' },
   { label: 'Wind Creek', value: 'Wind Creek' }
