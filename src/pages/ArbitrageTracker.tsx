@@ -17,6 +17,7 @@ const ArbitrageTracker = () => {
   const [isOpen, setIsOpen] = React.useState(true);
   const [bettingAmount, setBettingAmount] = useState('1000');
   const [selectedSportsbook, setSelectedSportsbook] = useState('all');
+  const [selectedProp, setSelectedProp] = useState('all');
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -157,11 +158,14 @@ const ArbitrageTracker = () => {
             onBettingAmountChange={setBettingAmount}
             selectedSportsbook={selectedSportsbook}
             onSportsbookChange={setSelectedSportsbook}
+            selectedProp={selectedProp}
+            onPropChange={setSelectedProp}
           />
 
           <ArbitrageTable
             bettingAmount={bettingAmount}
             selectedSportsbook={selectedSportsbook}
+            selectedProp={selectedProp}
           />
         </div>
       </div>

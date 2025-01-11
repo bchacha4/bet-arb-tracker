@@ -6,19 +6,41 @@ import BettingAmountInput from "./BettingAmountInput";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQueryClient } from '@tanstack/react-query';
 import SportsbookFilter from '@/components/OddsScoutTable/components/SportsbookFilter';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface FilterSectionProps {
   bettingAmount: string;
   onBettingAmountChange: (value: string) => void;
   selectedSportsbook: string;
   onSportsbookChange: (value: string) => void;
+  selectedProp?: string;
+  onPropChange?: (value: string) => void;
 }
+
+const PROP_OPTIONS = [
+  { value: 'all', label: 'All Props' },
+  { value: 'points', label: 'Points' },
+  { value: 'rebounds', label: 'Rebounds' },
+  { value: 'assists', label: 'Assists' },
+  { value: 'threes', label: '3-Pointers Made' },
+  { value: 'steals', label: 'Steals' },
+  { value: 'blocks', label: 'Blocks' },
+  { value: 'turnovers', label: 'Turnovers' },
+];
 
 const FilterSection: React.FC<FilterSectionProps> = ({
   bettingAmount,
   onBettingAmountChange,
   selectedSportsbook,
   onSportsbookChange,
+  selectedProp = 'all',
+  onPropChange = () => {},
 }) => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -40,7 +62,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
 
   return (
     <div className={`flex ${isMobile ? 'flex-col' : 'items-center justify-between'} gap-4 p-4 bg-white rounded-lg shadow-sm border border-border/50`}>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 flex-wrap">
         <BettingAmountInput
           value={bettingAmount}
           onChange={onBettingAmountChange}
@@ -50,6 +72,21 @@ const FilterSection: React.FC<FilterSectionProps> = ({
           onSportsbooksChange={handleSportsbookChange}
           singleSelect={true}
         />
+        <Select
+          value={selectedProp}
+          onValueChange={onPropChange}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select prop type" />
+          </SelectTrigger>
+          <SelectContent>
+            {PROP_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
       <div className="flex items-center gap-4">
         <Button

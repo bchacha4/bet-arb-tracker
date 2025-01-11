@@ -52,9 +52,9 @@ const fetchArbitrageProps = async () => {
   }));
 };
 
-export const useArbitrageData = (bettingAmount: string, selectedSportsbook: string) => {
+export const useArbitrageData = (bettingAmount: string, selectedSportsbook: string, selectedProp: string = 'all') => {
   const { data: fetchedProps = [], isLoading } = useQuery({
-    queryKey: ['arbitrageProps', selectedSportsbook],
+    queryKey: ['arbitrageProps', selectedSportsbook, selectedProp],
     queryFn: fetchArbitrageProps,
     staleTime: 30000, // Cache data for 30 seconds
     refetchInterval: 30000, // Refetch every 30 seconds
@@ -72,9 +72,17 @@ export const useArbitrageData = (bettingAmount: string, selectedSportsbook: stri
         prop.sides.some(side => side.book === selectedSportsbook)
       );
     }
+
+    if (selectedProp && selectedProp !== 'all') {
+      updated = updated.filter(prop => {
+        const normalizedPropType = prop.bet.toLowerCase();
+        const normalizedSelectedProp = selectedProp.toLowerCase();
+        return normalizedPropType.includes(normalizedSelectedProp);
+      });
+    }
     
     return updated.sort((a, b) => parseFloat(b.hold) - parseFloat(a.hold));
-  }, [bettingAmount, fetchedProps, selectedSportsbook]);
+  }, [bettingAmount, fetchedProps, selectedSportsbook, selectedProp]);
 
   return { data: processedData, isLoading };
 };
