@@ -1,24 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { AVAILABLE_SPORTSBOOKS } from "@/constants/sportsbooks";
 import { GroupedOddsData } from '../types';
-
-interface RawOddsData {
-  Player: string | null;
-  "Player Prop": string | null;
-  "Home Team": string;
-  "Away Team": string;
-  Outcome: string;
-  created_at: string;
-  [key: string]: any; // For dynamic sportsbook fields
-}
 
 export const useOddsData = () => {
   return useQuery<GroupedOddsData[], Error>({
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      let allData: RawOddsData[] = [];
+      let allData = [];
       let page = 0;
       const pageSize = 1000;
 
@@ -36,7 +25,7 @@ export const useOddsData = () => {
 
         if (!data || data.length === 0) break;
 
-        allData = [...allData, ...data] as RawOddsData[];
+        allData = [...allData, ...data];
         page++;
       }
 
@@ -56,23 +45,43 @@ export const useOddsData = () => {
           };
         }
         
-        // Add sportsbook data
-        AVAILABLE_SPORTSBOOKS.forEach(({ value: book }) => {
+        // Handle all sportsbooks, including those with spaces in their names
+        const sportsbooks = [
+          'FanDuel',
+          'ESPN BET',
+          'DraftKings',
+          'Fliff',
+          'BetMGM',
+          'Hard Rock Bet',
+          'BetRivers',
+          'Bally Bet',
+          'Caesars',
+          'BetOnline.ag',
+          'Bovada',
+          'BetUS',
+          'betPARX',
+          'BetAnySports',
+          'LowVig.ag'
+        ];
+
+        sportsbooks.forEach(book => {
           if (!acc[key].sportsbooks[book]) {
             acc[key].sportsbooks[book] = {
               Over: null,
               Under: null
             };
           }
-          
-          // Handle special characters in column names
-          const bookKey = book.replace(/\./g, '\\.').replace(/\s/g, ' ');
-          
+
+          // Use exact column names from the database
+          const oddsColumn = `${book}_Odds`;
+          const lineColumn = `${book}_Line`;
+          const linkColumn = `${book}_Link`;
+
           if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
             acc[key].sportsbooks[book][curr.Outcome] = {
-              odds: curr[`${bookKey}_Odds`] || curr[`${bookKey}_odds`],
-              line: curr[`${bookKey}_Line`],
-              link: curr[`${bookKey}_Link`]
+              odds: curr[oddsColumn],
+              line: curr[lineColumn],
+              link: curr[linkColumn]
             };
           }
         });
@@ -84,5 +93,7 @@ export const useOddsData = () => {
       console.log('Grouped data count:', groupedArray.length);
       return groupedArray;
     },
+    staleTime: 30000, // Cache data for 30 seconds
+    refetchInterval: 30000, // Refetch every 30 seconds
   });
 };
