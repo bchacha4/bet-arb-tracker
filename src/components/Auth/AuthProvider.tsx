@@ -20,27 +20,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     console.log("AuthProvider - Initializing");
     
+    let mounted = true;
+
     // Check active sessions and sets the user
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("AuthProvider - Session check complete:", !!session);
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+    const initializeAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (mounted) {
+          console.log("AuthProvider - Session check complete:", !!session);
+          setUser(session?.user ?? null);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("AuthProvider - Error getting session:", error);
+        if (mounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    initializeAuth();
 
     // Listen for changes on auth state (signed in, signed out, etc.)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("AuthProvider - Auth state changed:", !!session);
-      setUser(session?.user ?? null);
-      setIsLoading(false);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (mounted) {
+        console.log("AuthProvider - Auth state changed:", !!session);
+        setUser(session?.user ?? null);
+        setIsLoading(false);
+      }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
-
-  if (isLoading) {
-    console.log("AuthProvider - Loading state");
-    return null; // Or a loading spinner component
-  }
 
   return (
     <AuthContext.Provider value={{ user, isLoading }}>

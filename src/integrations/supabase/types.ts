@@ -183,6 +183,7 @@ export type Database = {
           Caesars_Line: number | null
           Caesars_Link: string | null
           Caesars_Odds: number | null
+          created_at: string
           DraftKings_Line: number | null
           DraftKings_Link: string | null
           DraftKings_Odds: number | null
@@ -238,6 +239,7 @@ export type Database = {
           Caesars_Line?: number | null
           Caesars_Link?: string | null
           Caesars_Odds?: number | null
+          created_at?: string
           DraftKings_Line?: number | null
           DraftKings_Link?: string | null
           DraftKings_Odds?: number | null
@@ -293,6 +295,7 @@ export type Database = {
           Caesars_Line?: number | null
           Caesars_Link?: string | null
           Caesars_Odds?: number | null
+          created_at?: string
           DraftKings_Line?: number | null
           DraftKings_Link?: string | null
           DraftKings_Odds?: number | null
@@ -336,129 +339,6 @@ export type Database = {
           created_at?: string
           email_notifications?: boolean | null
           id?: string
-        }
-        Relationships: []
-      }
-      prop_odds: {
-        Row: {
-          "Away Team": string | null
-          "Bally Bet_Link": string | null
-          "Bally Bet_Odds": number | null
-          BetAnySports_Link: string | null
-          BetAnySports_Odds: number | null
-          BetMGM_Link: string | null
-          BetMGM_Odds: number | null
-          "BetOnline.ag_Link": string | null
-          "BetOnline.ag_Odds": number | null
-          betPARX_Link: string | null
-          betPARX_Odds: number | null
-          BetRivers_Link: string | null
-          BetRivers_Odds: number | null
-          BetUS_Link: string | null
-          BetUS_odds: number | null
-          Bovada_Link: string | null
-          Bovada_Odds: number | null
-          Caesars_Link: string | null
-          Caesars_Odds: number | null
-          DraftKings_Link: string | null
-          DraftKings_Odds: number | null
-          "ESPN BET_Link": string | null
-          "ESPN BET_Odds": number | null
-          FanDuel_Link: string | null
-          FanDuel_Odds: number | null
-          Fliff_Link: string | null
-          Fliff_Odds: number | null
-          "Hard Rock Bet_Link": string | null
-          "Hard Rock Bet_Odds": number | null
-          "Home Team": string | null
-          id: number
-          Line: number | null
-          "LowVig.ag_Link": string | null
-          "LowVig.ag_Odds": number | null
-          Outcome: string | null
-          Player: string | null
-          "Player Prop": string | null
-          Sport: string | null
-        }
-        Insert: {
-          "Away Team"?: string | null
-          "Bally Bet_Link"?: string | null
-          "Bally Bet_Odds"?: number | null
-          BetAnySports_Link?: string | null
-          BetAnySports_Odds?: number | null
-          BetMGM_Link?: string | null
-          BetMGM_Odds?: number | null
-          "BetOnline.ag_Link"?: string | null
-          "BetOnline.ag_Odds"?: number | null
-          betPARX_Link?: string | null
-          betPARX_Odds?: number | null
-          BetRivers_Link?: string | null
-          BetRivers_Odds?: number | null
-          BetUS_Link?: string | null
-          BetUS_odds?: number | null
-          Bovada_Link?: string | null
-          Bovada_Odds?: number | null
-          Caesars_Link?: string | null
-          Caesars_Odds?: number | null
-          DraftKings_Link?: string | null
-          DraftKings_Odds?: number | null
-          "ESPN BET_Link"?: string | null
-          "ESPN BET_Odds"?: number | null
-          FanDuel_Link?: string | null
-          FanDuel_Odds?: number | null
-          Fliff_Link?: string | null
-          Fliff_Odds?: number | null
-          "Hard Rock Bet_Link"?: string | null
-          "Hard Rock Bet_Odds"?: number | null
-          "Home Team"?: string | null
-          id?: number
-          Line?: number | null
-          "LowVig.ag_Link"?: string | null
-          "LowVig.ag_Odds"?: number | null
-          Outcome?: string | null
-          Player?: string | null
-          "Player Prop"?: string | null
-          Sport?: string | null
-        }
-        Update: {
-          "Away Team"?: string | null
-          "Bally Bet_Link"?: string | null
-          "Bally Bet_Odds"?: number | null
-          BetAnySports_Link?: string | null
-          BetAnySports_Odds?: number | null
-          BetMGM_Link?: string | null
-          BetMGM_Odds?: number | null
-          "BetOnline.ag_Link"?: string | null
-          "BetOnline.ag_Odds"?: number | null
-          betPARX_Link?: string | null
-          betPARX_Odds?: number | null
-          BetRivers_Link?: string | null
-          BetRivers_Odds?: number | null
-          BetUS_Link?: string | null
-          BetUS_odds?: number | null
-          Bovada_Link?: string | null
-          Bovada_Odds?: number | null
-          Caesars_Link?: string | null
-          Caesars_Odds?: number | null
-          DraftKings_Link?: string | null
-          DraftKings_Odds?: number | null
-          "ESPN BET_Link"?: string | null
-          "ESPN BET_Odds"?: number | null
-          FanDuel_Link?: string | null
-          FanDuel_Odds?: number | null
-          Fliff_Link?: string | null
-          Fliff_Odds?: number | null
-          "Hard Rock Bet_Link"?: string | null
-          "Hard Rock Bet_Odds"?: number | null
-          "Home Team"?: string | null
-          id?: number
-          Line?: number | null
-          "LowVig.ag_Link"?: string | null
-          "LowVig.ag_Odds"?: number | null
-          Outcome?: string | null
-          Player?: string | null
-          "Player Prop"?: string | null
-          Sport?: string | null
         }
         Relationships: []
       }

@@ -1,6 +1,4 @@
-import React, { useState, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from "@/integrations/supabase/client";
+import React from 'react';
 import { useIsMobile } from "@/hooks/use-mobile";
 import LoadingState from "./components/LoadingState";
 import EmptyState from "./components/EmptyState";
@@ -8,86 +6,35 @@ import TableHeader from "./components/TableHeader";
 import TableRow from "./components/TableRow";
 import MobileOddsCard from "./components/MobileOddsCard";
 import FilterSection from "./components/FilterSection";
+import { useOddsData } from "./hooks/useOddsData";
+import { useOddsFilters } from "./hooks/useOddsFilters";
+import { GroupedOddsData } from './types';
+import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from "@/components/ui/use-toast";
 
 const OddsScoutTable = () => {
   const isMobile = useIsMobile();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProp, setSelectedProp] = useState('all');
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const { data: oddsData, isLoading } = useOddsData();
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedProp,
+    setSelectedProp,
+    selectedSportsbooks,
+    setSelectedSportsbooks,
+    availablePropTypes,
+    filteredData
+  } = useOddsFilters(oddsData);
 
-  const { data: oddsData, isLoading } = useQuery({
-    queryKey: ['oddsScout'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('odds_scout')
-        .select('*');
-      
-      if (error) throw error;
-      
-      // Group the data by Player and Prop
-      const groupedData = data.reduce((acc: any, curr: any) => {
-        const key = `${curr.Player}-${curr["Player Prop"]}`;
-        if (!acc[key]) {
-          acc[key] = {
-            player: curr.Player,
-            team: `${curr["Home Team"]} vs ${curr["Away Team"]}`,
-            prop: curr["Player Prop"],
-            playerProp: curr["Player Prop"],
-            sportsbooks: {}
-          };
-        }
-        
-        // Add sportsbook data
-        const sportsbooks = [
-          'FanDuel', 'ESPN BET', 'DraftKings', 'Fliff', 'BetMGM', 
-          'Hard Rock Bet', 'BetRivers', 'Bally Bet', 'Caesars', 
-          'BetOnline.ag', 'Bovada', 'BetUS', 'betPARX', 
-          'BetAnySports', 'LowVig.ag'
-        ];
-        
-        sportsbooks.forEach(book => {
-          if (!acc[key].sportsbooks[book]) {
-            acc[key].sportsbooks[book] = {};
-          }
-          
-          // Store both over and under data
-          if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
-            acc[key].sportsbooks[book][curr.Outcome] = {
-              odds: curr[`${book}_Odds`],
-              line: curr[`${book}_Line`],
-              link: curr[`${book}_Link`]
-            };
-          }
-        });
-        
-        return acc;
-      }, {});
-
-      return Object.values(groupedData);
-    }
-  });
-
-  // Get unique prop types from the data
-  const availablePropTypes = useMemo(() => {
-    if (!oddsData) return [];
-    const propTypes = new Set(oddsData.map((item: any) => item.prop));
-    return Array.from(propTypes).filter(Boolean);
-  }, [oddsData]);
-
-  const filteredData = useMemo(() => {
-    if (!oddsData) return [];
-
-    return oddsData.filter((item: any) => {
-      const searchMatch = searchQuery.toLowerCase().trim() === '' || 
-        item.player?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.team?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.prop?.toLowerCase().includes(searchQuery.toLowerCase());
-
-      const propMatch = selectedProp === 'all' || 
-        item.prop?.toLowerCase() === selectedProp.toLowerCase();
-
-      return searchMatch && propMatch;
+  const handleRefresh = React.useCallback(async () => {
+    await queryClient.invalidateQueries({ queryKey: ['oddsScout'] });
+    toast({
+      title: "Data Refreshed",
+      description: "The odds data has been updated to the latest version.",
     });
-  }, [oddsData, searchQuery, selectedProp]);
+  }, [queryClient, toast]);
 
   if (isLoading) {
     return <LoadingState />;
@@ -97,6 +44,8 @@ const OddsScoutTable = () => {
     return <EmptyState />;
   }
 
+  console.log('Final filtered data count:', filteredData.length);
+
   return (
     <div className="space-y-4">
       <FilterSection
@@ -105,23 +54,37 @@ const OddsScoutTable = () => {
         selectedProp={selectedProp}
         onPropChange={setSelectedProp}
         availablePropTypes={availablePropTypes}
+        lastUpdated={oddsData?.[0]?.created_at || ''}
+        onRefresh={handleRefresh}
+        selectedSportsbooks={selectedSportsbooks}
+        onSportsbooksChange={setSelectedSportsbooks}
       />
       {isMobile ? (
         <div className="space-y-4">
-          {filteredData.map((prop: any, index: number) => (
-            <MobileOddsCard key={index} prop={prop} />
+          {filteredData.map((prop: GroupedOddsData, index) => (
+            <MobileOddsCard 
+              key={index} 
+              prop={prop}
+              visibleSportsbooks={selectedSportsbooks}
+            />
           ))}
         </div>
       ) : (
-        <div className="border border-gray-200 rounded-lg overflow-auto max-h-[800px]">
-          <table className="w-full text-sm text-left text-gray-900">
-            <TableHeader />
-            <tbody>
-              {filteredData.map((prop: any, index: number) => (
-                <TableRow key={index} prop={prop} />
-              ))}
-            </tbody>
-          </table>
+        <div className="border border-gray-200 rounded-lg overflow-hidden">
+          <div className="max-h-[800px] overflow-auto relative">
+            <table className="w-full text-sm text-left text-gray-900">
+              <TableHeader visibleSportsbooks={selectedSportsbooks} />
+              <tbody>
+                {filteredData.map((prop: GroupedOddsData, index) => (
+                  <TableRow 
+                    key={index} 
+                    prop={prop}
+                    visibleSportsbooks={selectedSportsbooks}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

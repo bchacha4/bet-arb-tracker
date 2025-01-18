@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import BettingAmountInput from "./BettingAmountInput";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useQueryClient } from '@tanstack/react-query';
+import LastUpdatedSection from '@/components/OddsScoutTable/components/LastUpdatedSection';
 import {
   Select,
   SelectContent,
@@ -30,9 +31,11 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
+  const [lastUpdated, setLastUpdated] = React.useState(new Date().toISOString());
 
   const handleRefresh = React.useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['arbitrageProps'] });
+    setLastUpdated(new Date().toISOString());
     toast({
       title: "Data Refreshed",
       description: "The arbitrage opportunities have been updated.",
@@ -86,14 +89,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
             </SelectContent>
           </Select>
         )}
-        <Button
-          variant="outline"
-          className="gap-2 bg-primary text-white hover:bg-white hover:text-primary border-primary transition-colors duration-200 h-10"
-          onClick={handleRefresh}
-        >
-          <RefreshCw size={16} />
-          Refresh
-        </Button>
+        <LastUpdatedSection lastUpdated={lastUpdated} onRefresh={handleRefresh} />
       </div>
     </div>
   );

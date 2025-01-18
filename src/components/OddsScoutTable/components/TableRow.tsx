@@ -1,5 +1,6 @@
 import React from 'react';
 import OddsButton from './OddsButton';
+import { GroupedOddsData, TableRowProps } from '../types';
 
 const formatTeamName = (fullName: string): string => {
   if (!fullName) return '';
@@ -34,14 +35,7 @@ const formatBet = (bet: string): string => {
   return bet.toLowerCase().replace(/_/g, ' ');
 };
 
-const TableRow = ({ prop }: { prop: any }) => {
-  const sportsbooks = [
-    'FanDuel', 'ESPN BET', 'DraftKings', 'Fliff', 'BetMGM',
-    'Hard Rock Bet', 'BetRivers', 'Bally Bet', 'Caesars',
-    'BetOnline.ag', 'Bovada', 'BetUS', 'betPARX',
-    'BetAnySports', 'LowVig.ag'
-  ];
-
+const TableRow = ({ prop, visibleSportsbooks }: TableRowProps) => {
   return (
     <>
       {/* Over row */}
@@ -52,18 +46,19 @@ const TableRow = ({ prop }: { prop: any }) => {
           <span className="text-gray-500">{formatTeams(prop.team)}</span>
         </td>
         <td className="px-6 py-4 min-w-[160px] whitespace-normal capitalize" rowSpan={2}>
-          {formatBet(prop.playerProp)}
+          {formatBet(prop.prop)}
         </td>
         <td className="px-6 py-4">Over</td>
-        {sportsbooks.map((book) => {
-          const bookData = prop.sportsbooks[book];
+        {visibleSportsbooks.map((book) => {
+          const overData = prop.sportsbooks[book]?.Over;
+          
           return (
             <td key={`${book}-over`} className="px-6 py-4">
-              {bookData?.Over && (
+              {overData && (
                 <OddsButton
-                  odds={bookData.Over.odds}
-                  line={bookData.Over.line}
-                  link={bookData.Over.link}
+                  odds={overData.odds}
+                  line={overData.line}
+                  link={overData.link}
                   outcome="Over"
                   bookmaker={book}
                 />
@@ -75,15 +70,16 @@ const TableRow = ({ prop }: { prop: any }) => {
       {/* Under row */}
       <tr className="bg-white border-b border-gray-200 hover:bg-gray-50">
         <td className="px-6 py-4">Under</td>
-        {sportsbooks.map((book) => {
-          const bookData = prop.sportsbooks[book];
+        {visibleSportsbooks.map((book) => {
+          const underData = prop.sportsbooks[book]?.Under;
+          
           return (
             <td key={`${book}-under`} className="px-6 py-4">
-              {bookData?.Under && (
+              {underData && (
                 <OddsButton
-                  odds={bookData.Under.odds}
-                  line={bookData.Under.line}
-                  link={bookData.Under.link}
+                  odds={underData.odds}
+                  line={underData.line}
+                  link={underData.link}
                   outcome="Under"
                   bookmaker={book}
                 />

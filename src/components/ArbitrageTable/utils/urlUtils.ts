@@ -2,7 +2,7 @@ export const getBookmakerUrl = (bookmaker: string): string => {
   const normalizedBookmaker = bookmaker.toLowerCase().replace(/\s+/g, '');
   
   const urls: { [key: string]: string } = {
-    'betonline.ag': 'https://www.betonline.ag',
+    'betonline.ag': 'https://betonline.ag',
     'betmgm': 'https://sports.betmgm.com',
     'betrivers': 'https://betrivers.com',
     'betus': 'https://betus.com',
@@ -31,8 +31,8 @@ export const formatUrl = (link: string | null, bookmaker: string): string => {
   
   try {
     // Check if the link is a valid URL
-    new URL(link);
-    return link;
+    const url = new URL(link);
+    return url.toString();
   } catch {
     // If the link is not a valid URL, try to fix it
     if (!link.startsWith('http')) {
@@ -44,6 +44,12 @@ export const formatUrl = (link: string | null, bookmaker: string): string => {
 
 export const openUrl = (url: string) => {
   if (url && url !== '#') {
-    window.open(url, '_blank');
+    // Ensure the URL is properly formatted before opening
+    try {
+      const formattedUrl = new URL(url).toString();
+      window.open(formattedUrl, '_blank');
+    } catch {
+      console.error('Invalid URL:', url);
+    }
   }
 };
