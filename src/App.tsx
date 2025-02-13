@@ -52,7 +52,7 @@ const App = () => {
               <Route path="/arbitrage-calculator" element={<ArbitrageCalculator />} />
               <Route path="/odds-converter" element={<OddsConverter />} />
               <Route 
-                path="/arbitrage-tracker" 
+                path="/arbitrage-finder" 
                 element={
                   <ProtectedRoute>
                     <Index />
@@ -67,6 +67,8 @@ const App = () => {
                   </ProtectedRoute>
                 } 
               />
+              {/* Redirect old route to new route */}
+              <Route path="/arbitrage-tracker" element={<Navigate to="/arbitrage-finder" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </AuthProvider>

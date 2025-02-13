@@ -55,12 +55,12 @@ const Navbar = () => {
           {user && (
             <div className="flex items-center space-x-6">
               <Link
-                to="/arbitrage-tracker"
+                to="/arbitrage-finder"
                 className={`text-sm font-medium transition-colors hover:text-gray-900 ${
-                  location.pathname === '/arbitrage-tracker' ? 'text-gray-900' : 'text-gray-500'
+                  location.pathname === '/arbitrage-finder' ? 'text-gray-900' : 'text-gray-500'
                 }`}
               >
-                Arbitrage Tracker
+                Arbitrage Finder
               </Link>
               <Link
                 to="/odds-scout"

@@ -72,7 +72,7 @@ const LandingPage = () => {
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                 <Scale className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Arbitrage Tracker</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Arbitrage Finder</h3>
               <p className="text-gray-600 mb-6">
                 Automatically scan odds across multiple sportsbooks to find guaranteed profit opportunities. 
                 Our smart algorithms identify arbitrage opportunities and calculate optimal bet sizes.
@@ -91,6 +91,11 @@ const LandingPage = () => {
                   Track potential profits in real-time
                 </li>
               </ul>
+              <Link to="/arbitrage-finder">
+                <Button className="w-full bg-primary hover:bg-primary-hover text-white">
+                  Try Arbitrage Finder
+                </Button>
+              </Link>
             </div>
             
             <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">

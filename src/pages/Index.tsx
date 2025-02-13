@@ -18,7 +18,7 @@ const Index = () => {
       <Navbar />
       <div className="flex-grow max-w-[1400px] mx-auto p-4 md:p-6 space-y-6">
         <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-          Arbitrage Tracker
+          Arbitrage Finder
         </h1>
         <Announcement />
         <ArbitrageDescription />
