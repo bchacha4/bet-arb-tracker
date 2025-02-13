@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Twitter } from 'lucide-react';
@@ -18,6 +19,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-wider">Product</h4>
             <ul className="space-y-2">
+              <li>
+                <Link to="/arbitrage-calculator" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                  Free Arbitrage Calculator
+                </Link>
+              </li>
               <li>
                 <Link to="/login" className="text-sm text-gray-600 hover:text-primary transition-colors">
                   Arbitrage Tracker

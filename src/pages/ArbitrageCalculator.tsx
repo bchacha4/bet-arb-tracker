@@ -13,8 +13,17 @@ const ArbitrageCalculator = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-gray-50">
       <Helmet>
-        <title>Free Arbitrage Betting Calculator - Bettor-IQ</title>
-        <meta name="description" content="Calculate potential arbitrage betting profits with our free calculator. Learn about arbitrage betting strategies and maximize your sports betting returns." />
+        <title>Free Arbitrage Betting Calculator - Find Guaranteed Profits | Bettor-IQ</title>
+        <meta name="description" content="Calculate guaranteed arbitrage betting profits with our free calculator. Learn how to find and capitalize on arbitrage opportunities across different sportsbooks." />
+        <meta name="keywords" content="arbitrage betting calculator, sports arbitrage, sure betting, arbing calculator, betting arbitrage, sports betting calculator" />
+        <meta property="og:title" content="Free Arbitrage Betting Calculator - Find Guaranteed Profits | Bettor-IQ" />
+        <meta property="og:description" content="Calculate guaranteed arbitrage betting profits with our free calculator. Learn how to find and capitalize on arbitrage opportunities across different sportsbooks." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Free Arbitrage Betting Calculator - Find Guaranteed Profits | Bettor-IQ" />
+        <meta name="twitter:description" content="Calculate guaranteed arbitrage betting profits with our free calculator. Learn how to find and capitalize on arbitrage opportunities across different sportsbooks." />
+        <link rel="canonical" href={window.location.href} />
       </Helmet>
 
       <Navbar />

@@ -15,6 +15,11 @@ const LandingPage = () => {
               <span className="text-xl font-bold text-gray-900">Bettor-IQ</span>
             </Link>
             <div className="flex items-center gap-4">
+              <Link to="/arbitrage-calculator">
+                <Button variant="ghost" className="font-medium text-gray-600 hover:text-gray-900">
+                  Free Calculator
+                </Button>
+              </Link>
               <Link to="/login">
                 <Button variant="ghost" className="font-medium text-gray-600 hover:text-gray-900">
                   Log in
