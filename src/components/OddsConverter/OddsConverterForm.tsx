@@ -30,6 +30,18 @@ const OddsConverterForm = () => {
   });
 
   const validateAndConvertOdds = (value: string, type: 'american' | 'decimal' | 'fractional' | 'implied') => {
+    // First update the input value
+    setOddsState(prev => ({
+      ...prev,
+      [type]: value,
+      error: ''
+    }));
+
+    if (value === '') {
+      handleReset();
+      return;
+    }
+
     let decimal = 0;
     let error = '';
 
@@ -37,41 +49,57 @@ const OddsConverterForm = () => {
       // Convert input to decimal odds first
       switch (type) {
         case 'american':
-          if (value === '') return null;
           const american = parseFloat(value);
+          if (isNaN(american)) {
+            error = 'Please enter a valid number';
+            return;
+          }
           if (american === -100 || american === 0 || (american > -100 && american < 100)) {
             error = 'Odds must be less than -100 or greater than 100';
-            return null;
+            return;
           }
           decimal = american > 0 ? (american / 100) + 1 : (100 / Math.abs(american)) + 1;
           break;
         case 'decimal':
           decimal = parseFloat(value);
+          if (isNaN(decimal)) {
+            error = 'Please enter a valid number';
+            return;
+          }
           if (decimal <= 1) {
             error = 'Decimal odds must be greater than 1';
-            return null;
+            return;
           }
           break;
         case 'fractional':
           if (!value.includes('/')) {
             error = 'Fractional odds must be in format "X/Y"';
-            return null;
+            return;
           }
           const [num, den] = value.split('/').map(Number);
           if (isNaN(num) || isNaN(den) || den === 0) {
             error = 'Invalid fractional odds format';
-            return null;
+            return;
           }
           decimal = (num / den) + 1;
           break;
         case 'implied':
           const probability = parseFloat(value);
+          if (isNaN(probability)) {
+            error = 'Please enter a valid number';
+            return;
+          }
           if (probability <= 0 || probability >= 100) {
             error = 'Implied probability must be between 0 and 100';
-            return null;
+            return;
           }
           decimal = 1 / (probability / 100);
           break;
+      }
+
+      if (error) {
+        setOddsState(prev => ({ ...prev, error }));
+        return;
       }
 
       // Convert decimal odds to all formats
@@ -92,21 +120,20 @@ const OddsConverterForm = () => {
       const toWin = (betAmount * (decimal - 1)).toFixed(2);
       const payout = (betAmount * decimal).toFixed(2);
 
-      setOddsState({
+      setOddsState(prev => ({
+        ...prev,
         american: americanOdds,
         decimal: decimal.toFixed(3),
         fractional: fractional,
         implied: implied,
-        betAmount: oddsState.betAmount,
         toWin: toWin,
         payout: payout,
         error: ''
-      });
+      }));
 
     } catch (err) {
       setOddsState(prev => ({
         ...prev,
-        [type]: value,
         error: 'Invalid input format'
       }));
     }
