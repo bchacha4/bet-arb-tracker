@@ -67,7 +67,8 @@ const LandingPage = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">Powerful Tools for Smart Betting</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* First Row */}
             <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                 <Scale className="w-6 h-6 text-primary" />
@@ -100,6 +101,37 @@ const LandingPage = () => {
 
             <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                <BarChart2 className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Odds Scout</h3>
+              <p className="text-gray-600 mb-6">
+                Compare odds across major sportsbooks in one place. Find the best values and make informed betting decisions 
+                with our comprehensive odds comparison tool.
+              </p>
+              <ul className="space-y-3 text-gray-600 mb-6">
+                <li className="flex items-center">
+                  <Trophy className="w-5 h-5 text-primary mr-2" />
+                  Compare odds from major sportsbooks
+                </li>
+                <li className="flex items-center">
+                  <LineChart className="w-5 h-5 text-primary mr-2" />
+                  Track line movements
+                </li>
+                <li className="flex items-center">
+                  <DollarSign className="w-5 h-5 text-primary mr-2" />
+                  Find the best betting values
+                </li>
+              </ul>
+              <Link to="/odds-scout">
+                <Button className="w-full bg-primary hover:bg-primary-hover text-white">
+                  Try Odds Scout
+                </Button>
+              </Link>
+            </div>
+
+            {/* Second Row */}
+            <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                 <Calculator className="w-6 h-6 text-primary" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Arbitrage Calculator</h3>
@@ -126,31 +158,6 @@ const LandingPage = () => {
                   Try Calculator
                 </Button>
               </Link>
-            </div>
-            
-            <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                <BarChart2 className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Odds Scout</h3>
-              <p className="text-gray-600 mb-6">
-                Compare odds across major sportsbooks in one place. Find the best values and make informed betting decisions 
-                with our comprehensive odds comparison tool.
-              </p>
-              <ul className="space-y-3 text-gray-600 mb-6">
-                <li className="flex items-center">
-                  <Trophy className="w-5 h-5 text-primary mr-2" />
-                  Compare odds from major sportsbooks
-                </li>
-                <li className="flex items-center">
-                  <LineChart className="w-5 h-5 text-primary mr-2" />
-                  Track line movements
-                </li>
-                <li className="flex items-center">
-                  <DollarSign className="w-5 h-5 text-primary mr-2" />
-                  Find the best betting values
-                </li>
-              </ul>
             </div>
 
             <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
