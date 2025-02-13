@@ -42,6 +42,18 @@ const OddsConverterForm = () => {
       return;
     }
 
+    // For decimal and implied odds, only validate and convert if the number is complete
+    if (type === 'decimal' || type === 'implied') {
+      // Allow typing of incomplete numbers
+      if (value.endsWith('.') || value === '-') return;
+      
+      // For decimals, make sure it's a complete number
+      if (type === 'decimal' && !/^\d*\.?\d+$/.test(value)) return;
+      
+      // For implied, make sure it's a complete percentage
+      if (type === 'implied' && !/^\d*\.?\d+$/.test(value)) return;
+    }
+
     let decimal = 0;
     let error = '';
 
@@ -122,10 +134,10 @@ const OddsConverterForm = () => {
 
       setOddsState(prev => ({
         ...prev,
-        american: americanOdds,
-        decimal: decimal.toFixed(3),
-        fractional: fractional,
-        implied: implied,
+        american: type === 'american' ? value : americanOdds,
+        decimal: type === 'decimal' ? value : decimal.toFixed(3),
+        fractional: type === 'fractional' ? value : fractional,
+        implied: type === 'implied' ? value : implied,
         toWin: toWin,
         payout: payout,
         error: ''
