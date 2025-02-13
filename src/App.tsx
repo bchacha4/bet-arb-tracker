@@ -13,6 +13,7 @@ import Index from '@/pages/Index';
 import OddsScout from '@/pages/OddsScout';
 import PoliciesPage from '@/pages/PoliciesPage';
 import ArbitrageCalculator from '@/pages/ArbitrageCalculator';
+import OddsConverter from '@/pages/OddsConverter';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useAuth();
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/policies" element={<PoliciesPage />} />
               <Route path="/arbitrage-calculator" element={<ArbitrageCalculator />} />
+              <Route path="/odds-converter" element={<OddsConverter />} />
               <Route 
                 path="/arbitrage-tracker" 
                 element={

@@ -25,6 +25,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/odds-converter" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                  Free Odds Converter
+                </Link>
+              </li>
+              <li>
                 <Link to="/login" className="text-sm text-gray-600 hover:text-primary transition-colors">
                   Arbitrage Tracker
                 </Link>
