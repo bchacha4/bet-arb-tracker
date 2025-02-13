@@ -89,7 +89,7 @@ const LandingPage = () => {
                 </li>
                 <li className="flex items-center">
                   <DollarSign className="w-5 h-5 text-primary mr-2" />
-                  Track potential profits in real-time
+                  Place bets directly with sportsbooks
                 </li>
               </ul>
               <Link to="/arbitrage-finder">
