@@ -67,7 +67,7 @@ const LandingPage = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">Powerful Tools for Smart Betting</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                 <Scale className="w-6 h-6 text-primary" />
@@ -94,6 +94,36 @@ const LandingPage = () => {
               <Link to="/arbitrage-finder">
                 <Button className="w-full bg-primary hover:bg-primary-hover text-white">
                   Try Arbitrage Finder
+                </Button>
+              </Link>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                <Calculator className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Arbitrage Calculator</h3>
+              <p className="text-gray-600 mb-6">
+                Calculate potential profits and optimal bet sizes for arbitrage opportunities you've found. 
+                Make informed decisions with our easy-to-use betting calculator.
+              </p>
+              <ul className="space-y-3 text-gray-600 mb-6">
+                <li className="flex items-center">
+                  <Calculator className="w-5 h-5 text-primary mr-2" />
+                  Calculate arbitrage profits instantly
+                </li>
+                <li className="flex items-center">
+                  <DollarSign className="w-5 h-5 text-primary mr-2" />
+                  Determine optimal bet distribution
+                </li>
+                <li className="flex items-center">
+                  <LineChart className="w-5 h-5 text-primary mr-2" />
+                  View potential returns
+                </li>
+              </ul>
+              <Link to="/arbitrage-calculator">
+                <Button className="w-full bg-primary hover:bg-primary-hover text-white">
+                  Try Calculator
                 </Button>
               </Link>
             </div>
