@@ -5,11 +5,10 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import OddsConverterForm from '@/components/OddsConverter/OddsConverterForm';
 import { Card, CardContent } from '@/components/ui/card';
-import { Calculator, ArrowRight } from 'lucide-react';
 
 const OddsConverter = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background to-gray-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-background via-gray-50 to-background">
       <Helmet>
         <title>Free Sports Betting Odds Converter - Convert Odds Formats | Bettor-IQ</title>
         <meta name="description" content="Convert between American, Decimal, Fractional, and Implied odds formats with our free odds converter. Calculate potential payouts instantly for smarter betting decisions." />
@@ -39,7 +38,7 @@ const OddsConverter = () => {
         <div className="grid md:grid-cols-2 gap-8">
           <OddsConverterForm />
           
-          <Card className="bg-white shadow-sm border-border/50">
+          <Card className="bg-white shadow-lg border-border/50">
             <CardContent className="p-6 space-y-6">
               <div className="space-y-4">
                 <h2 className="text-2xl font-semibold text-gray-900">Understanding Odds Formats</h2>

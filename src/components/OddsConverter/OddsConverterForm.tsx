@@ -196,47 +196,51 @@ const OddsConverterForm = () => {
   };
 
   return (
-    <Card className="bg-white shadow-sm border-border/50">
+    <Card className="bg-white shadow-lg border-border/50">
       <CardContent className="p-6 space-y-6">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="american">American Odds</Label>
+            <Label htmlFor="american" className="text-gray-600">American Odds</Label>
             <Input
               id="american"
               type="text"
               placeholder="-110"
               value={oddsState.american}
               onChange={(e) => validateAndConvertOdds(e.target.value, 'american')}
+              className="focus-visible:ring-primary"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="fractional">Fractional Odds</Label>
+            <Label htmlFor="fractional" className="text-gray-600">Fractional Odds</Label>
             <Input
               id="fractional"
               type="text"
               placeholder="10/11"
               value={oddsState.fractional}
               onChange={(e) => validateAndConvertOdds(e.target.value, 'fractional')}
+              className="focus-visible:ring-primary"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="decimal">Decimal Odds</Label>
+            <Label htmlFor="decimal" className="text-gray-600">Decimal Odds</Label>
             <Input
               id="decimal"
               type="text"
               placeholder="1.909"
               value={oddsState.decimal}
               onChange={(e) => validateAndConvertOdds(e.target.value, 'decimal')}
+              className="focus-visible:ring-primary"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="implied">Implied Odds (%)</Label>
+            <Label htmlFor="implied" className="text-gray-600">Implied Odds (%)</Label>
             <Input
               id="implied"
               type="text"
               placeholder="52.4"
               value={oddsState.implied}
               onChange={(e) => validateAndConvertOdds(e.target.value, 'implied')}
+              className="focus-visible:ring-primary"
             />
           </div>
         </div>
@@ -249,24 +253,25 @@ const OddsConverterForm = () => {
         )}
 
         <div className="space-y-2">
-          <Label htmlFor="bet-amount">Enter your Bet Amount ($)</Label>
+          <Label htmlFor="bet-amount" className="text-gray-600">Enter your Bet Amount ($)</Label>
           <Input
             id="bet-amount"
             type="text"
             value={oddsState.betAmount}
             onChange={(e) => handleBetAmountChange(e.target.value)}
+            className="focus-visible:ring-primary"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label>To Win</Label>
+            <Label className="text-gray-600">To Win</Label>
             <p className="text-lg font-semibold text-gray-900">
               ${oddsState.toWin}
             </p>
           </div>
           <div>
-            <Label>Payout</Label>
+            <Label className="text-gray-600">Payout</Label>
             <p className="text-lg font-semibold text-gray-900">
               ${oddsState.payout}
             </p>
@@ -274,8 +279,8 @@ const OddsConverterForm = () => {
         </div>
 
         <Button 
-          variant="secondary" 
-          className="w-full"
+          variant="default" 
+          className="w-full bg-primary hover:bg-primary-hover text-white"
           onClick={handleReset}
         >
           Reset
