@@ -4,7 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { formatDollarAmount } from '@/components/ArbitrageTable/utils';
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 interface OddsState {
   american: string;
@@ -14,6 +15,7 @@ interface OddsState {
   betAmount: string;
   toWin: string;
   payout: string;
+  error?: string;
 }
 
 const OddsConverterForm = () => {
@@ -27,57 +29,87 @@ const OddsConverterForm = () => {
     payout: '-'
   });
 
-  const convertOdds = (value: string, type: 'american' | 'decimal' | 'fractional' | 'implied') => {
+  const validateAndConvertOdds = (value: string, type: 'american' | 'decimal' | 'fractional' | 'implied') => {
     let decimal = 0;
+    let error = '';
 
-    // Convert input to decimal odds first
-    switch (type) {
-      case 'american':
-        if (value === '') return null;
-        const american = parseFloat(value);
-        decimal = american > 0 ? (american / 100) + 1 : (100 / Math.abs(american)) + 1;
-        break;
-      case 'decimal':
-        decimal = parseFloat(value);
-        break;
-      case 'fractional':
-        if (!value.includes('/')) return null;
-        const [num, den] = value.split('/').map(Number);
-        decimal = (num / den) + 1;
-        break;
-      case 'implied':
-        const probability = parseFloat(value) / 100;
-        decimal = 1 / probability;
-        break;
+    try {
+      // Convert input to decimal odds first
+      switch (type) {
+        case 'american':
+          if (value === '') return null;
+          const american = parseFloat(value);
+          if (american === -100 || american === 0 || (american > -100 && american < 100)) {
+            error = 'Odds must be less than -100 or greater than 100';
+            return null;
+          }
+          decimal = american > 0 ? (american / 100) + 1 : (100 / Math.abs(american)) + 1;
+          break;
+        case 'decimal':
+          decimal = parseFloat(value);
+          if (decimal <= 1) {
+            error = 'Decimal odds must be greater than 1';
+            return null;
+          }
+          break;
+        case 'fractional':
+          if (!value.includes('/')) {
+            error = 'Fractional odds must be in format "X/Y"';
+            return null;
+          }
+          const [num, den] = value.split('/').map(Number);
+          if (isNaN(num) || isNaN(den) || den === 0) {
+            error = 'Invalid fractional odds format';
+            return null;
+          }
+          decimal = (num / den) + 1;
+          break;
+        case 'implied':
+          const probability = parseFloat(value);
+          if (probability <= 0 || probability >= 100) {
+            error = 'Implied probability must be between 0 and 100';
+            return null;
+          }
+          decimal = 1 / (probability / 100);
+          break;
+      }
+
+      // Convert decimal odds to all formats
+      const americanOdds = decimal >= 2 
+        ? ((decimal - 1) * 100).toFixed(0)
+        : (-100 / (decimal - 1)).toFixed(0);
+      
+      const fractionalDecimal = decimal - 1;
+      const gcd = (a: number, b: number): number => b ? gcd(b, a % b) : a;
+      const den = 100;
+      const num = Math.round(fractionalDecimal * den);
+      const divisor = gcd(num, den);
+      const fractional = `${num/divisor}/${den/divisor}`;
+      
+      const implied = ((1 / decimal) * 100).toFixed(1);
+
+      const betAmount = parseFloat(oddsState.betAmount) || 0;
+      const toWin = (betAmount * (decimal - 1)).toFixed(2);
+      const payout = (betAmount * decimal).toFixed(2);
+
+      setOddsState({
+        american: americanOdds,
+        decimal: decimal.toFixed(3),
+        fractional: fractional,
+        implied: implied,
+        betAmount: oddsState.betAmount,
+        toWin: toWin,
+        payout: payout,
+        error: ''
+      });
+
+    } catch (err) {
+      setOddsState(prev => ({
+        ...prev,
+        [type]: value,
+        error: 'Invalid input format'
+      }));
     }
-
-    // Convert decimal odds to all formats
-    const american = decimal >= 2 
-      ? ((decimal - 1) * 100).toFixed(0)
-      : (-100 / (decimal - 1)).toFixed(0);
-    
-    const fractionalDecimal = decimal - 1;
-    const gcd = (a: number, b: number): number => b ? gcd(b, a % b) : a;
-    const den = 100;
-    const num = Math.round(fractionalDecimal * den);
-    const divisor = gcd(num, den);
-    const fractional = `${num/divisor}/${den/divisor}`;
-    
-    const implied = ((1 / decimal) * 100).toFixed(1);
-
-    const betAmount = parseFloat(oddsState.betAmount) || 0;
-    const toWin = (betAmount * (decimal - 1)).toFixed(2);
-    const payout = (betAmount * decimal).toFixed(2);
-
-    setOddsState({
-      american: american,
-      decimal: decimal.toFixed(3),
-      fractional: fractional,
-      implied: implied,
-      betAmount: oddsState.betAmount,
-      toWin: toWin,
-      payout: payout
-    });
   };
 
   const handleReset = () => {
@@ -88,7 +120,8 @@ const OddsConverterForm = () => {
       implied: '',
       betAmount: '100',
       toWin: '-',
-      payout: '-'
+      payout: '-',
+      error: ''
     });
   };
 
@@ -98,18 +131,28 @@ const OddsConverterForm = () => {
       return;
     }
 
+    const amount = parseFloat(value);
+    if (isNaN(amount) || amount < 0) {
+      setOddsState(prev => ({
+        ...prev,
+        betAmount: value,
+        error: 'Invalid bet amount'
+      }));
+      return;
+    }
+
     const decimal = parseFloat(oddsState.decimal);
     if (!decimal) return;
 
-    const betAmount = parseFloat(value) || 0;
-    const toWin = (betAmount * (decimal - 1)).toFixed(2);
-    const payout = (betAmount * decimal).toFixed(2);
+    const toWin = (amount * (decimal - 1)).toFixed(2);
+    const payout = (amount * decimal).toFixed(2);
 
     setOddsState(prev => ({
       ...prev,
       betAmount: value,
       toWin,
-      payout
+      payout,
+      error: ''
     }));
   };
 
@@ -124,7 +167,7 @@ const OddsConverterForm = () => {
               type="text"
               placeholder="-110"
               value={oddsState.american}
-              onChange={(e) => convertOdds(e.target.value, 'american')}
+              onChange={(e) => validateAndConvertOdds(e.target.value, 'american')}
             />
           </div>
           <div className="space-y-2">
@@ -134,7 +177,7 @@ const OddsConverterForm = () => {
               type="text"
               placeholder="10/11"
               value={oddsState.fractional}
-              onChange={(e) => convertOdds(e.target.value, 'fractional')}
+              onChange={(e) => validateAndConvertOdds(e.target.value, 'fractional')}
             />
           </div>
           <div className="space-y-2">
@@ -144,7 +187,7 @@ const OddsConverterForm = () => {
               type="text"
               placeholder="1.909"
               value={oddsState.decimal}
-              onChange={(e) => convertOdds(e.target.value, 'decimal')}
+              onChange={(e) => validateAndConvertOdds(e.target.value, 'decimal')}
             />
           </div>
           <div className="space-y-2">
@@ -154,10 +197,17 @@ const OddsConverterForm = () => {
               type="text"
               placeholder="52.4"
               value={oddsState.implied}
-              onChange={(e) => convertOdds(e.target.value, 'implied')}
+              onChange={(e) => validateAndConvertOdds(e.target.value, 'implied')}
             />
           </div>
         </div>
+
+        {oddsState.error && (
+          <Alert variant="destructive" className="bg-destructive/15 border-none">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{oddsState.error}</AlertDescription>
+          </Alert>
+        )}
 
         <div className="space-y-2">
           <Label htmlFor="bet-amount">Enter your Bet Amount ($)</Label>
