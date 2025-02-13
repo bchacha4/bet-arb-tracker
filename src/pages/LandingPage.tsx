@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Crosshair, LineChart, BarChart2, DollarSign, Scale, Trophy } from 'lucide-react';
+import { ArrowRight, Crosshair, LineChart, BarChart2, DollarSign, Scale, Trophy, Calculator } from 'lucide-react';
 import Footer from '@/components/Footer/Footer';
 
 const LandingPage = () => {
@@ -17,7 +18,12 @@ const LandingPage = () => {
             <div className="flex items-center gap-4">
               <Link to="/arbitrage-calculator">
                 <Button variant="ghost" className="font-medium text-gray-600 hover:text-gray-900">
-                  Free Calculator
+                  Arbitrage Calculator
+                </Button>
+              </Link>
+              <Link to="/odds-converter">
+                <Button variant="ghost" className="font-medium text-gray-600 hover:text-gray-900">
+                  Odds Converter
                 </Button>
               </Link>
               <Link to="/login">
@@ -61,7 +67,7 @@ const LandingPage = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">Powerful Tools for Smart Betting</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
                 <Scale className="w-6 h-6 text-primary" />
@@ -69,7 +75,7 @@ const LandingPage = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Arbitrage Tracker</h3>
               <p className="text-gray-600 mb-6">
                 Automatically scan odds across multiple sportsbooks to find guaranteed profit opportunities. 
-                Our smart algorithms identify arbitrage opportunities and calculate optimal bet sizes for maximum returns.
+                Our smart algorithms identify arbitrage opportunities and calculate optimal bet sizes.
               </p>
               <ul className="space-y-3 text-gray-600 mb-6">
                 <li className="flex items-center">
@@ -110,6 +116,36 @@ const LandingPage = () => {
                   Find the best betting values
                 </li>
               </ul>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-primary transition-colors shadow-sm">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                <Calculator className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Odds Converter</h3>
+              <p className="text-gray-600 mb-6">
+                Convert between American, Decimal, Fractional, and Implied odds formats instantly. Calculate potential payouts 
+                and make informed decisions with our easy-to-use converter.
+              </p>
+              <ul className="space-y-3 text-gray-600 mb-6">
+                <li className="flex items-center">
+                  <Calculator className="w-5 h-5 text-primary mr-2" />
+                  Convert between odds formats
+                </li>
+                <li className="flex items-center">
+                  <DollarSign className="w-5 h-5 text-primary mr-2" />
+                  Calculate potential payouts
+                </li>
+                <li className="flex items-center">
+                  <LineChart className="w-5 h-5 text-primary mr-2" />
+                  View implied probabilities
+                </li>
+              </ul>
+              <Link to="/odds-converter">
+                <Button className="w-full bg-primary hover:bg-primary-hover text-white">
+                  Try Odds Converter
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
