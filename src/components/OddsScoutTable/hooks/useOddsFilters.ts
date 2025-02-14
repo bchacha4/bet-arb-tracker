@@ -17,7 +17,10 @@ export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
     
     // Single pass through data
     oddsData.forEach(item => {
-      if (item.prop) propTypes.add(item.prop);
+      if (item.prop) {
+        // Store props in lowercase for consistent comparison
+        propTypes.add(item.prop.toLowerCase());
+      }
     });
     
     return Array.from(propTypes);
@@ -37,14 +40,21 @@ export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
 
   // Memoize prop filter function
   const propFilter = useCallback((item: GroupedOddsData) => {
-    return item.prop?.toLowerCase() === selectedProp.toLowerCase();
+    if (!item.prop) return false;
+    // Ensure case-insensitive comparison
+    return item.prop.toLowerCase() === selectedProp.toLowerCase();
   }, [selectedProp]);
 
   // Memoize filtered data with optimized filtering
   const filteredData = useMemo(() => {
     if (!oddsData) return [];
-
-    return oddsData.filter(item => searchFilter(item) && propFilter(item));
+    console.log('Total data before filtering:', oddsData.length);
+    
+    const filtered = oddsData.filter(item => searchFilter(item) && propFilter(item));
+    console.log('Data after filtering:', filtered.length);
+    console.log('Current selected prop:', selectedProp);
+    
+    return filtered;
   }, [oddsData, searchFilter, propFilter]);
 
   return {

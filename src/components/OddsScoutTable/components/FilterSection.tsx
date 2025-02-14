@@ -44,6 +44,18 @@ const FilterSection = ({
 }: FilterSectionProps) => {
   const isMobile = useIsMobile();
 
+  // Sort prop types alphabetically and ensure "Player Points" appears if available
+  const sortedPropTypes = React.useMemo(() => {
+    return availablePropTypes
+      .map(prop => prop.toLowerCase())
+      .sort((a, b) => {
+        // Ensure "player points" comes first if it exists
+        if (a === 'player points') return -1;
+        if (b === 'player points') return 1;
+        return a.localeCompare(b);
+      });
+  }, [availablePropTypes]);
+
   return (
     <div className="space-y-4">
       {isMobile ? (
@@ -59,11 +71,11 @@ const FilterSection = ({
               <SelectTrigger className="flex-1 bg-white">
                 <SelectValue placeholder="Filter by prop type" />
               </SelectTrigger>
-              <SelectContent className="bg-white border shadow-md">
-                {availablePropTypes.map((prop) => (
+              <SelectContent className="bg-white border shadow-md max-h-[300px]">
+                {sortedPropTypes.map((prop) => (
                   <SelectItem 
                     key={prop} 
-                    value={prop.toLowerCase()}
+                    value={prop}
                     className="cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
                     {formatPropType(prop)}
@@ -93,11 +105,11 @@ const FilterSection = ({
               <SelectTrigger className="w-[180px] bg-white">
                 <SelectValue placeholder="Filter by prop type" />
               </SelectTrigger>
-              <SelectContent className="bg-white border shadow-md">
-                {availablePropTypes.map((prop) => (
+              <SelectContent className="bg-white border shadow-md max-h-[300px]">
+                {sortedPropTypes.map((prop) => (
                   <SelectItem 
                     key={prop} 
-                    value={prop.toLowerCase()}
+                    value={prop}
                     className="cursor-pointer hover:bg-gray-100 transition-colors duration-200"
                   >
                     {formatPropType(prop)}
