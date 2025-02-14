@@ -4,8 +4,17 @@ import { GroupedOddsData } from '../types';
 import { AVAILABLE_SPORTSBOOKS } from '@/constants/sportsbooks';
 
 export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
+  // Get initial prop type from data
+  const initialProp = useMemo(() => {
+    if (!oddsData || oddsData.length === 0) return '';
+    const pointsProp = oddsData.find(item => 
+      item.prop?.toLowerCase().includes('point')
+    )?.prop?.toLowerCase() || '';
+    return pointsProp;
+  }, [oddsData]);
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProp, setSelectedProp] = useState('player_points');
+  const [selectedProp, setSelectedProp] = useState(initialProp);
   const [selectedSportsbooks, setSelectedSportsbooks] = useState<string[]>(
     AVAILABLE_SPORTSBOOKS.map(book => book.value)
   );
@@ -37,13 +46,17 @@ export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
 
   // Memoize prop filter function
   const propFilter = useCallback((item: GroupedOddsData) => {
-    return item.prop?.toLowerCase() === selectedProp.toLowerCase();
+    if (!selectedProp || !item.prop) return false;
+    return item.prop.toLowerCase() === selectedProp.toLowerCase();
   }, [selectedProp]);
 
   // Memoize filtered data with optimized filtering
   const filteredData = useMemo(() => {
     if (!oddsData) return [];
-
+    
+    console.log('Selected prop:', selectedProp);
+    console.log('Available props:', availablePropTypes);
+    
     return oddsData.filter(item => searchFilter(item) && propFilter(item));
   }, [oddsData, searchFilter, propFilter]);
 
