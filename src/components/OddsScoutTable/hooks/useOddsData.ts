@@ -70,6 +70,6 @@ export const useOddsData = () => {
     },
     staleTime: 60000, // Cache data for 1 minute
     refetchInterval: 60000, // Refetch every 1 minute
-    cacheTime: 3600000, // Keep cache for 1 hour
+    gcTime: 3600000, // Keep garbage collection time for 1 hour (replaces cacheTime)
   });
 };

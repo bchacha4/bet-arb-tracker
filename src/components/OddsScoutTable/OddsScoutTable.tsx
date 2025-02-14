@@ -31,7 +31,7 @@ const OddsScoutTable = () => {
     setSelectedSportsbooks,
     availablePropTypes,
     filteredData
-  } = useOddsFilters(oddsData);
+  } = useOddsFilters(oddsData as GroupedOddsData[]);
 
   const handleRefresh = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ['oddsScout'] });
