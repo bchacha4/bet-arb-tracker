@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -11,6 +12,8 @@ import LandingPage from '@/pages/LandingPage';
 import Index from '@/pages/Index';
 import OddsScout from '@/pages/OddsScout';
 import PoliciesPage from '@/pages/PoliciesPage';
+import ArbitrageCalculator from '@/pages/ArbitrageCalculator';
+import OddsConverter from '@/pages/OddsConverter';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useAuth();
@@ -46,8 +49,10 @@ const App = () => {
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/policies" element={<PoliciesPage />} />
+              <Route path="/arbitrage-calculator" element={<ArbitrageCalculator />} />
+              <Route path="/odds-converter" element={<OddsConverter />} />
               <Route 
-                path="/arbitrage-tracker" 
+                path="/arbitrage-finder" 
                 element={
                   <ProtectedRoute>
                     <Index />
@@ -62,6 +67,8 @@ const App = () => {
                   </ProtectedRoute>
                 } 
               />
+              {/* Redirect old route to new route */}
+              <Route path="/arbitrage-tracker" element={<Navigate to="/arbitrage-finder" replace />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </AuthProvider>

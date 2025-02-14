@@ -190,6 +190,9 @@ export type Database = {
           "ESPN BET_Line": number | null
           "ESPN BET_Link": string | null
           "ESPN BET_Odds": number | null
+          Fanatics_Line: number | null
+          Fanatics_Link: string | null
+          Fanatics_Odds: number | null
           FanDuel_Line: number | null
           FanDuel_Link: string | null
           FanDuel_Odds: number | null
@@ -246,6 +249,9 @@ export type Database = {
           "ESPN BET_Line"?: number | null
           "ESPN BET_Link"?: string | null
           "ESPN BET_Odds"?: number | null
+          Fanatics_Line?: number | null
+          Fanatics_Link?: string | null
+          Fanatics_Odds?: number | null
           FanDuel_Line?: number | null
           FanDuel_Link?: string | null
           FanDuel_Odds?: number | null
@@ -302,6 +308,9 @@ export type Database = {
           "ESPN BET_Line"?: number | null
           "ESPN BET_Link"?: string | null
           "ESPN BET_Odds"?: number | null
+          Fanatics_Line?: number | null
+          Fanatics_Link?: string | null
+          Fanatics_Odds?: number | null
           FanDuel_Line?: number | null
           FanDuel_Link?: string | null
           FanDuel_Odds?: number | null

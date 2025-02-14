@@ -1,9 +1,11 @@
+
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import Navbar from '@/components/Navbar/Navbar';
 import OddsScoutTable from '@/components/OddsScoutTable/OddsScoutTable';
 import Announcement from '@/components/Announcement/Announcement';
+import Footer from '@/components/Footer/Footer';
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, Search, RefreshCw, MousePointerClick } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -25,7 +27,7 @@ const OddsScout = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Helmet>
         <title>Odds Scout - Compare Sports Betting Odds Across Sportsbooks</title>
         <meta name="description" content="Compare sports betting odds across multiple sportsbooks. Find the best value for player props and betting lines with our comprehensive odds comparison tool." />
@@ -36,7 +38,7 @@ const OddsScout = () => {
       </Helmet>
 
       <Navbar />
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex-grow max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Odds Scout</h1>
@@ -164,6 +166,7 @@ const OddsScout = () => {
           <OddsScoutTable />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

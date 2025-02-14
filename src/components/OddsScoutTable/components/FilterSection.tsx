@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Input } from "@/components/ui/input";
 import {
@@ -59,9 +60,12 @@ const FilterSection = ({
                 <SelectValue placeholder="Filter by prop type" />
               </SelectTrigger>
               <SelectContent className="bg-white border shadow-md">
-                <SelectItem value="all">All Props</SelectItem>
                 {availablePropTypes.map((prop) => (
-                  <SelectItem key={prop} value={prop.toLowerCase()}>
+                  <SelectItem 
+                    key={prop} 
+                    value={prop.toLowerCase()}
+                    className="cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  >
                     {formatPropType(prop)}
                   </SelectItem>
                 ))}
@@ -90,9 +94,12 @@ const FilterSection = ({
                 <SelectValue placeholder="Filter by prop type" />
               </SelectTrigger>
               <SelectContent className="bg-white border shadow-md">
-                <SelectItem value="all">All Props</SelectItem>
                 {availablePropTypes.map((prop) => (
-                  <SelectItem key={prop} value={prop.toLowerCase()}>
+                  <SelectItem 
+                    key={prop} 
+                    value={prop.toLowerCase()}
+                    className="cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  >
                     {formatPropType(prop)}
                   </SelectItem>
                 ))}
