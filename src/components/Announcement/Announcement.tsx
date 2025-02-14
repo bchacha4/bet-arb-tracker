@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChevronDown } from "lucide-react";
@@ -14,47 +15,48 @@ const Announcement = () => {
     if (isArbitrageTracker) {
       return isExpanded ? (
         <>
-          <p className="font-semibold mb-2">Performance Update! 🚀</p>
+          <p className="font-semibold mb-2">NFL Season Update & System Improvements! 🏈</p>
           <p className="text-sm text-foreground/80">
-            We've made some significant improvements to enhance your arbitrage tracking experience:
+            As the NFL season concludes, congratulations to the Kansas City Chiefs on their Super Bowl victory! 
+            We've made some important updates to our system:
           </p>
           <ul className="list-disc list-inside mt-2 ml-2 text-sm text-foreground/80 space-y-1">
-            <li>Added a "Last Updated" indicator to help you track data freshness</li>
-            <li>Optimized our algorithm to update data every 18 minutes for better efficiency</li>
-            <li>Improved overall system performance for faster odds tracking</li>
+            <li>NFL props and bets scanning has been paused until next season</li>
+            <li>Improved data refresh frequency to every 10 minutes</li>
+            <li>Currently preparing our software for MLS betting integration</li>
           </ul>
           <p className="mt-3 text-sm font-medium text-foreground/90">
-            Keep an eye on the last updated timestamp to ensure you're working with the freshest data. 
-            Got feedback? We'd love to hear from you in the user menu! 💪
+            Stay tuned for our MLS integration! We're excited to bring you more betting opportunities soon. 
+            Got feedback? We'd love to hear from you in the user menu! ⚽
           </p>
         </>
       ) : (
         <p className="font-medium">
-          New update! 🚀 Added last updated tracking and faster 18-minute data refresh intervals.
+          NFL Season Update! 🏈 Faster 10-minute data refresh & MLS integration coming soon! ⚽
         </p>
       );
     }
 
     return isExpanded ? (
       <>
-        <p className="font-semibold mb-2">New Features Alert! 🎯</p>
+        <p className="font-semibold mb-2">System Updates & NFL Season Wrap-up! 🏈</p>
         <p className="text-sm text-foreground/80">
-          We've rolled out some key improvements to help you find the best odds faster:
+          As we bid farewell to the NFL season, here are some important updates:
         </p>
         <ul className="list-disc list-inside mt-2 ml-2 text-sm text-foreground/80 space-y-1">
-          <li>Table headers now stay visible as you scroll - track odds more easily 📊</li>
-          <li>Added a last updated timer showing data freshness (now updating every 18 minutes)</li>
-          <li>Fixed the bug that was limiting prop visibility - now showing all available options</li>
-          <li>New sportsbook filter lets you focus on your preferred books</li>
+          <li>Congratulations to the Kansas City Chiefs on their Super Bowl victory!</li>
+          <li>NFL props tracking paused until next season</li>
+          <li>Enhanced data refresh rate - now every 10 minutes 🚀</li>
+          <li>MLS betting integration in development ⚽</li>
         </ul>
         <p className="mt-3 text-sm font-medium text-foreground/90">
-          We're working on even more improvements to give you the best odds tracking experience. 
-          Got feedback? Hit the user menu in the top right to let us know what you think. 💪
+          We're working hard to bring you even more opportunities with our upcoming MLS integration. 
+          Your feedback helps shape our platform - share your thoughts via the user menu! 💪
         </p>
       </>
     ) : (
       <p className="font-medium">
-        New features deployed! 🎯 Better table navigation, fresh data tracking (18-minute updates), and custom sportsbook filters now live.
+        NFL Season Wrap-up! 🏈 Faster data updates (10-min refresh) & MLS integration coming soon! ⚽
       </p>
     );
   };
