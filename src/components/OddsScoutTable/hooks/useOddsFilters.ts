@@ -5,7 +5,7 @@ import { AVAILABLE_SPORTSBOOKS } from '@/constants/sportsbooks';
 
 export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProp, setSelectedProp] = useState('all');
+  const [selectedProp, setSelectedProp] = useState('player points');
   const [selectedSportsbooks, setSelectedSportsbooks] = useState<string[]>(
     AVAILABLE_SPORTSBOOKS.map(book => book.value)
   );
@@ -37,7 +37,7 @@ export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
 
   // Memoize prop filter function
   const propFilter = useCallback((item: GroupedOddsData) => {
-    return selectedProp === 'all' || item.prop?.toLowerCase() === selectedProp.toLowerCase();
+    return item.prop?.toLowerCase() === selectedProp.toLowerCase();
   }, [selectedProp]);
 
   // Memoize filtered data with optimized filtering
