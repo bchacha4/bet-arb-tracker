@@ -27,8 +27,8 @@ export const useOddsFilters = (oddsData: GroupedOddsData[] | undefined) => {
   useEffect(() => {
     if (oddsData && oddsData.length > 0 && !selectedProp) {
       const pointsProp = oddsData.find(item => 
-        item.prop?.toLowerCase().includes('point')
-      )?.prop?.toLowerCase() || '';
+        item.prop?.toLowerCase() === 'player points'
+      )?.prop || '';
       setSelectedProp(pointsProp);
     }
   }, [oddsData, selectedProp]);
