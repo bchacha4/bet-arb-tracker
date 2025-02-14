@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useCallback, memo } from 'react';
 import { useIsMobile } from "@/hooks/use-mobile";
 import LoadingState from "./components/LoadingState";
 import EmptyState from "./components/EmptyState";
@@ -11,6 +12,10 @@ import { useOddsFilters } from "./hooks/useOddsFilters";
 import { GroupedOddsData } from './types';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from "@/components/ui/use-toast";
+
+// Memoize TableRow component
+const MemoizedTableRow = memo(TableRow);
+const MemoizedMobileOddsCard = memo(MobileOddsCard);
 
 const OddsScoutTable = () => {
   const isMobile = useIsMobile();
@@ -28,7 +33,7 @@ const OddsScoutTable = () => {
     filteredData
   } = useOddsFilters(oddsData);
 
-  const handleRefresh = React.useCallback(async () => {
+  const handleRefresh = useCallback(async () => {
     await queryClient.invalidateQueries({ queryKey: ['oddsScout'] });
     toast({
       title: "Data Refreshed",
@@ -43,8 +48,6 @@ const OddsScoutTable = () => {
   if (!filteredData || filteredData.length === 0) {
     return <EmptyState />;
   }
-
-  console.log('Final filtered data count:', filteredData.length);
 
   return (
     <div className="space-y-4">
@@ -62,8 +65,8 @@ const OddsScoutTable = () => {
       {isMobile ? (
         <div className="space-y-4">
           {filteredData.map((prop: GroupedOddsData, index) => (
-            <MobileOddsCard 
-              key={index} 
+            <MemoizedMobileOddsCard 
+              key={`${prop.player}-${prop.prop}-${index}`}
               prop={prop}
               visibleSportsbooks={selectedSportsbooks}
             />
@@ -76,8 +79,8 @@ const OddsScoutTable = () => {
               <TableHeader visibleSportsbooks={selectedSportsbooks} />
               <tbody>
                 {filteredData.map((prop: GroupedOddsData, index) => (
-                  <TableRow 
-                    key={index} 
+                  <MemoizedTableRow 
+                    key={`${prop.player}-${prop.prop}-${index}`}
                     prop={prop}
                     visibleSportsbooks={selectedSportsbooks}
                   />

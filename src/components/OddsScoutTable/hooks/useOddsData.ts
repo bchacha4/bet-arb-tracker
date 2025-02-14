@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { GroupedOddsData } from '../types';
@@ -8,77 +9,67 @@ export const useOddsData = () => {
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      let allData = [];
-      let page = 0;
-      const pageSize = 1000;
+      // Fetch only the most recent data with a limit
+      const { data, error } = await supabase
+        .from('odds_scout')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1000); // Limit to most recent 1000 records for better performance
 
-      while (true) {
-        const { data, error } = await supabase
-          .from('odds_scout')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .range(page * pageSize, (page + 1) * pageSize - 1);
-
-        if (error) {
-          console.error('Error fetching data:', error);
-          throw error;
-        }
-
-        if (!data || data.length === 0) break;
-
-        allData = [...allData, ...data];
-        page++;
+      if (error) {
+        console.error('Error fetching data:', error);
+        throw error;
       }
 
-      console.log('Raw data count:', allData.length);
+      if (!data) return [];
 
-      // Transform the data into GroupedOddsData format
-      const groupedData = allData.reduce<Record<string, GroupedOddsData>>((acc, curr) => {
+      console.log('Raw data count:', data.length);
+
+      // Use a Map for faster lookups
+      const groupedData = new Map<string, GroupedOddsData>();
+
+      // Single pass through the data
+      data.forEach(curr => {
         const key = `${curr.Player}-${curr["Player Prop"]}`;
         
-        if (!acc[key]) {
-          acc[key] = {
+        if (!groupedData.has(key)) {
+          groupedData.set(key, {
             player: curr.Player,
             team: `${curr["Home Team"]} vs ${curr["Away Team"]}`,
             prop: curr["Player Prop"],
             created_at: curr.created_at,
             sportsbooks: {}
-          };
+          });
         }
 
-        // Use the order from AVAILABLE_SPORTSBOOKS to maintain consistent column order
+        const entry = groupedData.get(key)!;
+        
+        // Batch sportsbook processing
         AVAILABLE_SPORTSBOOKS.forEach(({ value: book }) => {
-          if (!acc[key].sportsbooks[book]) {
-            acc[key].sportsbooks[book] = {
+          if (!entry.sportsbooks[book]) {
+            entry.sportsbooks[book] = {
               Over: null,
               Under: null
             };
           }
 
-          // Special case for BetUS which uses lowercase 'odds'
-          const oddsValue = book === 'BetUS' ? curr[`${book}_odds`] : curr[`${book}_Odds`];
-
           if (curr.Outcome === 'Over' || curr.Outcome === 'Under') {
-            acc[key].sportsbooks[book][curr.Outcome] = {
-              odds: oddsValue,
+            entry.sportsbooks[book][curr.Outcome] = {
+              odds: book === 'BetUS' ? curr[`${book}_odds`] : curr[`${book}_Odds`],
               line: curr[`${book}_Line`],
               link: curr[`${book}_Link`]
             };
           }
         });
-        
-        return acc;
-      }, {});
+      });
 
-      const groupedArray = Object.values(groupedData);
+      const groupedArray = Array.from(groupedData.values());
       console.log('Grouped data count:', groupedArray.length);
-      
-      // Add debug logging for ESPN BET data
-      console.log('Sample ESPN BET data:', groupedArray[0]?.sportsbooks['ESPN BET']);
       
       return groupedArray;
     },
-    staleTime: 30000, // Cache data for 30 seconds
-    refetchInterval: 30000, // Refetch every 30 seconds
+    staleTime: 60000, // Cache data for 1 minute
+    refetchInterval: 60000, // Refetch every 1 minute
+    cacheTime: 3600000, // Keep cache for 1 hour
   });
 };
