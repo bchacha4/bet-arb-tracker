@@ -17,7 +17,7 @@ const Announcement = () => {
         <>
           <p className="font-semibold mb-2">NFL Season Update & System Improvements! 🏈</p>
           <p className="text-sm text-foreground/80">
-            As the NFL season concludes, congratulations to the Kansas City Chiefs on their Super Bowl victory! 
+            As the NFL season concludes, congratulations to the Philadelphia Eagles on their Super Bowl LIX victory! 
             We've made some important updates to our system:
           </p>
           <ul className="list-disc list-inside mt-2 ml-2 text-sm text-foreground/80 space-y-1">
@@ -32,7 +32,7 @@ const Announcement = () => {
         </>
       ) : (
         <p className="font-medium">
-          NFL Season Update! 🏈 Faster 10-minute data refresh & MLS integration coming soon! ⚽
+          NFL Season Update! 🏈 Congratulations Eagles! Faster 10-minute data refresh & MLS integration coming soon! ⚽
         </p>
       );
     }
@@ -44,7 +44,7 @@ const Announcement = () => {
           As we bid farewell to the NFL season, here are some important updates:
         </p>
         <ul className="list-disc list-inside mt-2 ml-2 text-sm text-foreground/80 space-y-1">
-          <li>Congratulations to the Kansas City Chiefs on their Super Bowl victory!</li>
+          <li>Congratulations to the Philadelphia Eagles on their Super Bowl LIX victory (40-22)!</li>
           <li>NFL props tracking paused until next season</li>
           <li>Enhanced data refresh rate - now every 10 minutes 🚀</li>
           <li>MLS betting integration in development ⚽</li>
@@ -56,7 +56,7 @@ const Announcement = () => {
       </>
     ) : (
       <p className="font-medium">
-        NFL Season Wrap-up! 🏈 Faster data updates (10-min refresh) & MLS integration coming soon! ⚽
+        NFL Season Wrap-up! 🏈 Congrats Eagles on Super Bowl LIX! Faster data updates & MLS integration coming soon! ⚽
       </p>
     );
   };
