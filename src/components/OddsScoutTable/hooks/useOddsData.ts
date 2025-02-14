@@ -9,11 +9,12 @@ export const useOddsData = () => {
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      // Fetch all data, ordered by creation date
+      // Fetch only the most recent data with a limit
       const { data, error } = await supabase
         .from('odds_scout')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .limit(1000); // Limit to most recent 1000 records for better performance
 
       if (error) {
         console.error('Error fetching data:', error);
