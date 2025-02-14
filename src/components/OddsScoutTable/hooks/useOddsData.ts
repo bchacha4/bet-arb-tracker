@@ -9,26 +9,38 @@ export const useOddsData = () => {
     queryKey: ['oddsScout'],
     queryFn: async () => {
       console.log('Fetching data from Supabase...');
-      // Fetch all data, ordered by creation date
-      const { data, error } = await supabase
-        .from('odds_scout')
-        .select('*')
-        .order('created_at', { ascending: false });
+      
+      let allData: any[] = [];
+      let page = 0;
+      const pageSize = 1000;
+      
+      while (true) {
+        const { data, error } = await supabase
+          .from('odds_scout')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .range(page * pageSize, (page + 1) * pageSize - 1);
 
-      if (error) {
-        console.error('Error fetching data:', error);
-        throw error;
+        if (error) {
+          console.error('Error fetching data:', error);
+          throw error;
+        }
+
+        if (!data || data.length === 0) break;
+        
+        allData = [...allData, ...data];
+        if (data.length < pageSize) break;
+        
+        page++;
       }
 
-      if (!data) return [];
-
-      console.log('Raw data count:', data.length);
+      console.log('Raw data count:', allData.length);
 
       // Use a Map for faster lookups
       const groupedData = new Map<string, GroupedOddsData>();
 
       // Single pass through the data
-      data.forEach(curr => {
+      allData.forEach(curr => {
         const key = `${curr.Player}-${curr["Player Prop"]}`;
         
         if (!groupedData.has(key)) {
